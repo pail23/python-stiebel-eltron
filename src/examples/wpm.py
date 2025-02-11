@@ -8,12 +8,13 @@ async def main():
     await api.connect()
 
     await api.async_update()
-    for (k,v ) in api._data.items():
+    for k, v in api._data.items():
         if v is not None:
             print(f"{k.name} ({k.value}): {v}")
 
     await api.close()
 
-if __name__ ==  '__main__':
+
+if __name__ == "__main__":
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())    
+    loop.run_until_complete(main())
