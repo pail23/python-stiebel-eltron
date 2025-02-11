@@ -1,0 +1,27 @@
+"""Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
+from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, get_register_descriptor, IsgRegisters
+
+{% for (name, registerblock) in registers.items() %}
+class {{heatpump_type}}{{python_class_name(name)}}Registers(IsgRegisters):
+{% for register in registerblock %}
+    {{python_name(register[1])}} = {{register[0]}}{% endfor %}
+{% endfor %}
+
+
+
+{% for (name, registerblock) in registers.items() %}
+{{heatpump_type.upper()}}_{{python_name(name).upper()}}_REGISTERS = {
+{% for register in registerblock %}
+    {{heatpump_type}}{{python_class_name(name)}}Registers.{{python_name(register[1])}}: ModbusRegister(address={{register[0]}}, name="{{register[1]}}", unit="{{register[9]}}", min={{float_or_none(register[6])}}, max={{float_or_none(register[7])}}, data_type={{register[8]}}, key={{heatpump_type}}{{python_class_name(name)}}Registers.{{python_name(register[1])}}),{% endfor %}
+}
+{% endfor %}
+
+
+class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
+
+    def __init__(self, host: str, port: int = 502, slave: int = 1) -> None:
+        super().__init__([
+            {% for (name, registerblock) in registers.items() %}
+                ModbusRegisterBlock(base_address=500, count=112, name="{{name}}", registers={{heatpump_type.upper()}}_{{python_name(name).upper()}}_REGISTERS),{% endfor %}
+            ], 
+            host, port, slave)

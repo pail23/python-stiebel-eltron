@@ -1,0 +1,21 @@
+[project]
+name = "python-stiebel-eltron"
+version = "0.1.0"
+description = "Stiebel Eltron python api library."
+readme = "README.md"
+authors = [
+    { name = "Paul Frank", email = "pail@gmx.net" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "pymodbus>=3.8.3",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "jinja2>=3.1.5",
+]
