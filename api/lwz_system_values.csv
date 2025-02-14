@@ -1,0 +1,4 @@
+"Modbus
+Address",Object designation,LWZ,LWA,Comments,Min. value,Max. value,Data type,Unit,Write/read (w/r)
+1,ACTUAL ROOM T HC1,x,x,Remote control value ,-20,60,2,°C,r
+2,SET ROOM TEMPERATURE HC1,x,x,,-20,60,2,°C,r

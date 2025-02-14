@@ -12,7 +12,7 @@ class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(Isg
 {% for registerblock in registers %}
 {{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS = {
 {% for register in registerblock["register_block"] %}
-    {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1])}}: ModbusRegister(address={{register[0]}}, name="{{register[1]}}", unit="{{register[9]}}", min={{float_or_none(register[6])}}, max={{float_or_none(register[7])}}, data_type={{register[8]}}, key={{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1])}}),{% endfor %}
+    {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1])}}: ModbusRegister(address={{register[0]}}, name="{{register[1]}}", unit="{{register[8]}}", min={{float_or_none(register[5])}}, max={{float_or_none(register[6])}}, data_type={{register[7]}}, key={{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1])}}),{% endfor %}
 }
 {% endfor %}
 
