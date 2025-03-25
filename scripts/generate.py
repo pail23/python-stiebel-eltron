@@ -6,9 +6,13 @@ import csv
 from jinja2 import Environment, FileSystemLoader, Template, select_autoescape
 
 
-def python_name(name: str) -> str:
+def python_name(name: str, suffix: str = "") -> str:
     """Generate a valid python variable name."""
-    return name.replace(" ", "_")
+    if suffix == "":
+        result = name
+    else:
+        result = name + "_" + suffix
+    return result.replace(" ", "_")
 
 
 def python_class_name(name: str) -> str:

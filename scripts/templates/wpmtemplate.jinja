@@ -4,7 +4,7 @@ from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegister
 {% for registerblock in registers %}
 class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(IsgRegisters):
 {% for register in registerblock["register_block"] %}
-    {{python_name(register[1])}} = {{register[0]}}{% endfor %}
+    {{python_name(register[1], register[11])}} = {{register[0]}}{% endfor %}
 {% endfor %}
 
 
@@ -12,7 +12,7 @@ class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(Isg
 {% for registerblock in registers %}
 {{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS = {
 {% for register in registerblock["register_block"] %}
-    {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1])}}: ModbusRegister(address={{register[0]}}, name="{{register[1]}}", unit="{{register[9]}}", min={{float_or_none(register[6])}}, max={{float_or_none(register[7])}}, data_type={{register[8]}}, key={{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1])}}),{% endfor %}
+    {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1], register[11])}}: ModbusRegister(address={{register[0]}}, name="{{register[1]}}", unit="{{register[9]}}", min={{float_or_none(register[6])}}, max={{float_or_none(register[7])}}, data_type={{register[8]}}, key={{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1], register[11])}}),{% endfor %}
 }
 {% endfor %}
 

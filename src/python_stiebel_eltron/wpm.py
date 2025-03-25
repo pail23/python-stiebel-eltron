@@ -36,6 +36,57 @@ class WpmSystemValuesRegisters(IsgRegisters):
     RUNTIME = 530
     ACTUAL_TEMPERATURE_EXTERNAL = 531
     SET_TEMPERATURE_EXTERNAL = 532
+    APPLICATION_LIMIT_HZG = 533
+    APPLICATION_LIMIT_WW = 534
+    RUNTIME_EHS = 535
+    SOURCE_TEMPERATURE = 536
+    MIN_SOURCE_TEMPERATURE = 537
+    SOURCE_PRESSURE = 538
+    HOT_GAS_TEMPERATURE = 539
+    HIGH_PRESSURE = 540
+    LOW_PRESSURE = 541
+    RETURN_TEMPERATURE_HP1 = 542
+    FLOW_TEMPERATURE_HP1 = 543
+    HOT_GAS_TEMPERATURE_HP1 = 544
+    LOW_PRESSURE_HP1 = 545
+    MEAN_PRESSURE_HP1 = 546
+    HIGH_PRESSURE_HP1 = 547
+    WP_WATER_FLOW_RATE_HP1 = 548
+    RETURN_TEMPERATURE_HP2 = 549
+    FLOW_TEMPERATURE_HP2 = 550
+    HOT_GAS_TEMPERATURE_HP2 = 551
+    LOW_PRESSURE_HP2 = 552
+    MEAN_PRESSURE_HP2 = 553
+    HIGH_PRESSURE_HP2 = 554
+    WP_WATER_FLOW_RATE_HP2 = 555
+    RETURN_TEMPERATURE_HP3 = 556
+    FLOW_TEMPERATURE_HP3 = 557
+    HOT_GAS_TEMPERATURE_HP3 = 558
+    LOW_PRESSURE_HP3 = 559
+    MEAN_PRESSURE_HP3 = 560
+    HIGH_PRESSURE_HP3 = 561
+    WP_WATER_FLOW_RATE_HP3 = 562
+    RETURN_TEMPERATURE_HP4 = 563
+    FLOW_TEMPERATURE_HP4 = 564
+    HOT_GAS_TEMPERATURE_HP4 = 565
+    LOW_PRESSURE_HP4 = 566
+    MEAN_PRESSURE_HP4 = 567
+    HIGH_PRESSURE_HP4 = 568
+    WP_WATER_FLOW_RATE_HP4 = 569
+    RETURN_TEMPERATURE_HP5 = 570
+    FLOW_TEMPERATURE_HP5 = 571
+    HOT_GAS_TEMPERATURE_HP5 = 572
+    LOW_PRESSURE_HP5 = 573
+    MEAN_PRESSURE_HP5 = 574
+    HIGH_PRESSURE_HP5 = 575
+    WP_WATER_RATE_HP5 = 576
+    RETURN_TEMPERATURE_HP6 = 577
+    FLOW_TEMPERATURE_HP6 = 578
+    HOT_GAS_HP6 = 579
+    LOW_PRESSURE_HP6 = 580
+    MEAN_PRESSURE_HP6 = 581
+    HIGH_PRESSURE_HP6 = 582
+    WP_WATER_RATE_HP6 = 583
 
 
 class WpmEnergySystemInformationRegisters(IsgRegisters):
@@ -118,7 +169,7 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     ),
     WpmSystemValuesRegisters.SET_TEMPERATURE_HK_1_WPM3I: ModbusRegister(
         address=509,
-        name="SET TEMPERATURE HK 1 WPM3I",
+        name="SET TEMPERATURE HK 1",
         unit="°C",
         min=0.0,
         max=65.0,
@@ -332,6 +383,465 @@ WPM_SYSTEM_VALUES_REGISTERS = {
         data_type=2,
         key=WpmSystemValuesRegisters.SET_TEMPERATURE_EXTERNAL,
     ),
+    WpmSystemValuesRegisters.APPLICATION_LIMIT_HZG: ModbusRegister(
+        address=533,
+        name="APPLICATION LIMIT HZG",
+        unit="°C",
+        min=-40.0,
+        max=40.0,
+        data_type=2,
+        key=WpmSystemValuesRegisters.APPLICATION_LIMIT_HZG,
+    ),
+    WpmSystemValuesRegisters.APPLICATION_LIMIT_WW: ModbusRegister(
+        address=534,
+        name="APPLICATION LIMIT WW",
+        unit="°C",
+        min=-40.0,
+        max=40.0,
+        data_type=2,
+        key=WpmSystemValuesRegisters.APPLICATION_LIMIT_WW,
+    ),
+    WpmSystemValuesRegisters.RUNTIME_EHS: ModbusRegister(
+        address=535,
+        name="RUNTIME",
+        unit="h",
+        min=None,
+        max=None,
+        data_type=6,
+        key=WpmSystemValuesRegisters.RUNTIME_EHS,
+    ),
+    WpmSystemValuesRegisters.SOURCE_TEMPERATURE: ModbusRegister(
+        address=536,
+        name="SOURCE TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.SOURCE_TEMPERATURE,
+    ),
+    WpmSystemValuesRegisters.MIN_SOURCE_TEMPERATURE: ModbusRegister(
+        address=537,
+        name="MIN SOURCE TEMPERATURE",
+        unit="°C",
+        min=-10.0,
+        max=10.0,
+        data_type=2,
+        key=WpmSystemValuesRegisters.MIN_SOURCE_TEMPERATURE,
+    ),
+    WpmSystemValuesRegisters.SOURCE_PRESSURE: ModbusRegister(
+        address=538,
+        name="SOURCE PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.SOURCE_PRESSURE,
+    ),
+    WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE: ModbusRegister(
+        address=539,
+        name="HOT GAS TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE,
+    ),
+    WpmSystemValuesRegisters.HIGH_PRESSURE: ModbusRegister(
+        address=540,
+        name="HIGH PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HIGH_PRESSURE,
+    ),
+    WpmSystemValuesRegisters.LOW_PRESSURE: ModbusRegister(
+        address=541,
+        name="LOW PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.LOW_PRESSURE,
+    ),
+    WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP1: ModbusRegister(
+        address=542,
+        name="RETURN TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP1,
+    ),
+    WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP1: ModbusRegister(
+        address=543,
+        name="FLOW TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP1,
+    ),
+    WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP1: ModbusRegister(
+        address=544,
+        name="HOT GAS TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP1,
+    ),
+    WpmSystemValuesRegisters.LOW_PRESSURE_HP1: ModbusRegister(
+        address=545,
+        name="LOW PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.LOW_PRESSURE_HP1,
+    ),
+    WpmSystemValuesRegisters.MEAN_PRESSURE_HP1: ModbusRegister(
+        address=546,
+        name="MEAN PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.MEAN_PRESSURE_HP1,
+    ),
+    WpmSystemValuesRegisters.HIGH_PRESSURE_HP1: ModbusRegister(
+        address=547,
+        name="HIGH PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.HIGH_PRESSURE_HP1,
+    ),
+    WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP1: ModbusRegister(
+        address=548,
+        name="WP WATER FLOW RATE",
+        unit="l/min",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP1,
+    ),
+    WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP2: ModbusRegister(
+        address=549,
+        name="RETURN TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP2,
+    ),
+    WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP2: ModbusRegister(
+        address=550,
+        name="FLOW TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP2,
+    ),
+    WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP2: ModbusRegister(
+        address=551,
+        name="HOT GAS TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP2,
+    ),
+    WpmSystemValuesRegisters.LOW_PRESSURE_HP2: ModbusRegister(
+        address=552,
+        name="LOW PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.LOW_PRESSURE_HP2,
+    ),
+    WpmSystemValuesRegisters.MEAN_PRESSURE_HP2: ModbusRegister(
+        address=553,
+        name="MEAN PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.MEAN_PRESSURE_HP2,
+    ),
+    WpmSystemValuesRegisters.HIGH_PRESSURE_HP2: ModbusRegister(
+        address=554,
+        name="HIGH PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.HIGH_PRESSURE_HP2,
+    ),
+    WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP2: ModbusRegister(
+        address=555,
+        name="WP WATER FLOW RATE",
+        unit="l/min",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP2,
+    ),
+    WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP3: ModbusRegister(
+        address=556,
+        name="RETURN TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP3,
+    ),
+    WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP3: ModbusRegister(
+        address=557,
+        name="FLOW TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP3,
+    ),
+    WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP3: ModbusRegister(
+        address=558,
+        name="HOT GAS TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP3,
+    ),
+    WpmSystemValuesRegisters.LOW_PRESSURE_HP3: ModbusRegister(
+        address=559,
+        name="LOW PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.LOW_PRESSURE_HP3,
+    ),
+    WpmSystemValuesRegisters.MEAN_PRESSURE_HP3: ModbusRegister(
+        address=560,
+        name="MEAN PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.MEAN_PRESSURE_HP3,
+    ),
+    WpmSystemValuesRegisters.HIGH_PRESSURE_HP3: ModbusRegister(
+        address=561,
+        name="HIGH PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.HIGH_PRESSURE_HP3,
+    ),
+    WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP3: ModbusRegister(
+        address=562,
+        name="WP WATER FLOW RATE",
+        unit="l/min",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP3,
+    ),
+    WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP4: ModbusRegister(
+        address=563,
+        name="RETURN TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP4,
+    ),
+    WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP4: ModbusRegister(
+        address=564,
+        name="FLOW TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP4,
+    ),
+    WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP4: ModbusRegister(
+        address=565,
+        name="HOT GAS TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP4,
+    ),
+    WpmSystemValuesRegisters.LOW_PRESSURE_HP4: ModbusRegister(
+        address=566,
+        name="LOW PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.LOW_PRESSURE_HP4,
+    ),
+    WpmSystemValuesRegisters.MEAN_PRESSURE_HP4: ModbusRegister(
+        address=567,
+        name="MEAN PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.MEAN_PRESSURE_HP4,
+    ),
+    WpmSystemValuesRegisters.HIGH_PRESSURE_HP4: ModbusRegister(
+        address=568,
+        name="HIGH PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.HIGH_PRESSURE_HP4,
+    ),
+    WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP4: ModbusRegister(
+        address=569,
+        name="WP WATER FLOW RATE",
+        unit="l/min",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP4,
+    ),
+    WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP5: ModbusRegister(
+        address=570,
+        name="RETURN TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP5,
+    ),
+    WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP5: ModbusRegister(
+        address=571,
+        name="FLOW TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP5,
+    ),
+    WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP5: ModbusRegister(
+        address=572,
+        name="HOT GAS TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HOT_GAS_TEMPERATURE_HP5,
+    ),
+    WpmSystemValuesRegisters.LOW_PRESSURE_HP5: ModbusRegister(
+        address=573,
+        name="LOW PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.LOW_PRESSURE_HP5,
+    ),
+    WpmSystemValuesRegisters.MEAN_PRESSURE_HP5: ModbusRegister(
+        address=574,
+        name="MEAN PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.MEAN_PRESSURE_HP5,
+    ),
+    WpmSystemValuesRegisters.HIGH_PRESSURE_HP5: ModbusRegister(
+        address=575,
+        name="HIGH PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.HIGH_PRESSURE_HP5,
+    ),
+    WpmSystemValuesRegisters.WP_WATER_RATE_HP5: ModbusRegister(
+        address=576,
+        name="WP WATER RATE",
+        unit="l/min",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.WP_WATER_RATE_HP5,
+    ),
+    WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP6: ModbusRegister(
+        address=577,
+        name="RETURN TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.RETURN_TEMPERATURE_HP6,
+    ),
+    WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP6: ModbusRegister(
+        address=578,
+        name="FLOW TEMPERATURE",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.FLOW_TEMPERATURE_HP6,
+    ),
+    WpmSystemValuesRegisters.HOT_GAS_HP6: ModbusRegister(
+        address=579,
+        name="HOT GAS",
+        unit="°C",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.HOT_GAS_HP6,
+    ),
+    WpmSystemValuesRegisters.LOW_PRESSURE_HP6: ModbusRegister(
+        address=580,
+        name="LOW PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.LOW_PRESSURE_HP6,
+    ),
+    WpmSystemValuesRegisters.MEAN_PRESSURE_HP6: ModbusRegister(
+        address=581,
+        name="MEAN PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.MEAN_PRESSURE_HP6,
+    ),
+    WpmSystemValuesRegisters.HIGH_PRESSURE_HP6: ModbusRegister(
+        address=582,
+        name="HIGH PRESSURE",
+        unit="bar",
+        min=None,
+        max=None,
+        data_type=7,
+        key=WpmSystemValuesRegisters.HIGH_PRESSURE_HP6,
+    ),
+    WpmSystemValuesRegisters.WP_WATER_RATE_HP6: ModbusRegister(
+        address=583,
+        name="WP WATER RATE",
+        unit="l/min",
+        min=None,
+        max=None,
+        data_type=2,
+        key=WpmSystemValuesRegisters.WP_WATER_RATE_HP6,
+    ),
 }
 
 WPM_ENERGY_SYSTEM_INFORMATION_REGISTERS = {
@@ -362,7 +872,7 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
             [
                 ModbusRegisterBlock(
                     base_address=500,
-                    count=32,
+                    count=83,
                     name="System Values",
                     registers=WPM_SYSTEM_VALUES_REGISTERS,
                 ),
