@@ -10,7 +10,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 class IsgRegisters(Enum):
-    NoRegister: 0
+    """ISG Register base class."""
 
 
 @dataclass
@@ -26,6 +26,13 @@ class ModbusRegister:
     key: IsgRegisters
 
 
+class RegisterType(Enum):
+    """Register type enum."""
+
+    INPUT_REGISTER = 1
+    HOLDING_REGISTER = 2
+
+
 @dataclass
 class ModbusRegisterBlock:
     """Register block data class."""
@@ -34,9 +41,13 @@ class ModbusRegisterBlock:
     count: int
     name: str
     registers: dict
+    register_type: RegisterType
 
 
-def get_register_descriptor(descriptors: list, address: int) -> ModbusRegister | None:
+def get_register_descriptor(
+    descriptors: list[ModbusRegister], address: int
+) -> ModbusRegister | None:
+    """Find the descriptor with a given address."""
     for descriptor in descriptors:
         if descriptor.address == address:
             return descriptor
@@ -95,6 +106,16 @@ class StiebelEltronAPI:
                 address, count=count, slave=slave
             )
 
+    async def read_holding_registers(self, slave, address, count):
+        """Read holding registers."""
+        _LOGGER.debug(
+            f"Reading {count} holding registers from {address} with slave {slave}"
+        )
+        async with self._lock:
+            return await self._client.read_holding_registers(
+                address, count=count, slave=slave
+            )
+
     def convert_value(
         self, register, register_description: ModbusRegister
     ) -> float | int | None:
@@ -132,12 +153,21 @@ class StiebelEltronAPI:
         """Request current values from heat pump."""
         result: dict = {}
         for registerblock in self._register_blocks:
-            heat_pump_data = await self.read_input_registers(
-                slave=self._slave,
-                address=registerblock.base_address,
-                count=registerblock.count,
-            )
-            if not heat_pump_data.isError():
+            heat_pump_data = None
+            if registerblock.register_type == RegisterType.INPUT_REGISTER:
+                heat_pump_data = await self.read_input_registers(
+                    slave=self._slave,
+                    address=registerblock.base_address,
+                    count=registerblock.count,
+                )
+            elif registerblock.register_type == RegisterType.HOLDING_REGISTER:
+                heat_pump_data = await self.read_holding_registers(
+                    slave=self._slave,
+                    address=registerblock.base_address,
+                    count=registerblock.count,
+                )
+
+            if heat_pump_data is not None and not heat_pump_data.isError():
                 for i in range(0, registerblock.count):
                     descriptor = get_register_descriptor(
                         registerblock.registers.values(),

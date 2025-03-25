@@ -3,7 +3,19 @@
 from pathlib import Path
 import csv
 
+from dataclasses import dataclass
+
 from jinja2 import Environment, FileSystemLoader, Template, select_autoescape
+from python_stiebel_eltron import RegisterType
+
+
+@dataclass
+class ModbusFile:
+    """Register file class."""
+
+    name: str
+    path: Path
+    register_type: RegisterType
 
 
 def python_name(name: str, suffix: str = "") -> str:
@@ -36,23 +48,27 @@ def get_base_address(registers: list) -> int:
 
 
 def generate_heatpump(
-    root_path: Path, template: Template, modbus_files: dict, heatpump_type: str
+    root_path: Path,
+    template: Template,
+    modbus_files: list[ModbusFile],
+    heatpump_type: str,
 ):
     """Generate the python file for a heat pump."""
     register_blocks = []
 
-    for name, modbus_file in modbus_files.items():
-        with modbus_file.open("r") as f:
+    for modbus_file in modbus_files:
+        with modbus_file.path.open("r") as f:
             reader = csv.reader(f)
             data = list(reader)
 
         api_data = data[1:]
         register_blocks.append(
             {
-                "name": name,
+                "name": modbus_file.name,
                 "count": len(api_data),
                 "base_address": get_base_address(api_data),
                 "register_block": api_data,
+                "register_type": modbus_file.register_type,
             }
         )
 
@@ -82,16 +98,43 @@ def main() -> None:
     )
 
     wpm_template = env.get_template("wpmtemplate.jinja")
-    wpm_modbus_files = {
-        "System Values": root / "api/wpm_system_values.csv",
-        "Energy System Information": root / "api/wpm_energy_system_information.csv",
-    }
+    wpm_modbus_files = [
+        ModbusFile(
+            name="System Values",
+            path=root / "api/wpm_system_values.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+        ModbusFile(
+            name="System Parameters",
+            path=root / "api/wpm_system_parameters.csv",
+            register_type=RegisterType.HOLDING_REGISTER,
+        ),
+        ModbusFile(
+            name="System State",
+            path=root / "api/wpm_system_state.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+        ModbusFile(
+            name="Energy Data",
+            path=root / "api/wpm_energy_data.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+        ModbusFile(
+            name="Energy System Information",
+            path=root / "api/wpm_energy_system_information.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+    ]
     generate_heatpump(root, wpm_template, wpm_modbus_files, "Wpm")
 
     lwz_template = env.get_template("lwztemplate.jinja")
-    lwz_modbus_files = {
-        "System Values": root / "api/lwz_system_values.csv",
-    }
+    lwz_modbus_files = [
+        ModbusFile(
+            name="System Values",
+            path=root / "api/lwz_system_values.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+    ]
     generate_heatpump(root, lwz_template, lwz_modbus_files, "Lwz")
 
 

@@ -81,4 +81,31 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 580,LOW PRESSURE,x,x,,Heat pump 6,,,7,bar,r,HP6
 581,MEAN PRESSURE,x,x,,Heat pump 6,,,7,bar,r,HP6
 582,HIGH PRESSURE,x,x,,Heat pump 6,,,7,bar,r,HP6
-583,WP WATER RATE,x,x,,Heat pump 6,,,2,l/min,r,HP6
+583,WP WATER FLOW RATE,x,x,,Heat pump 6,,,2,l/min,r,HP6
+584,ACTUAL TEMPERATURE ,x,,,"Room temperature, heating circuit 1",,,2,°C,r,ROOM TEMP HC1
+585,SET TEMPERATURE ,x,,,"Room temperature, heating circuit 1",,,2,°C,r,ROOM TEMP HC1
+586,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 1",,,2,%,r,ROOM TEMP HC1
+587,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 1",,,2,°C,r,ROOM TEMP HC1
+588,ACTUAL TEMPERATURE ,x,,,"Room temperature, heating circuit 2",,,2,°C,r,ROOM TEMP HC2
+589,SET TEMPERATURE ,x,,,"Room temperature, heating circuit 2",,,2,°C,r,ROOM TEMP HC2
+590,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 2",,,2,%,r,ROOM TEMP HC2
+591,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 2",,,2,°C,r,ROOM TEMP HC2
+592,ACTUAL TEMPERATURE ,x,,,"Room temperature, heating circuit 3",,,2,°C,r,ROOM TEMP HC3
+593,SET TEMPERATURE ,x,,,"Room temperature, heating circuit 3",,,2,°C,r,ROOM TEMP HC3
+594,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 3",,,2,%,r,ROOM TEMP HC3
+595,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 3",,,2,°C,r,ROOM TEMP HC3
+596,ACTUAL TEMPERATURE ,x,,,"Room temperature, heating circuit 4",,,2,°C,r,ROOM TEMP HC4
+597,SET TEMPERATURE ,x,,,"Room temperature, heating circuit 4",,,2,°C,r,ROOM TEMP HC4
+598,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 4",,,2,%,r,ROOM TEMP HC4
+599,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 4",,,2,°C,r,ROOM TEMP HC4
+600,ACTUAL TEMPERATURE ,x,,,"Room temperature, heating circuit 5",,,2,°C,r,ROOM TEMP HC5
+601,SET TEMPERATURE ,x,,,"Room temperature, heating circuit 5",,,2,°C,r,ROOM TEMP HC5
+602,RELATIVE HUMIDITY,x,,,"Room temperature, heating circuit 5",,,2,%,r,ROOM TEMP HC5
+603,DEW POINT TEMPERATURE,x,,,"Room temperature, heating circuit 5",,,2,°C,r,ROOM TEMP HC5
+604,SET TEMPERATURE ,x,,,"Room temperature, cooling circuit 1",,,2,°C,r,ROOM TEMP COOLING1
+605,SET TEMPERATURE ,x,,,"Room temperature, cooling circuit 2",,,2,°C,r,ROOM TEMP COOLING2
+606,SET TEMPERATURE ,x,,,"Room temperature, cooling circuit 3",,,2,°C,r,ROOM TEMP COOLING3
+607,SET TEMPERATURE ,x,,,"Room temperature, cooling circuit 4",,,2,°C,r,ROOM TEMP COOLING4
+608,SET TEMPERATURE ,x,,,"Room temperature, cooling circuit 5",,,2,°C,r,ROOM TEMP COOLING5
+609,ACTUAL TEMPERATURE HK 3,x,,,,0,90,2,°C,r,
+610,SET TEMPERATURE HK 3,x,,,,0,65,2,°C,r,
