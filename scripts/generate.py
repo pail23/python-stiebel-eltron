@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from jinja2 import Environment, FileSystemLoader, Template, select_autoescape
 from python_stiebel_eltron import RegisterType
 
+ENERGY_DATA_BLOCK_NAME = "Energy Data"
+
 
 @dataclass
 class ModbusFile:
@@ -72,9 +74,7 @@ def generate_heatpump(
             }
         )
 
-    generated_content = template.render(
-        registers=register_blocks, heatpump_type=heatpump_type
-    )
+    generated_content = template.render(registers=register_blocks, heatpump_type=heatpump_type)
 
     generated_path = root_path / f"src/python_stiebel_eltron/{heatpump_type.lower()}.py"
 
@@ -91,13 +91,9 @@ def main() -> None:
         loader=FileSystemLoader(str(scripts_path / "templates")),
         autoescape=select_autoescape(),
     )
-    env.globals.update(
-        python_name=python_name,
-        python_class_name=python_class_name,
-        float_or_none=float_or_none,
-    )
+    env.globals.update(python_name=python_name, python_class_name=python_class_name, float_or_none=float_or_none, ENERGY_DATA_BLOCK_NAME=ENERGY_DATA_BLOCK_NAME)
 
-    wpm_template = env.get_template("wpmtemplate.jinja")
+    wpm_template = env.get_template("wpmtemplate.j2")
     wpm_modbus_files = [
         ModbusFile(
             name="System Values",
@@ -132,7 +128,7 @@ def main() -> None:
     ]
     generate_heatpump(root, wpm_template, wpm_modbus_files, "Wpm")
 
-    lwz_template = env.get_template("lwztemplate.jinja")
+    lwz_template = env.get_template("lwztemplate.j2")
     lwz_modbus_files = [
         ModbusFile(
             name="System Values",
