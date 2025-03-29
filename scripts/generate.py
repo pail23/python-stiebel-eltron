@@ -134,6 +134,11 @@ def main() -> None:
             path=root / "api/lwz_system_values.csv",
             register_type=RegisterType.INPUT_REGISTER,
         ),
+        ModbusFile(
+            name="System Parameters",
+            path=root / "api/lwz_system_parameters.csv",
+            register_type=RegisterType.HOLDING_REGISTER,
+        ),
     ]
     generate_heatpump(root, lwz_template, lwz_modbus_files, "Lwz")
 
