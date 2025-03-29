@@ -140,24 +140,29 @@ class StiebelEltronAPI:
         """Convert a modbus value to a python value."""
         if register_description.data_type == 2:
             value = self._client.convert_from_registers([register], self._client.DATATYPE.INT16)
-            if value == -32768:
-                return None
-            return float(value) * 0.1
+            if isinstance(value, int):
+                if value == -32768:
+                    return None
+                return float(value) * 0.1
         elif register_description.data_type == 6:
             value = self._client.convert_from_registers([register], self._client.DATATYPE.UINT16)
-            if value == 32768:
-                return None
-            return value
+            if isinstance(value, int):
+                if value == 32768:
+                    return None
+                return value
         elif register_description.data_type == 7:
             value = self._client.convert_from_registers([register], self._client.DATATYPE.INT16)
-            if value == -32768:
-                return None
-            return value * 0.01
+            if isinstance(value, int):
+                if value == -32768:
+                    return None
+                return value * 0.01
         elif register_description.data_type == 8:
             value = self._client.convert_from_registers([register], self._client.DATATYPE.UINT16)
-            if value == 32768:
-                return None
-            return value
+            if isinstance(value, int):
+                if value == 32768:
+                    return None
+                return value
+        raise ValueError("invalid register.")
 
     def convert_value_to_modbus(self, value: int | float, register_description: ModbusRegister) -> int:
         """Convert a modbus value to a python value."""
