@@ -1,6 +1,6 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
 
-from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType
+from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, get_register_descriptor
 
 
 class LwzSystemValuesRegisters(IsgRegisters):
@@ -80,30 +80,40 @@ class LwzSystemStateRegisters(IsgRegisters):
 class LwzEnergyDataRegisters(IsgRegisters):
     HEAT_METER_HTG_DAY = 3001
     HEAT_METER_HTG_TTL_LOW = 3002
+    HEAT_METER_HTG_TTL = 103002
     HEAT_METER_HTG_TTL_HI = 3003
     HEAT_METER_DHW_DAY = 3004
     HEAT_METER_DHW_TTL_LOW = 3005
+    HEAT_METER_DHW_TTL = 103005
     HEAT_METER_DHW_TTL_HI = 3006
     HEAT_M_BOOST_HTG_TTL_LOW = 3007
+    HEAT_M_BOOST_HTG_TTL = 103007
     HEAT_M_BOOST_HTG_TTL_HI = 3008
     HEAT_M_BOOST_DHW_TTL_LOW = 3009
+    HEAT_M_BOOST_DHW_TTL = 103009
     HEAT_M_BOOST_DHW_HI = 3010
     HEAT_M_RECOVERY_DAY = 3011
     HEAT_M_RECOVERY_TTL_LOW = 3012
+    HEAT_M_RECOVERY_TTL = 103012
     HEAT_M_RECOVERY_TTL_HI = 3013
     HM_SOLAR_HTG_DAY = 3014
     HM_SOLAR_HTG_TOTAL_LOW = 3015
+    HM_SOLAR_HTG_TOTAL = 103015
     HM_SOLAR_HTG_TOTAL_HI = 3016
     HM_SOLAR_DHW_DAY = 3017
     HM_SOLAR_DWH_TOTAL_LOW = 3018
+    HM_SOLAR_DWH_TOTAL = 103018
     HM_SOLAR_DWH_TOTAL_HI = 3019
     HM_COOLING_TOTAL_LOW = 3020
+    HM_COOLING_TOTAL = 103020
     HM_COOLING_TOTAL_HI = 3021
     PWR_CON_HTG_DAY = 3022
     PWR_CON_HTG_TTL_LOW = 3023
+    PWR_CON_HTG_TTL = 103023
     PWR_CON_HTG_TTL_HI = 3024
     PWR_CON_DHW_DAY = 3025
     PWR_CON_DHW_TTL_LOW = 3026
+    PWR_CON_DHW_TTL = 103026
     PWR_CON_DHW_TTL_HI = 3027
     COMPRESSOR_HEATING = 3028
     COMPRESSOR_COOLING = 3029
@@ -335,3 +345,25 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
             port,
             slave,
         )
+
+    async def async_update(self):
+        """Request current values from heat pump."""
+        await super().async_update()
+        for registerblock in self._register_blocks:
+            if registerblock.name == ENERGY_DATA_BLOCK_NAME:
+                for register in LwzEnergyDataRegisters:
+                    if register.value > VIRTUAL_REGISTER_OFFSET:
+                        low_descriptor = get_register_descriptor(
+                            list(registerblock.registers.values()),
+                            register.value - VIRTUAL_REGISTER_OFFSET,
+                        )
+                        if low_descriptor is not None:
+                            high_descriptor = get_register_descriptor(
+                                list(registerblock.registers.values()),
+                                register.value - VIRTUAL_REGISTER_OFFSET + 1,
+                            )
+                            if high_descriptor is not None:
+                                high_value = self._data.get(high_descriptor.key)
+                                low_value = self._data.get(low_descriptor.key)
+                                if high_value is not None and low_value is not None:
+                                    self._data[register] = high_value * 1000 + low_value

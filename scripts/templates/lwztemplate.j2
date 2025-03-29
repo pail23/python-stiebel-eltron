@@ -1,10 +1,11 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
-from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType
+from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, get_register_descriptor
 
 {% for registerblock in registers %}
 class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(IsgRegisters):
 {% for register in registerblock["register_block"] %}
-    {{python_name(register[1], register[10])}} = {{register[0]}}{% endfor %}
+    {{python_name(register[1], register[10])}} = {{register[0]}}{%if registerblock["name"]=="Energy Data" and register[10][:3]=="LOW" %}
+    {{python_name(register[1], register[10][3:].strip())}} = {{register[0] | int + 100000}} {% endif %}  {% endfor %}
 {% endfor %}
 
 
@@ -25,3 +26,25 @@ class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
                 ModbusRegisterBlock(base_address={{registerblock["base_address"]}}, count={{registerblock["count"]}}, name="{{registerblock["name"]}}", registers={{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS, register_type={{registerblock["register_type"]}}),{% endfor %}
             ],
             host, port, slave)
+
+    async def async_update(self):
+        """Request current values from heat pump."""
+        await super().async_update()
+        for registerblock in self._register_blocks:
+            if registerblock.name == ENERGY_DATA_BLOCK_NAME:
+                for register in {{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers:
+                    if register.value > VIRTUAL_REGISTER_OFFSET:
+                        low_descriptor = get_register_descriptor(
+                            list(registerblock.registers.values()),
+                            register.value - VIRTUAL_REGISTER_OFFSET,
+                        )
+                        if low_descriptor is not None:
+                            high_descriptor = get_register_descriptor(
+                                list(registerblock.registers.values()),
+                                register.value - VIRTUAL_REGISTER_OFFSET + 1,
+                            )
+                            if high_descriptor is not None:
+                                high_value = self._data.get(high_descriptor.key)
+                                low_value = self._data.get(low_descriptor.key)
+                                if high_value is not None and low_value is not None:
+                                    self._data[register] = high_value * 1000 + low_value

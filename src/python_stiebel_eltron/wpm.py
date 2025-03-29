@@ -1,6 +1,6 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
 
-from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, get_register_descriptor
+from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, get_register_descriptor
 
 
 class WpmSystemValuesRegisters(IsgRegisters):
@@ -745,15 +745,15 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
         for registerblock in self._register_blocks:
             if registerblock.name == ENERGY_DATA_BLOCK_NAME:
                 for register in WpmEnergyDataRegisters:
-                    if register.value > 100000:
+                    if register.value > VIRTUAL_REGISTER_OFFSET:
                         low_descriptor = get_register_descriptor(
                             list(registerblock.registers.values()),
-                            register.value - 100000,
+                            register.value - VIRTUAL_REGISTER_OFFSET,
                         )
                         if low_descriptor is not None:
                             high_descriptor = get_register_descriptor(
                                 list(registerblock.registers.values()),
-                                register.value - 100000 + 1,
+                                register.value - VIRTUAL_REGISTER_OFFSET + 1,
                             )
                             if high_descriptor is not None:
                                 high_value = self._data.get(high_descriptor.key)
