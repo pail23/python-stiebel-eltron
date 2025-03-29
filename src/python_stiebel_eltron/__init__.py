@@ -10,6 +10,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 
 ENERGY_DATA_BLOCK_NAME = "Energy Data"
+VIRTUAL_REGISTER_OFFSET = 100000
 
 
 class IsgRegisters(Enum):
@@ -31,6 +32,7 @@ class ModbusRegister:
     @property
     def is_virtual_register(self) -> bool:
         """Registers with an address above"""
+        return self.address > VIRTUAL_REGISTER_OFFSET
 
 
 class RegisterType(Enum):
