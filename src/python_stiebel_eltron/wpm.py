@@ -231,6 +231,12 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_DHW_TOTAL_HP_3 = 3572
 
 
+class WpmEnergyManagementSettingsRegisters(IsgRegisters):
+    SWITCH_SG_READ_ON_AND_OFF = 4001
+    SG_READY_INPUT_1 = 4002
+    SG_READY_INPUT_2 = 4003
+
+
 class WpmEnergySystemInformationRegisters(IsgRegisters):
     SG_READY_OPERATING_STATE = 5001
     CONTROLLER_IDENTIFICATION = 5002
@@ -2138,6 +2144,36 @@ WPM_ENERGY_DATA_REGISTERS = {
     ),
 }
 
+WPM_ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
+    WpmEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF: ModbusRegister(
+        address=4001,
+        name="SWITCH SG READ ON AND OFF",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=WpmEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF,
+    ),
+    WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_1: ModbusRegister(
+        address=4002,
+        name="SG READY INPUT 1",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_1,
+    ),
+    WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_2: ModbusRegister(
+        address=4003,
+        name="SG READY INPUT 2",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_2,
+    ),
+}
+
 WPM_ENERGY_SYSTEM_INFORMATION_REGISTERS = {
     WpmEnergySystemInformationRegisters.SG_READY_OPERATING_STATE: ModbusRegister(
         address=5001,
@@ -2191,6 +2227,13 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
                     name="Energy Data",
                     registers=WPM_ENERGY_DATA_REGISTERS,
                     register_type=RegisterType.INPUT_REGISTER,
+                ),
+                ModbusRegisterBlock(
+                    base_address=4000,
+                    count=3,
+                    name="Energy Management Settings",
+                    registers=WPM_ENERGY_MANAGEMENT_SETTINGS_REGISTERS,
+                    register_type=RegisterType.HOLDING_REGISTER,
                 ),
                 ModbusRegisterBlock(
                     base_address=5000,

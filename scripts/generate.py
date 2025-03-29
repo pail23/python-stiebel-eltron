@@ -120,6 +120,11 @@ def main() -> None:
             register_type=RegisterType.INPUT_REGISTER,
         ),
         ModbusFile(
+            name="Energy Management Settings",
+            path=root / "api/wpm_energy_management_settings.csv",
+            register_type=RegisterType.HOLDING_REGISTER,
+        ),
+        ModbusFile(
             name="Energy System Information",
             path=root / "api/wpm_energy_system_information.csv",
             register_type=RegisterType.INPUT_REGISTER,
@@ -138,6 +143,26 @@ def main() -> None:
             name="System Parameters",
             path=root / "api/lwz_system_parameters.csv",
             register_type=RegisterType.HOLDING_REGISTER,
+        ),
+        ModbusFile(
+            name="System State",
+            path=root / "api/lwz_system_state.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+        ModbusFile(
+            name="Energy Data",
+            path=root / "api/lwz_energy_data.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+        ModbusFile(
+            name="Energy Management Settings",
+            path=root / "api/lwz_energy_management_settings.csv",
+            register_type=RegisterType.HOLDING_REGISTER,
+        ),
+        ModbusFile(
+            name="Energy System Information",
+            path=root / "api/lwz_energy_system_information.csv",
+            register_type=RegisterType.INPUT_REGISTER,
         ),
     ]
     generate_heatpump(root, lwz_template, lwz_modbus_files, "Lwz")

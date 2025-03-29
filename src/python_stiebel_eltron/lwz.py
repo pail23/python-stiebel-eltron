@@ -75,6 +75,60 @@ class LwzSystemParametersRegisters(IsgRegisters):
     RESTART_ISG = 1027
 
 
+class LwzSystemStateRegisters(IsgRegisters):
+    OPERATING_STATUS = 2001
+    FAULT_STATUS = 2002
+    BUS_STATUS = 2003
+    DEFROST_INITIATED = 2004
+    OPERATING_STATUS_2 = 2005
+
+
+class LwzEnergyDataRegisters(IsgRegisters):
+    HEAT_METER_HTG_DAY = 3001
+    HEAT_METER_HTG_TTL_LOW = 3002
+    HEAT_METER_HTG_TTL_HI = 3003
+    HEAT_METER_DHW_DAY = 3004
+    HEAT_METER_DHW_TTL_LOW = 3005
+    HEAT_METER_DHW_TTL_HI = 3006
+    HEAT_M_BOOST_HTG_TTL_LOW = 3007
+    HEAT_M_BOOST_HTG_TTL_HI = 3008
+    HEAT_M_BOOST_DHW_TTL_LOW = 3009
+    HEAT_M_BOOST_DHW_HI = 3010
+    HEAT_M_RECOVERY_DAY = 3011
+    HEAT_M_RECOVERY_TTL_LOW = 3012
+    HEAT_M_RECOVERY_TTL_HI = 3013
+    HM_SOLAR_HTG_DAY = 3014
+    HM_SOLAR_HTG_TOTAL_LOW = 3015
+    HM_SOLAR_HTG_TOTAL_HI = 3016
+    HM_SOLAR_DHW_DAY = 3017
+    HM_SOLAR_DWH_TOTAL_LOW = 3018
+    HM_SOLAR_DWH_TOTAL_HI = 3019
+    HM_COOLING_TOTAL_LOW = 3020
+    HM_COOLING_TOTAL_HI = 3021
+    PWR_CON_HTG_DAY = 3022
+    PWR_CON_HTG_TTL_LOW = 3023
+    PWR_CON_HTG_TTL_HI = 3024
+    PWR_CON_DHW_DAY = 3025
+    PWR_CON_DHW_TTL_LOW = 3026
+    PWR_CON_DHW_TTL_HI = 3027
+    COMPRESSOR_HEATING = 3028
+    COMPRESSOR_COOLING = 3029
+    COMPRESSOR_DHW = 3030
+    ELEC_BOOSTER_HEATING = 3031
+    ELEC_BOOSTER_DHW = 3032
+
+
+class LwzEnergyManagementSettingsRegisters(IsgRegisters):
+    SWITCH_SG_READ_ON_AND_OFF = 4001
+    SG_READY_INPUT_1 = 4002
+    SG_READY_INPUT_2 = 4003
+
+
+class LwzEnergySystemInformationRegisters(IsgRegisters):
+    SG_READY_OPERATING_STATE = 5001
+    CONTROLLER_IDENTIFICATION = 5002
+
+
 LWZ_SYSTEM_VALUES_REGISTERS = {
     LwzSystemValuesRegisters.ACTUAL_ROOM_T_HC1: ModbusRegister(
         address=1,
@@ -621,6 +675,396 @@ LWZ_SYSTEM_PARAMETERS_REGISTERS = {
     ),
 }
 
+LWZ_SYSTEM_STATE_REGISTERS = {
+    LwzSystemStateRegisters.OPERATING_STATUS: ModbusRegister(
+        address=2001,
+        name="OPERATING STATUS",
+        unit="",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzSystemStateRegisters.OPERATING_STATUS,
+    ),
+    LwzSystemStateRegisters.FAULT_STATUS: ModbusRegister(
+        address=2002,
+        name="FAULT STATUS",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=LwzSystemStateRegisters.FAULT_STATUS,
+    ),
+    LwzSystemStateRegisters.BUS_STATUS: ModbusRegister(
+        address=2003,
+        name="BUS STATUS",
+        unit="",
+        min=-4.0,
+        max=0.0,
+        data_type=6,
+        key=LwzSystemStateRegisters.BUS_STATUS,
+    ),
+    LwzSystemStateRegisters.DEFROST_INITIATED: ModbusRegister(
+        address=2004,
+        name="DEFROST INITIATED",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=LwzSystemStateRegisters.DEFROST_INITIATED,
+    ),
+    LwzSystemStateRegisters.OPERATING_STATUS_2: ModbusRegister(
+        address=2005,
+        name="OPERATING STATUS 2",
+        unit="",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzSystemStateRegisters.OPERATING_STATUS_2,
+    ),
+}
+
+LWZ_ENERGY_DATA_REGISTERS = {
+    LwzEnergyDataRegisters.HEAT_METER_HTG_DAY: ModbusRegister(
+        address=3001,
+        name="HEAT METER HTG DAY",
+        unit="kWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_METER_HTG_DAY,
+    ),
+    LwzEnergyDataRegisters.HEAT_METER_HTG_TTL_LOW: ModbusRegister(
+        address=3002,
+        name="HEAT METER HTG TTL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_METER_HTG_TTL_LOW,
+    ),
+    LwzEnergyDataRegisters.HEAT_METER_HTG_TTL_HI: ModbusRegister(
+        address=3003,
+        name="HEAT METER HTG TTL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_METER_HTG_TTL_HI,
+    ),
+    LwzEnergyDataRegisters.HEAT_METER_DHW_DAY: ModbusRegister(
+        address=3004,
+        name="HEAT METER DHW DAY",
+        unit="kWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_METER_DHW_DAY,
+    ),
+    LwzEnergyDataRegisters.HEAT_METER_DHW_TTL_LOW: ModbusRegister(
+        address=3005,
+        name="HEAT METER DHW TTL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_METER_DHW_TTL_LOW,
+    ),
+    LwzEnergyDataRegisters.HEAT_METER_DHW_TTL_HI: ModbusRegister(
+        address=3006,
+        name="HEAT METER DHW TTL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_METER_DHW_TTL_HI,
+    ),
+    LwzEnergyDataRegisters.HEAT_M_BOOST_HTG_TTL_LOW: ModbusRegister(
+        address=3007,
+        name="HEAT M BOOST HTG TTL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_M_BOOST_HTG_TTL_LOW,
+    ),
+    LwzEnergyDataRegisters.HEAT_M_BOOST_HTG_TTL_HI: ModbusRegister(
+        address=3008,
+        name="HEAT M BOOST HTG TTL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_M_BOOST_HTG_TTL_HI,
+    ),
+    LwzEnergyDataRegisters.HEAT_M_BOOST_DHW_TTL_LOW: ModbusRegister(
+        address=3009,
+        name="HEAT M BOOST DHW TTL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_M_BOOST_DHW_TTL_LOW,
+    ),
+    LwzEnergyDataRegisters.HEAT_M_BOOST_DHW_HI: ModbusRegister(
+        address=3010,
+        name="HEAT M BOOST DHW",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_M_BOOST_DHW_HI,
+    ),
+    LwzEnergyDataRegisters.HEAT_M_RECOVERY_DAY: ModbusRegister(
+        address=3011,
+        name="HEAT M RECOVERY DAY",
+        unit="kWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_M_RECOVERY_DAY,
+    ),
+    LwzEnergyDataRegisters.HEAT_M_RECOVERY_TTL_LOW: ModbusRegister(
+        address=3012,
+        name="HEAT M RECOVERY TTL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_M_RECOVERY_TTL_LOW,
+    ),
+    LwzEnergyDataRegisters.HEAT_M_RECOVERY_TTL_HI: ModbusRegister(
+        address=3013,
+        name="HEAT M RECOVERY TTL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HEAT_M_RECOVERY_TTL_HI,
+    ),
+    LwzEnergyDataRegisters.HM_SOLAR_HTG_DAY: ModbusRegister(
+        address=3014,
+        name="HM SOLAR HTG DAY",
+        unit="kWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_SOLAR_HTG_DAY,
+    ),
+    LwzEnergyDataRegisters.HM_SOLAR_HTG_TOTAL_LOW: ModbusRegister(
+        address=3015,
+        name="HM SOLAR HTG TOTAL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_SOLAR_HTG_TOTAL_LOW,
+    ),
+    LwzEnergyDataRegisters.HM_SOLAR_HTG_TOTAL_HI: ModbusRegister(
+        address=3016,
+        name="HM SOLAR HTG TOTAL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_SOLAR_HTG_TOTAL_HI,
+    ),
+    LwzEnergyDataRegisters.HM_SOLAR_DHW_DAY: ModbusRegister(
+        address=3017,
+        name="HM SOLAR DHW DAY",
+        unit="kWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_SOLAR_DHW_DAY,
+    ),
+    LwzEnergyDataRegisters.HM_SOLAR_DWH_TOTAL_LOW: ModbusRegister(
+        address=3018,
+        name="HM SOLAR DWH TOTAL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_SOLAR_DWH_TOTAL_LOW,
+    ),
+    LwzEnergyDataRegisters.HM_SOLAR_DWH_TOTAL_HI: ModbusRegister(
+        address=3019,
+        name="HM SOLAR DWH TOTAL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_SOLAR_DWH_TOTAL_HI,
+    ),
+    LwzEnergyDataRegisters.HM_COOLING_TOTAL_LOW: ModbusRegister(
+        address=3020,
+        name="HM COOLING TOTAL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_COOLING_TOTAL_LOW,
+    ),
+    LwzEnergyDataRegisters.HM_COOLING_TOTAL_HI: ModbusRegister(
+        address=3021,
+        name="HM COOLING TOTAL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.HM_COOLING_TOTAL_HI,
+    ),
+    LwzEnergyDataRegisters.PWR_CON_HTG_DAY: ModbusRegister(
+        address=3022,
+        name="PWR CON HTG DAY",
+        unit="kWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.PWR_CON_HTG_DAY,
+    ),
+    LwzEnergyDataRegisters.PWR_CON_HTG_TTL_LOW: ModbusRegister(
+        address=3023,
+        name="PWR CON HTG TTL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.PWR_CON_HTG_TTL_LOW,
+    ),
+    LwzEnergyDataRegisters.PWR_CON_HTG_TTL_HI: ModbusRegister(
+        address=3024,
+        name="PWR CON HTG TTL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.PWR_CON_HTG_TTL_HI,
+    ),
+    LwzEnergyDataRegisters.PWR_CON_DHW_DAY: ModbusRegister(
+        address=3025,
+        name="PWR CON DHW DAY",
+        unit="kWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.PWR_CON_DHW_DAY,
+    ),
+    LwzEnergyDataRegisters.PWR_CON_DHW_TTL_LOW: ModbusRegister(
+        address=3026,
+        name="PWR CON DHW TTL",
+        unit="kWh",
+        min=0.0,
+        max=999.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.PWR_CON_DHW_TTL_LOW,
+    ),
+    LwzEnergyDataRegisters.PWR_CON_DHW_TTL_HI: ModbusRegister(
+        address=3027,
+        name="PWR CON DHW TTL",
+        unit="MWh",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.PWR_CON_DHW_TTL_HI,
+    ),
+    LwzEnergyDataRegisters.COMPRESSOR_HEATING: ModbusRegister(
+        address=3028,
+        name="COMPRESSOR HEATING",
+        unit="h",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.COMPRESSOR_HEATING,
+    ),
+    LwzEnergyDataRegisters.COMPRESSOR_COOLING: ModbusRegister(
+        address=3029,
+        name="COMPRESSOR COOLING",
+        unit="h",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.COMPRESSOR_COOLING,
+    ),
+    LwzEnergyDataRegisters.COMPRESSOR_DHW: ModbusRegister(
+        address=3030,
+        name="COMPRESSOR DHW",
+        unit="h",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.COMPRESSOR_DHW,
+    ),
+    LwzEnergyDataRegisters.ELEC_BOOSTER_HEATING: ModbusRegister(
+        address=3031,
+        name="ELEC BOOSTER HEATING",
+        unit="h",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.ELEC_BOOSTER_HEATING,
+    ),
+    LwzEnergyDataRegisters.ELEC_BOOSTER_DHW: ModbusRegister(
+        address=3032,
+        name="ELEC BOOSTER DHW",
+        unit="h",
+        min=0.0,
+        max=65535.0,
+        data_type=6,
+        key=LwzEnergyDataRegisters.ELEC_BOOSTER_DHW,
+    ),
+}
+
+LWZ_ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
+    LwzEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF: ModbusRegister(
+        address=4001,
+        name="SWITCH SG READ ON AND OFF",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=LwzEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF,
+    ),
+    LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_1: ModbusRegister(
+        address=4002,
+        name="SG READY INPUT 1",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_1,
+    ),
+    LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_2: ModbusRegister(
+        address=4003,
+        name="SG READY INPUT 2",
+        unit="",
+        min=0.0,
+        max=1.0,
+        data_type=6,
+        key=LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_2,
+    ),
+}
+
+LWZ_ENERGY_SYSTEM_INFORMATION_REGISTERS = {
+    LwzEnergySystemInformationRegisters.SG_READY_OPERATING_STATE: ModbusRegister(
+        address=5001,
+        name="SG READY OPERATING STATE",
+        unit="",
+        min=1.0,
+        max=4.0,
+        data_type=6,
+        key=LwzEnergySystemInformationRegisters.SG_READY_OPERATING_STATE,
+    ),
+    LwzEnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION: ModbusRegister(
+        address=5002,
+        name="CONTROLLER IDENTIFICATION",
+        unit="",
+        min=None,
+        max=None,
+        data_type=6,
+        key=LwzEnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION,
+    ),
+}
+
 
 class LwzStiebelEltronAPI(StiebelEltronAPI):
     def __init__(self, host: str, port: int = 502, slave: int = 1) -> None:
@@ -639,6 +1083,34 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
                     name="System Parameters",
                     registers=LWZ_SYSTEM_PARAMETERS_REGISTERS,
                     register_type=RegisterType.HOLDING_REGISTER,
+                ),
+                ModbusRegisterBlock(
+                    base_address=2000,
+                    count=5,
+                    name="System State",
+                    registers=LWZ_SYSTEM_STATE_REGISTERS,
+                    register_type=RegisterType.INPUT_REGISTER,
+                ),
+                ModbusRegisterBlock(
+                    base_address=3000,
+                    count=32,
+                    name="Energy Data",
+                    registers=LWZ_ENERGY_DATA_REGISTERS,
+                    register_type=RegisterType.INPUT_REGISTER,
+                ),
+                ModbusRegisterBlock(
+                    base_address=4000,
+                    count=3,
+                    name="Energy Management Settings",
+                    registers=LWZ_ENERGY_MANAGEMENT_SETTINGS_REGISTERS,
+                    register_type=RegisterType.HOLDING_REGISTER,
+                ),
+                ModbusRegisterBlock(
+                    base_address=5000,
+                    count=2,
+                    name="Energy System Information",
+                    registers=LWZ_ENERGY_SYSTEM_INFORMATION_REGISTERS,
+                    register_type=RegisterType.INPUT_REGISTER,
                 ),
             ],
             host,
