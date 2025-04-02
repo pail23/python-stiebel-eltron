@@ -78,6 +78,7 @@ class StiebelEltronAPI:
         self._client: AsyncModbusTcpClient = AsyncModbusTcpClient(host=host, port=port)
         self._register_blocks = register_blocks
         self._data = {}
+        self._modbus_data = {}  # store raw data from modbus for debug purpose
 
     async def close(self) -> None:
         """Disconnect client."""
@@ -202,6 +203,7 @@ class StiebelEltronAPI:
                 )
 
             if heat_pump_data is not None and not heat_pump_data.isError():
+                self._modbus_data[registerblock.name] = heat_pump_data
                 for i in range(0, registerblock.count):
                     descriptor = get_register_descriptor(
                         list(registerblock.registers.values()),
@@ -209,5 +211,7 @@ class StiebelEltronAPI:
                     )
                     if descriptor is not None:
                         result[descriptor.key] = self.convert_value_from_modbus(heat_pump_data.registers[i], descriptor)
+            else:
+                self._modbus_data[registerblock.name] = None
 
         self._data = result
