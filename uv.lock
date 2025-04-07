@@ -44,11 +44,11 @@ wheels = [
 
 [[package]]
 name = "pymodbus"
-version = "3.8.6"
+version = "3.9.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/47/3a/a6958507d6f9c0c50f11cd299b056161c10f3cef7c227b44bc183a7e7854/pymodbus-3.8.6.tar.gz", hash = "sha256:7689b56cc3ad05a594e1486e772abb9d9646c01737935df492db04455680baf6", size = 162341 }
+sdist = { url = "https://files.pythonhosted.org/packages/72/7d/f1fcd4af29fb3dffd02685038e82c8c35482c2b050badac1acd9a3078124/pymodbus-3.9.0.tar.gz", hash = "sha256:76e104dc806233f3a4d6037106a4741b0c6526934604f5500419ae5c7dac20d6", size = 161743 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/84/23/8f30f094b4a00428bd3c28dd3b6a2b3715164ab85520673e197bd4bba2e7/pymodbus-3.8.6-py3-none-any.whl", hash = "sha256:b82373295fb98c9a9bf9338235240a8b2e97bcc49c0d833168cade7ba2fa90e6", size = 164366 },
+    { url = "https://files.pythonhosted.org/packages/5e/d1/5dc35f81330e2fc171d0b43bd65499035dae9c0e301f90ad8e21bb262d35/pymodbus-3.9.0-py3-none-any.whl", hash = "sha256:c4b655857f05848f3e0dca1fd547402c7171b8b2130bd6d8a840be3aa4c71280", size = 163994 },
 ]
 
 [[package]]
