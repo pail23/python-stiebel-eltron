@@ -17,6 +17,27 @@ class IsgRegisters(Enum):
     """ISG Register base class."""
 
 
+class IsgRegistersNone(IsgRegisters):
+    """Dummy registers."""
+
+    NONE = -1
+
+
+class EnergyManagementSettingsRegisters(IsgRegisters):
+    """Energy Management settings registers."""
+
+    SWITCH_SG_READ_ON_AND_OFF = 4001
+    SG_READY_INPUT_1 = 4002
+    SG_READY_INPUT_2 = 4003
+
+
+class EnergySystemInformationRegisters(IsgRegisters):
+    """Energy Management information registers."""
+
+    SG_READY_OPERATING_STATE = 5001
+    CONTROLLER_IDENTIFICATION = 5002
+
+
 @dataclass
 class ModbusRegister:
     """Register data class."""
@@ -53,6 +74,16 @@ class ModbusRegisterBlock:
     register_type: RegisterType
 
 
+ENERGY_SYSTEM_INFORMATION_REGISTERS = {
+    EnergySystemInformationRegisters.SG_READY_OPERATING_STATE: ModbusRegister(
+        address=5001, name="SG READY OPERATING STATE", unit="", min=1.0, max=4.0, data_type=6, key=EnergySystemInformationRegisters.SG_READY_OPERATING_STATE
+    ),
+    EnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION: ModbusRegister(
+        address=5002, name="CONTROLLER IDENTIFICATION", unit="", min=None, max=None, data_type=6, key=EnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION
+    ),
+}
+
+
 def get_register_descriptor(descriptors: list[ModbusRegister], address: int) -> ModbusRegister | None:
     """Find the descriptor with a given address."""
     for descriptor in descriptors:
@@ -76,6 +107,7 @@ class StiebelEltronAPI:
         self._lock = asyncio.Lock()
         self._host = host
         self._client: AsyncModbusTcpClient = AsyncModbusTcpClient(host=host, port=port)
+        self._lock = asyncio.Lock()
         self._register_blocks = register_blocks
         self._data = {}
         self._modbus_data = {}  # store raw data from modbus for debug purpose
@@ -119,11 +151,16 @@ class StiebelEltronAPI:
         """Get a value form the registers. The async_udpate needs to be called first."""
         return self._data[register]
 
+    def has_register_value(self, register: IsgRegisters) -> bool:
+        """Check if a value for the registers has been read. The async_udpate needs to be called first."""
+        return register in self._data
+
     async def write_register_value(self, register: IsgRegisters, value: int | float) -> None:
         """Writes a modbus register."""
         descriptor = self.get_register_descriptor(register)
         if descriptor is not None:
-            await self._client.write_register(descriptor.address - 1, value=self.convert_value_to_modbus(value, descriptor), slave=1)
+            async with self._lock:
+                await self._client.write_register(descriptor.address - 1, value=self.convert_value_to_modbus(value, descriptor), slave=1)
         else:
             raise ValueError("invalid register")
 

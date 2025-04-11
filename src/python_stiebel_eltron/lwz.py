@@ -123,14 +123,9 @@ class LwzEnergyDataRegisters(IsgRegisters):
 
 
 class LwzEnergyManagementSettingsRegisters(IsgRegisters):
-    SWITCH_SG_READ_ON_AND_OFF = 4001
+    SWITCH_SG_READY_ON_AND_OFF = 4001
     SG_READY_INPUT_1 = 4002
     SG_READY_INPUT_2 = 4003
-
-
-class LwzEnergySystemInformationRegisters(IsgRegisters):
-    SG_READY_OPERATING_STATE = 5001
-    CONTROLLER_IDENTIFICATION = 5002
 
 
 LWZ_SYSTEM_VALUES_REGISTERS = {
@@ -309,23 +304,14 @@ LWZ_ENERGY_DATA_REGISTERS = {
 }
 
 LWZ_ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
-    LwzEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF: ModbusRegister(
-        address=4001, name="SWITCH SG READ ON AND OFF", unit="", min=0.0, max=1.0, data_type=6, key=LwzEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF
+    LwzEnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF: ModbusRegister(
+        address=4001, name="SWITCH SG READY ON AND OFF", unit="", min=0.0, max=1.0, data_type=6, key=LwzEnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF
     ),
     LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_1: ModbusRegister(
         address=4002, name="SG READY INPUT 1", unit="", min=0.0, max=1.0, data_type=6, key=LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_1
     ),
     LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_2: ModbusRegister(
         address=4003, name="SG READY INPUT 2", unit="", min=0.0, max=1.0, data_type=6, key=LwzEnergyManagementSettingsRegisters.SG_READY_INPUT_2
-    ),
-}
-
-LWZ_ENERGY_SYSTEM_INFORMATION_REGISTERS = {
-    LwzEnergySystemInformationRegisters.SG_READY_OPERATING_STATE: ModbusRegister(
-        address=5001, name="SG READY OPERATING STATE", unit="", min=1.0, max=4.0, data_type=6, key=LwzEnergySystemInformationRegisters.SG_READY_OPERATING_STATE
-    ),
-    LwzEnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION: ModbusRegister(
-        address=5002, name="CONTROLLER IDENTIFICATION", unit="", min=None, max=None, data_type=6, key=LwzEnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION
     ),
 }
 
@@ -339,7 +325,7 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
                 ModbusRegisterBlock(base_address=2000, count=5, name="System State", registers=LWZ_SYSTEM_STATE_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=3000, count=32, name="Energy Data", registers=LWZ_ENERGY_DATA_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=LWZ_ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
-                ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=LWZ_ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
+                ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
             ],
             host,
             port,

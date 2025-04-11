@@ -1,6 +1,16 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
 
-from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, get_register_descriptor
+from . import (
+    ModbusRegister,
+    ModbusRegisterBlock,
+    StiebelEltronAPI,
+    IsgRegisters,
+    RegisterType,
+    ENERGY_DATA_BLOCK_NAME,
+    VIRTUAL_REGISTER_OFFSET,
+    get_register_descriptor,
+    ENERGY_SYSTEM_INFORMATION_REGISTERS,
+)
 
 
 class WpmSystemValuesRegisters(IsgRegisters):
@@ -148,6 +158,10 @@ class WpmSystemStateRegisters(IsgRegisters):
     POWER_OFF = 2502
     OPERATING_STATUS_WPM_3 = 2503
     FAULT_STATUS = 2504
+    BUS_STATUS = 2505
+    DEFROST_INITIATED = 2506
+    ACTIVE_ERROR = 2507
+    MESSAGE_NUMBER = 2508
 
 
 class WpmEnergyDataRegisters(IsgRegisters):
@@ -243,14 +257,9 @@ class WpmEnergyDataRegisters(IsgRegisters):
 
 
 class WpmEnergyManagementSettingsRegisters(IsgRegisters):
-    SWITCH_SG_READ_ON_AND_OFF = 4001
+    SWITCH_SG_READY_ON_AND_OFF = 4001
     SG_READY_INPUT_1 = 4002
     SG_READY_INPUT_2 = 4003
-
-
-class WpmEnergySystemInformationRegisters(IsgRegisters):
-    SG_READY_OPERATING_STATE = 5001
-    CONTROLLER_IDENTIFICATION = 5002
 
 
 WPM_SYSTEM_VALUES_REGISTERS = {
@@ -576,6 +585,10 @@ WPM_SYSTEM_STATE_REGISTERS = {
     WpmSystemStateRegisters.POWER_OFF: ModbusRegister(address=2502, name="POWER OFF", unit="", min=None, max=None, data_type=8, key=WpmSystemStateRegisters.POWER_OFF),
     WpmSystemStateRegisters.OPERATING_STATUS_WPM_3: ModbusRegister(address=2503, name="OPERATING STATUS", unit="", min=None, max=None, data_type=6, key=WpmSystemStateRegisters.OPERATING_STATUS_WPM_3),
     WpmSystemStateRegisters.FAULT_STATUS: ModbusRegister(address=2504, name="FAULT STATUS", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.FAULT_STATUS),
+    WpmSystemStateRegisters.BUS_STATUS: ModbusRegister(address=2505, name="BUS STATUS", unit="", min=-4.0, max=0.0, data_type=6, key=WpmSystemStateRegisters.BUS_STATUS),
+    WpmSystemStateRegisters.DEFROST_INITIATED: ModbusRegister(address=2506, name="DEFROST INITIATED", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.DEFROST_INITIATED),
+    WpmSystemStateRegisters.ACTIVE_ERROR: ModbusRegister(address=2507, name="ACTIVE ERROR", unit="", min=0.0, max=65535.0, data_type=6, key=WpmSystemStateRegisters.ACTIVE_ERROR),
+    WpmSystemStateRegisters.MESSAGE_NUMBER: ModbusRegister(address=2508, name="MESSAGE NUMBER", unit="", min=0.0, max=65535.0, data_type=6, key=WpmSystemStateRegisters.MESSAGE_NUMBER),
 }
 
 WPM_ENERGY_DATA_REGISTERS = {
@@ -702,23 +715,14 @@ WPM_ENERGY_DATA_REGISTERS = {
 }
 
 WPM_ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
-    WpmEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF: ModbusRegister(
-        address=4001, name="SWITCH SG READ ON AND OFF", unit="", min=0.0, max=1.0, data_type=6, key=WpmEnergyManagementSettingsRegisters.SWITCH_SG_READ_ON_AND_OFF
+    WpmEnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF: ModbusRegister(
+        address=4001, name="SWITCH SG READY ON AND OFF", unit="", min=0.0, max=1.0, data_type=6, key=WpmEnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF
     ),
     WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_1: ModbusRegister(
         address=4002, name="SG READY INPUT 1", unit="", min=0.0, max=1.0, data_type=6, key=WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_1
     ),
     WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_2: ModbusRegister(
         address=4003, name="SG READY INPUT 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_2
-    ),
-}
-
-WPM_ENERGY_SYSTEM_INFORMATION_REGISTERS = {
-    WpmEnergySystemInformationRegisters.SG_READY_OPERATING_STATE: ModbusRegister(
-        address=5001, name="SG READY OPERATING STATE", unit="", min=1.0, max=4.0, data_type=6, key=WpmEnergySystemInformationRegisters.SG_READY_OPERATING_STATE
-    ),
-    WpmEnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION: ModbusRegister(
-        address=5002, name="CONTROLLER IDENTIFICATION", unit="", min=None, max=None, data_type=6, key=WpmEnergySystemInformationRegisters.CONTROLLER_IDENTIFICATION
     ),
 }
 
@@ -729,10 +733,10 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
             [
                 ModbusRegisterBlock(base_address=500, count=110, name="System Values", registers=WPM_SYSTEM_VALUES_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=1500, count=24, name="System Parameters", registers=WPM_SYSTEM_PARAMETERS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
-                ModbusRegisterBlock(base_address=2500, count=4, name="System State", registers=WPM_SYSTEM_STATE_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
+                ModbusRegisterBlock(base_address=2500, count=8, name="System State", registers=WPM_SYSTEM_STATE_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=3500, count=72, name="Energy Data", registers=WPM_ENERGY_DATA_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=WPM_ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
-                ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=WPM_ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
+                ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
             ],
             host,
             port,

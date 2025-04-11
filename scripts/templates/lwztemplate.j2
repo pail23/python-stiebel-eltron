@@ -24,6 +24,7 @@ class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
         super().__init__([
             {% for registerblock in registers %}
                 ModbusRegisterBlock(base_address={{registerblock["base_address"]}}, count={{registerblock["count"]}}, name="{{registerblock["name"]}}", registers={{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS, register_type={{registerblock["register_type"]}}),{% endfor %}
+                ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
             ],
             host, port, slave)
 

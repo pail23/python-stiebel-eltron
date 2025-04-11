@@ -3,3 +3,7 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 2502,POWER OFF,x,x,x,,,,8,,r,
 2503,OPERATING STATUS,,x,,bit-coded,,,6,,r,WPM 3
 2504,FAULT STATUS,x,x,x,System fault,0,1,6,,r,
+2505,BUS STATUS,x,x,x,,-4,0,6,,r,
+2506,DEFROST INITIATED,x,x,,defrost initiated,0,1,6,,r,
+2507,ACTIVE ERROR,x,x,x,Fault Number,0,65535,6,,r,
+2508,MESSAGE NUMBER,x,,,Message number,0,65535,6,,r,
