@@ -1,6 +1,7 @@
 import asyncio
 
-from python_stiebel_eltron.wpm import WpmStiebelEltronAPI, WpmSystemValuesRegisters, WpmSystemParametersRegisters, WpmEnergyManagementSettingsRegisters
+# from python_stiebel_eltron import EnergyManagementSettingsRegisters
+from python_stiebel_eltron.wpm import WpmStiebelEltronAPI, WpmSystemValuesRegisters, WpmSystemParametersRegisters
 
 
 async def main():
@@ -24,7 +25,7 @@ async def main():
     comfort_temp = api.get_register_value(WpmSystemParametersRegisters.COMFORT_TEMPERATURE)
     print(f"The new current water comfort temperature is {comfort_temp} °C")
 
-    # await api.write_register_value(WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_2, 1)
+    # await api.write_register_value(EnergyManagementSettingsRegisters.SG_READY_INPUT_2, 1)
 
     await api.close()
 

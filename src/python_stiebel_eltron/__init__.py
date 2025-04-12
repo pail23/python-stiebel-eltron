@@ -26,7 +26,7 @@ class IsgRegistersNone(IsgRegisters):
 class EnergyManagementSettingsRegisters(IsgRegisters):
     """Energy Management settings registers."""
 
-    SWITCH_SG_READ_ON_AND_OFF = 4001
+    SWITCH_SG_READY_ON_AND_OFF = 4001
     SG_READY_INPUT_1 = 4002
     SG_READY_INPUT_2 = 4003
 
@@ -73,6 +73,18 @@ class ModbusRegisterBlock:
     registers: dict
     register_type: RegisterType
 
+
+ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
+    EnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF: ModbusRegister(
+        address=4001, name="SWITCH SG READY ON AND OFF", unit="", min=0.0, max=1.0, data_type=6, key=EnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF
+    ),
+    EnergyManagementSettingsRegisters.SG_READY_INPUT_1: ModbusRegister(
+        address=4002, name="SG READY INPUT 1", unit="", min=0.0, max=1.0, data_type=6, key=EnergyManagementSettingsRegisters.SG_READY_INPUT_1
+    ),
+    EnergyManagementSettingsRegisters.SG_READY_INPUT_2: ModbusRegister(
+        address=4003, name="SG READY INPUT 2", unit="", min=0.0, max=1.0, data_type=6, key=EnergyManagementSettingsRegisters.SG_READY_INPUT_2
+    ),
+}
 
 ENERGY_SYSTEM_INFORMATION_REGISTERS = {
     EnergySystemInformationRegisters.SG_READY_OPERATING_STATE: ModbusRegister(

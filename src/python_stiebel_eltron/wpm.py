@@ -9,6 +9,7 @@ from . import (
     ENERGY_DATA_BLOCK_NAME,
     VIRTUAL_REGISTER_OFFSET,
     get_register_descriptor,
+    ENERGY_MANAGEMENT_SETTINGS_REGISTERS,
     ENERGY_SYSTEM_INFORMATION_REGISTERS,
 )
 
@@ -254,12 +255,6 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_HEATING_TOTAL_HI_HP_3 = 3570
     VD_DHW_DAY_HP_3 = 3571
     VD_DHW_TOTAL_HP_3 = 3572
-
-
-class WpmEnergyManagementSettingsRegisters(IsgRegisters):
-    SWITCH_SG_READY_ON_AND_OFF = 4001
-    SG_READY_INPUT_1 = 4002
-    SG_READY_INPUT_2 = 4003
 
 
 WPM_SYSTEM_VALUES_REGISTERS = {
@@ -714,18 +709,6 @@ WPM_ENERGY_DATA_REGISTERS = {
     WpmEnergyDataRegisters.VD_DHW_TOTAL_HP_3: ModbusRegister(address=3572, name="VD DHW TOTAL", unit="kWh", min=0.0, max=999.0, data_type=6, key=WpmEnergyDataRegisters.VD_DHW_TOTAL_HP_3),
 }
 
-WPM_ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
-    WpmEnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF: ModbusRegister(
-        address=4001, name="SWITCH SG READY ON AND OFF", unit="", min=0.0, max=1.0, data_type=6, key=WpmEnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF
-    ),
-    WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_1: ModbusRegister(
-        address=4002, name="SG READY INPUT 1", unit="", min=0.0, max=1.0, data_type=6, key=WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_1
-    ),
-    WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_2: ModbusRegister(
-        address=4003, name="SG READY INPUT 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmEnergyManagementSettingsRegisters.SG_READY_INPUT_2
-    ),
-}
-
 
 class WpmStiebelEltronAPI(StiebelEltronAPI):
     def __init__(self, host: str, port: int = 502, slave: int = 1) -> None:
@@ -735,7 +718,7 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
                 ModbusRegisterBlock(base_address=1500, count=24, name="System Parameters", registers=WPM_SYSTEM_PARAMETERS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
                 ModbusRegisterBlock(base_address=2500, count=8, name="System State", registers=WPM_SYSTEM_STATE_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=3500, count=72, name="Energy Data", registers=WPM_ENERGY_DATA_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
-                ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=WPM_ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
+                ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
                 ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
             ],
             host,

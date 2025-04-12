@@ -1,5 +1,5 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
-from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, get_register_descriptor
+from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, get_register_descriptor, ENERGY_MANAGEMENT_SETTINGS_REGISTERS, ENERGY_SYSTEM_INFORMATION_REGISTERS
 
 {% for registerblock in registers %}
 class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(IsgRegisters):
@@ -24,6 +24,7 @@ class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
         super().__init__([
             {% for registerblock in registers %}
                 ModbusRegisterBlock(base_address={{registerblock["base_address"]}}, count={{registerblock["count"]}}, name="{{registerblock["name"]}}", registers={{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS, register_type={{registerblock["register_type"]}}),{% endfor %}
+                ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
                 ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
             ],
             host, port, slave)

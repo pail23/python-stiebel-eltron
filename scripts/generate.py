@@ -115,11 +115,6 @@ def main() -> None:
             path=root / "api/wpm_energy_data.csv",
             register_type=RegisterType.INPUT_REGISTER,
         ),
-        ModbusFile(
-            name="Energy Management Settings",
-            path=root / "api/wpm_energy_management_settings.csv",
-            register_type=RegisterType.HOLDING_REGISTER,
-        ),
     ]
     generate_heatpump(root, wpm_template, wpm_modbus_files, "Wpm")
 
@@ -144,11 +139,6 @@ def main() -> None:
             name="Energy Data",
             path=root / "api/lwz_energy_data.csv",
             register_type=RegisterType.INPUT_REGISTER,
-        ),
-        ModbusFile(
-            name="Energy Management Settings",
-            path=root / "api/lwz_energy_management_settings.csv",
-            register_type=RegisterType.HOLDING_REGISTER,
         ),
     ]
     generate_heatpump(root, lwz_template, lwz_modbus_files, "Lwz")
