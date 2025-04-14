@@ -23,9 +23,9 @@ class ModbusFile:
 def python_name(name: str, suffix: str = "") -> str:
     """Generate a valid python variable name."""
     if suffix == "":
-        result = name
+        result = name.strip()
     else:
-        result = name + "_" + suffix
+        result = name + "_" + suffix.strip()
     return result.replace(" ", "_")
 
 

@@ -98,31 +98,31 @@ class WpmSystemValuesRegisters(IsgRegisters):
     MEAN_PRESSURE_HP6 = 581
     HIGH_PRESSURE_HP6 = 582
     WP_WATER_FLOW_RATE_HP6 = 583
-    ACTUAL_TEMPERATURE__ROOM_TEMP_HC1 = 584
-    SET_TEMPERATURE__ROOM_TEMP_HC1 = 585
+    ACTUAL_TEMPERATURE_ROOM_TEMP_HC1 = 584
+    SET_TEMPERATURE_ROOM_TEMP_HC1 = 585
     RELATIVE_HUMIDITY_ROOM_TEMP_HC1 = 586
     DEW_POINT_TEMPERATURE_ROOM_TEMP_HC1 = 587
-    ACTUAL_TEMPERATURE__ROOM_TEMP_HC2 = 588
-    SET_TEMPERATURE__ROOM_TEMP_HC2 = 589
+    ACTUAL_TEMPERATURE_ROOM_TEMP_HC2 = 588
+    SET_TEMPERATURE_ROOM_TEMP_HC2 = 589
     RELATIVE_HUMIDITY_ROOM_TEMP_HC2 = 590
     DEW_POINT_TEMPERATURE_ROOM_TEMP_HC2 = 591
-    ACTUAL_TEMPERATURE__ROOM_TEMP_HC3 = 592
-    SET_TEMPERATURE__ROOM_TEMP_HC3 = 593
+    ACTUAL_TEMPERATURE_ROOM_TEMP_HC3 = 592
+    SET_TEMPERATURE_ROOM_TEMP_HC3 = 593
     RELATIVE_HUMIDITY_ROOM_TEMP_HC3 = 594
     DEW_POINT_TEMPERATURE_ROOM_TEMP_HC3 = 595
-    ACTUAL_TEMPERATURE__ROOM_TEMP_HC4 = 596
-    SET_TEMPERATURE__ROOM_TEMP_HC4 = 597
+    ACTUAL_TEMPERATURE_ROOM_TEMP_HC4 = 596
+    SET_TEMPERATURE_ROOM_TEMP_HC4 = 597
     RELATIVE_HUMIDITY_ROOM_TEMP_HC4 = 598
     DEW_POINT_TEMPERATURE_ROOM_TEMP_HC4 = 599
-    ACTUAL_TEMPERATURE__ROOM_TEMP_HC5 = 600
-    SET_TEMPERATURE__ROOM_TEMP_HC5 = 601
+    ACTUAL_TEMPERATURE_ROOM_TEMP_HC5 = 600
+    SET_TEMPERATURE_ROOM_TEMP_HC5 = 601
     RELATIVE_HUMIDITY_ROOM_TEMP_HC5 = 602
     DEW_POINT_TEMPERATURE_ROOM_TEMP_HC5 = 603
-    SET_TEMPERATURE__ROOM_TEMP_COOLING1 = 604
-    SET_TEMPERATURE__ROOM_TEMP_COOLING2 = 605
-    SET_TEMPERATURE__ROOM_TEMP_COOLING3 = 606
-    SET_TEMPERATURE__ROOM_TEMP_COOLING4 = 607
-    SET_TEMPERATURE__ROOM_TEMP_COOLING5 = 608
+    SET_TEMPERATURE_ROOM_TEMP_COOLING1 = 604
+    SET_TEMPERATURE_ROOM_TEMP_COOLING2 = 605
+    SET_TEMPERATURE_ROOM_TEMP_COOLING3 = 606
+    SET_TEMPERATURE_ROOM_TEMP_COOLING4 = 607
+    SET_TEMPERATURE_ROOM_TEMP_COOLING5 = 608
     ACTUAL_TEMPERATURE_HK_3 = 609
     SET_TEMPERATURE_HK_3 = 610
 
@@ -163,6 +163,45 @@ class WpmSystemStateRegisters(IsgRegisters):
     DEFROST_INITIATED = 2506
     ACTIVE_ERROR = 2507
     MESSAGE_NUMBER = 2508
+    HEATING_CIRCUIT_PUMP_1 = 2509
+    HEATING_CIRCUIT_PUMP_2 = 2510
+    HEATING_CIRCUIT_PUMP_3 = 2511
+    BUFFER_CHARGING_PUMP_1 = 2512
+    BUFFER_CHARGING_PUMP_2 = 2513
+    DHW_CHARGING_PUMP = 2514
+    SOURCE_PUMP = 2515
+    FAULT_OUTPUT = 2516
+    DHW_CIRCULATION_PUMP = 2517
+    WE_2_DHW = 2518
+    WE_2_HEATING = 2519
+    COOLING_MODE = 2520
+    MIXER_OPEN_HC2 = 2521
+    MIXER_CLOSE_HC2 = 2522
+    MIXER_OPEN_HC3 = 2523
+    MIXER_CLOSE_HC3 = 2524
+    NHZ_1 = 2525
+    NHZ_2 = 2526
+    NHZ_1_2 = 2527
+    HEATING_CIRCUIT_PUMP_4 = 2528
+    HEATING_CIRCUIT_PUMP_5 = 2529
+    BUFFER_CHARGING_PUMP_3 = 2530
+    BUFFER_CHARGING_PUMP_4 = 2531
+    BUFFER_CHARGING_PUMP_5 = 2532
+    BUFFER_CHARGING_PUMP_6 = 2533
+    DIFF_CONTROLLER_PUMP_1 = 2534
+    DIFF_CONTROLLER_PUMP_2 = 2535
+    POOL_PUMP_PRIMARY = 2536
+    POOL_PUMP_SECONDARY = 2537
+    MIXER_OPEN_HC4 = 2538
+    MIXER_CLOSE_HC4 = 2539
+    MIXER_OPEN_HC5 = 2540
+    MIXER_CLOSE_HC5 = 2541
+    COMPRESSOR_1 = 2542
+    COMPRESSOR_2 = 2543
+    COMPRESSOR_3 = 2544
+    COMPRESSOR_4 = 2545
+    COMPRESSOR_5 = 2546
+    COMPRESSOR_6 = 2547
 
 
 class WpmEnergyDataRegisters(IsgRegisters):
@@ -427,11 +466,11 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP6: ModbusRegister(
         address=583, name="WP WATER FLOW RATE", unit="l/min", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.WP_WATER_FLOW_RATE_HP6
     ),
-    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC1: ModbusRegister(
-        address=584, name="ACTUAL TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC1
+    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC1: ModbusRegister(
+        address=584, name="ACTUAL TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC1
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC1: ModbusRegister(
-        address=585, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC1
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC1: ModbusRegister(
+        address=585, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC1
     ),
     WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC1: ModbusRegister(
         address=586, name="RELATIVE HUMIDITY", unit="%", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC1
@@ -439,11 +478,11 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC1: ModbusRegister(
         address=587, name="DEW POINT TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC1
     ),
-    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC2: ModbusRegister(
-        address=588, name="ACTUAL TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC2
+    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC2: ModbusRegister(
+        address=588, name="ACTUAL TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC2
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC2: ModbusRegister(
-        address=589, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC2
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC2: ModbusRegister(
+        address=589, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC2
     ),
     WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC2: ModbusRegister(
         address=590, name="RELATIVE HUMIDITY", unit="%", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC2
@@ -451,11 +490,11 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC2: ModbusRegister(
         address=591, name="DEW POINT TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC2
     ),
-    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC3: ModbusRegister(
-        address=592, name="ACTUAL TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC3
+    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC3: ModbusRegister(
+        address=592, name="ACTUAL TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC3
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC3: ModbusRegister(
-        address=593, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC3
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC3: ModbusRegister(
+        address=593, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC3
     ),
     WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC3: ModbusRegister(
         address=594, name="RELATIVE HUMIDITY", unit="%", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC3
@@ -463,11 +502,11 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC3: ModbusRegister(
         address=595, name="DEW POINT TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC3
     ),
-    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC4: ModbusRegister(
-        address=596, name="ACTUAL TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC4
+    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC4: ModbusRegister(
+        address=596, name="ACTUAL TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC4
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC4: ModbusRegister(
-        address=597, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC4
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC4: ModbusRegister(
+        address=597, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC4
     ),
     WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC4: ModbusRegister(
         address=598, name="RELATIVE HUMIDITY", unit="%", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC4
@@ -475,11 +514,11 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC4: ModbusRegister(
         address=599, name="DEW POINT TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC4
     ),
-    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC5: ModbusRegister(
-        address=600, name="ACTUAL TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE__ROOM_TEMP_HC5
+    WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC5: ModbusRegister(
+        address=600, name="ACTUAL TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_ROOM_TEMP_HC5
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC5: ModbusRegister(
-        address=601, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_HC5
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC5: ModbusRegister(
+        address=601, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_HC5
     ),
     WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC5: ModbusRegister(
         address=602, name="RELATIVE HUMIDITY", unit="%", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.RELATIVE_HUMIDITY_ROOM_TEMP_HC5
@@ -487,20 +526,20 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC5: ModbusRegister(
         address=603, name="DEW POINT TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.DEW_POINT_TEMPERATURE_ROOM_TEMP_HC5
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING1: ModbusRegister(
-        address=604, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING1
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING1: ModbusRegister(
+        address=604, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING1
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING2: ModbusRegister(
-        address=605, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING2
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING2: ModbusRegister(
+        address=605, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING2
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING3: ModbusRegister(
-        address=606, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING3
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING3: ModbusRegister(
+        address=606, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING3
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING4: ModbusRegister(
-        address=607, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING4
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING4: ModbusRegister(
+        address=607, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING4
     ),
-    WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING5: ModbusRegister(
-        address=608, name="SET TEMPERATURE ", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE__ROOM_TEMP_COOLING5
+    WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING5: ModbusRegister(
+        address=608, name="SET TEMPERATURE", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.SET_TEMPERATURE_ROOM_TEMP_COOLING5
     ),
     WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_HK_3: ModbusRegister(
         address=609, name="ACTUAL TEMPERATURE HK 3", unit="°C", min=0.0, max=90.0, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_HK_3
@@ -584,6 +623,71 @@ WPM_SYSTEM_STATE_REGISTERS = {
     WpmSystemStateRegisters.DEFROST_INITIATED: ModbusRegister(address=2506, name="DEFROST INITIATED", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.DEFROST_INITIATED),
     WpmSystemStateRegisters.ACTIVE_ERROR: ModbusRegister(address=2507, name="ACTIVE ERROR", unit="", min=0.0, max=65535.0, data_type=6, key=WpmSystemStateRegisters.ACTIVE_ERROR),
     WpmSystemStateRegisters.MESSAGE_NUMBER: ModbusRegister(address=2508, name="MESSAGE NUMBER", unit="", min=0.0, max=65535.0, data_type=6, key=WpmSystemStateRegisters.MESSAGE_NUMBER),
+    WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_1: ModbusRegister(
+        address=2509, name="HEATING CIRCUIT PUMP 1", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_1
+    ),
+    WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_2: ModbusRegister(
+        address=2510, name="HEATING CIRCUIT PUMP 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_2
+    ),
+    WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_3: ModbusRegister(
+        address=2511, name="HEATING CIRCUIT PUMP 3", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_3
+    ),
+    WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_1: ModbusRegister(
+        address=2512, name="BUFFER CHARGING PUMP 1", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_1
+    ),
+    WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_2: ModbusRegister(
+        address=2513, name="BUFFER CHARGING PUMP 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_2
+    ),
+    WpmSystemStateRegisters.DHW_CHARGING_PUMP: ModbusRegister(address=2514, name="DHW CHARGING PUMP", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.DHW_CHARGING_PUMP),
+    WpmSystemStateRegisters.SOURCE_PUMP: ModbusRegister(address=2515, name="SOURCE PUMP", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.SOURCE_PUMP),
+    WpmSystemStateRegisters.FAULT_OUTPUT: ModbusRegister(address=2516, name="FAULT OUTPUT", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.FAULT_OUTPUT),
+    WpmSystemStateRegisters.DHW_CIRCULATION_PUMP: ModbusRegister(address=2517, name="DHW CIRCULATION PUMP", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.DHW_CIRCULATION_PUMP),
+    WpmSystemStateRegisters.WE_2_DHW: ModbusRegister(address=2518, name="WE 2 DHW", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.WE_2_DHW),
+    WpmSystemStateRegisters.WE_2_HEATING: ModbusRegister(address=2519, name="WE 2 HEATING", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.WE_2_HEATING),
+    WpmSystemStateRegisters.COOLING_MODE: ModbusRegister(address=2520, name="COOLING MODE", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COOLING_MODE),
+    WpmSystemStateRegisters.MIXER_OPEN_HC2: ModbusRegister(address=2521, name="MIXER OPEN HC2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_OPEN_HC2),
+    WpmSystemStateRegisters.MIXER_CLOSE_HC2: ModbusRegister(address=2522, name="MIXER CLOSE HC2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_CLOSE_HC2),
+    WpmSystemStateRegisters.MIXER_OPEN_HC3: ModbusRegister(address=2523, name="MIXER OPEN HC3", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_OPEN_HC3),
+    WpmSystemStateRegisters.MIXER_CLOSE_HC3: ModbusRegister(address=2524, name="MIXER CLOSE HC3", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_CLOSE_HC3),
+    WpmSystemStateRegisters.NHZ_1: ModbusRegister(address=2525, name="NHZ 1 ", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.NHZ_1),
+    WpmSystemStateRegisters.NHZ_2: ModbusRegister(address=2526, name="NHZ 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.NHZ_2),
+    WpmSystemStateRegisters.NHZ_1_2: ModbusRegister(address=2527, name="NHZ 1 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.NHZ_1_2),
+    WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_4: ModbusRegister(
+        address=2528, name="HEATING CIRCUIT PUMP 4", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_4
+    ),
+    WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_5: ModbusRegister(
+        address=2529, name="HEATING CIRCUIT PUMP 5", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.HEATING_CIRCUIT_PUMP_5
+    ),
+    WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_3: ModbusRegister(
+        address=2530, name="BUFFER CHARGING PUMP 3", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_3
+    ),
+    WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_4: ModbusRegister(
+        address=2531, name="BUFFER CHARGING PUMP 4", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_4
+    ),
+    WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_5: ModbusRegister(
+        address=2532, name="BUFFER CHARGING PUMP 5", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_5
+    ),
+    WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_6: ModbusRegister(
+        address=2533, name="BUFFER CHARGING PUMP 6", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.BUFFER_CHARGING_PUMP_6
+    ),
+    WpmSystemStateRegisters.DIFF_CONTROLLER_PUMP_1: ModbusRegister(
+        address=2534, name="DIFF CONTROLLER PUMP 1", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.DIFF_CONTROLLER_PUMP_1
+    ),
+    WpmSystemStateRegisters.DIFF_CONTROLLER_PUMP_2: ModbusRegister(
+        address=2535, name="DIFF CONTROLLER PUMP 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.DIFF_CONTROLLER_PUMP_2
+    ),
+    WpmSystemStateRegisters.POOL_PUMP_PRIMARY: ModbusRegister(address=2536, name="POOL PUMP PRIMARY", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.POOL_PUMP_PRIMARY),
+    WpmSystemStateRegisters.POOL_PUMP_SECONDARY: ModbusRegister(address=2537, name="POOL PUMP SECONDARY", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.POOL_PUMP_SECONDARY),
+    WpmSystemStateRegisters.MIXER_OPEN_HC4: ModbusRegister(address=2538, name="MIXER OPEN HC4", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_OPEN_HC4),
+    WpmSystemStateRegisters.MIXER_CLOSE_HC4: ModbusRegister(address=2539, name="MIXER CLOSE HC4", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_CLOSE_HC4),
+    WpmSystemStateRegisters.MIXER_OPEN_HC5: ModbusRegister(address=2540, name="MIXER OPEN HC5", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_OPEN_HC5),
+    WpmSystemStateRegisters.MIXER_CLOSE_HC5: ModbusRegister(address=2541, name="MIXER CLOSE HC5", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.MIXER_CLOSE_HC5),
+    WpmSystemStateRegisters.COMPRESSOR_1: ModbusRegister(address=2542, name="COMPRESSOR 1", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COMPRESSOR_1),
+    WpmSystemStateRegisters.COMPRESSOR_2: ModbusRegister(address=2543, name="COMPRESSOR 2", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COMPRESSOR_2),
+    WpmSystemStateRegisters.COMPRESSOR_3: ModbusRegister(address=2544, name="COMPRESSOR 3", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COMPRESSOR_3),
+    WpmSystemStateRegisters.COMPRESSOR_4: ModbusRegister(address=2545, name="COMPRESSOR 4", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COMPRESSOR_4),
+    WpmSystemStateRegisters.COMPRESSOR_5: ModbusRegister(address=2546, name="COMPRESSOR 5", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COMPRESSOR_5),
+    WpmSystemStateRegisters.COMPRESSOR_6: ModbusRegister(address=2547, name="COMPRESSOR 6", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COMPRESSOR_6),
 }
 
 WPM_ENERGY_DATA_REGISTERS = {
@@ -716,7 +820,7 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
             [
                 ModbusRegisterBlock(base_address=500, count=110, name="System Values", registers=WPM_SYSTEM_VALUES_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=1500, count=24, name="System Parameters", registers=WPM_SYSTEM_PARAMETERS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
-                ModbusRegisterBlock(base_address=2500, count=8, name="System State", registers=WPM_SYSTEM_STATE_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
+                ModbusRegisterBlock(base_address=2500, count=47, name="System State", registers=WPM_SYSTEM_STATE_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=3500, count=72, name="Energy Data", registers=WPM_ENERGY_DATA_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
                 ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
