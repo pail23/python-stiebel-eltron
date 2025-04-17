@@ -11,6 +11,7 @@ from . import (
     get_register_descriptor,
     ENERGY_MANAGEMENT_SETTINGS_REGISTERS,
     ENERGY_SYSTEM_INFORMATION_REGISTERS,
+    VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET,
 )
 
 
@@ -208,10 +209,12 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_HEATING_DAY = 3501
     VD_HEATING_TOTAL_LOW = 3502
     VD_HEATING_TOTAL = 103502
+    VD_HEATING_TOTAL_AND_DAY = 203502
     VD_HEATING_TOTAL_HI = 3503
     VD_DHW_DAY = 3504
     VD_DHW_TOTAL_LOW = 3505
     VD_DHW_TOTAL = 103505
+    VD_DHW_TOTAL_AND_DAY = 203505
     VD_DHW_TOTAL_HI = 3506
     NHZ_HEATING_TOTAL_LOW = 3507
     NHZ_HEATING_TOTAL = 103507
@@ -222,10 +225,12 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_HEATING_DAY_CONSUMED = 3511
     VD_HEATING_TOTAL_LOW_CONSUMED = 3512
     VD_HEATING_TOTAL_CONSUMED = 103512
+    VD_HEATING_TOTAL_AND_DAY_CONSUMED = 203512
     VD_HEATING_TOTAL_HI_CONSUMED = 3513
     VD_DHW_DAY_CONSUMED = 3514
     VD_DHW_TOTAL_LOW_CONSUMED = 3515
     VD_DHW_TOTAL_CONSUMED = 103515
+    VD_DHW_TOTAL_AND_DAY_CONSUMED = 203515
     VD_DHW_TOTAL_HI_CONSUMED = 3516
     VD_HEATING = 3517
     VD_DHW = 3518
@@ -236,10 +241,12 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_HEATING_DAY_HP_1 = 3523
     VD_HEATING_TOTAL_LOW_HP_1 = 3524
     VD_HEATING_TOTAL_HP_1 = 103524
+    VD_HEATING_TOTAL_AND_DAY_HP_1 = 203524
     VD_HEATING_TOTAL_HI_HP_1 = 3525
     VD_DHW_DAY_HP_1 = 3526
     VD_DHW_TOTAL_LOW_HP_1 = 3527
     VD_DHW_TOTAL_HP_1 = 103527
+    VD_DHW_TOTAL_AND_DAY_HP_1 = 203527
     VD_DHW_TOTAL_HI_HP_1 = 3528
     NHZ_HEATING_TOTAL_LOW_HP_1 = 3529
     NHZ_HEATING_TOTAL_HP_1 = 103529
@@ -250,10 +257,12 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_HEATING_DAY_CONSUMED_HP_1 = 3533
     VD_HEATING_TOTAL_LOW_CONSUMED_HP_1 = 3534
     VD_HEATING_TOTAL_CONSUMED_HP_1 = 103534
+    VD_HEATING_TOTAL_AND_DAY_CONSUMED_HP_1 = 203534
     VD_HEATING_TOTAL_HI_CONSUMED_HP_1 = 3535
     VD_DHW_DAY_CONSUMEDHP_1 = 3536
     VD_DHW_TOTAL_LOW_CONSUMED_HP_1 = 3537
     VD_DHW_TOTAL_CONSUMED_HP_1 = 103537
+    VD_DHW_TOTAL_AND_DAY_CONSUMED_HP_1 = 203537
     VD_DHW_TOTAL_HI_CONSUMED_HP_1 = 3538
     VD_1_HEATING_HP_1 = 3539
     VD_2_HEATING_HP_1 = 3540
@@ -268,18 +277,22 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_HEATING_DAY_HP_2 = 3549
     VD_HEATING_TOTAL_LOW_HP_2 = 3550
     VD_HEATING_TOTAL_HP_2 = 103550
+    VD_HEATING_TOTAL_AND_DAY_HP_2 = 203550
     VD_HEATING_TOTAL_HI_HP_2 = 3551
     VD_DHW_DAY_HP_2 = 3552
     VD_DHW_TOTAL_LOW_HP_2 = 3553
     VD_DHW_TOTAL_HP_2 = 103553
+    VD_DHW_TOTAL_AND_DAY_HP_2 = 203553
     VD_DHW_TOTAL_HI_HP_2 = 3554
     VD_HEATING_DAY_CONSUMED_HP_2 = 3555
     VD_HEATING_TOTAL_LOW_CONSUMED_HP_2 = 3556
     VD_HEATING_TOTAL_CONSUMED_HP_2 = 103556
+    VD_HEATING_TOTAL_AND_DAY_CONSUMED_HP_2 = 203556
     VD_HEATING_TOTAL_HI_CONSUMED_HP_2 = 3557
     VD_DHW_DAY_CONSUMED_HP_2 = 3558
     VD_DHW_TOTAL_LOW_CONSUMED_HP_2 = 3559
     VD_DHW_TOTAL_CONSUMED_HP_2 = 103559
+    VD_DHW_TOTAL_AND_DAY_CONSUMED_HP_2 = 203559
     VD_DHW_TOTAL_HI_CONSUMED_HP_2 = 3560
     VD_1_HEATING_HP_2 = 3561
     VD_2_HEATING_HP_2 = 3562
@@ -291,6 +304,7 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_HEATING_DAY_HP_3 = 3568
     VD_HEATING_TOTAL_LOW_HP_3 = 3569
     VD_HEATING_TOTAL_HP_3 = 103569
+    VD_HEATING_TOTAL_AND_DAY_HP_3 = 203569
     VD_HEATING_TOTAL_HI_HP_3 = 3570
     VD_DHW_DAY_HP_3 = 3571
     VD_DHW_TOTAL_HP_3 = 3572
@@ -837,17 +851,17 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
             if registerblock.name == ENERGY_DATA_BLOCK_NAME:
                 for register in WpmEnergyDataRegisters:
                     if register.value > VIRTUAL_REGISTER_OFFSET:
-                        low_descriptor = get_register_descriptor(
-                            list(registerblock.registers.values()),
-                            register.value - VIRTUAL_REGISTER_OFFSET,
-                        )
-                        if low_descriptor is not None:
-                            high_descriptor = get_register_descriptor(
-                                list(registerblock.registers.values()),
-                                register.value - VIRTUAL_REGISTER_OFFSET + 1,
-                            )
-                            if high_descriptor is not None:
-                                high_value = self._data.get(high_descriptor.key)
-                                low_value = self._data.get(low_descriptor.key)
-                                if high_value is not None and low_value is not None:
-                                    self._data[register] = high_value * 1000 + low_value
+                        if register.value > VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET:
+                            total_key = WpmEnergyDataRegisters(register.value - VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET + VIRTUAL_REGISTER_OFFSET)
+                            day_key = WpmEnergyDataRegisters(register.value - VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET - 1)
+                            total_value = self._data.get(total_key)
+                            day_value = self._data.get(day_key)
+                            if total_value is not None and day_value is not None:
+                                self._data[register] = total_value + day_value
+                        else:
+                            low_key = WpmEnergyDataRegisters(register.value - VIRTUAL_REGISTER_OFFSET)
+                            high_key = WpmEnergyDataRegisters(register.value - VIRTUAL_REGISTER_OFFSET + 1)
+                            high_value = self._data.get(high_key)
+                            low_value = self._data.get(low_key)
+                            if high_value is not None and low_value is not None:
+                                self._data[register] = high_value * 1000 + low_value

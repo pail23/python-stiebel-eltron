@@ -11,6 +11,7 @@ _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 ENERGY_DATA_BLOCK_NAME = "Energy Data"
 VIRTUAL_REGISTER_OFFSET = 100000
+VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET = 200000
 
 
 class IsgRegisters(Enum):

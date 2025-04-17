@@ -332,17 +332,9 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
             if registerblock.name == ENERGY_DATA_BLOCK_NAME:
                 for register in LwzEnergyDataRegisters:
                     if register.value > VIRTUAL_REGISTER_OFFSET:
-                        low_descriptor = get_register_descriptor(
-                            list(registerblock.registers.values()),
-                            register.value - VIRTUAL_REGISTER_OFFSET,
-                        )
-                        if low_descriptor is not None:
-                            high_descriptor = get_register_descriptor(
-                                list(registerblock.registers.values()),
-                                register.value - VIRTUAL_REGISTER_OFFSET + 1,
-                            )
-                            if high_descriptor is not None:
-                                high_value = self._data.get(high_descriptor.key)
-                                low_value = self._data.get(low_descriptor.key)
-                                if high_value is not None and low_value is not None:
-                                    self._data[register] = high_value * 1000 + low_value
+                        low_key = LwzEnergyDataRegisters(register.value - VIRTUAL_REGISTER_OFFSET)
+                        high_key = LwzEnergyDataRegisters(register.value - VIRTUAL_REGISTER_OFFSET + 1)
+                        high_value = self._data.get(high_key)
+                        low_value = self._data.get(low_key)
+                        if high_value is not None and low_value is not None:
+                            self._data[register] = high_value * 1000 + low_value
