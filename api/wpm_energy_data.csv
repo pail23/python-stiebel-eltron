@@ -70,4 +70,18 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 3569,VD HEATING TOTAL,x,x,,Amount of heat HP 3,0,999,6,kWh,r,LOW HP 3
 3570,VD HEATING TOTAL,x,x,,Amount of heat HP 3,0,65535,6,MWh,r,HI HP 3
 3571,VD DHW DAY,x,x,,Amount of heat HP 3,0,65535,6,kWh,r,HP 3
-3572,VD DHW TOTAL,x,x,,Amount of heat HP 3,0,999,6,kWh,r,HP 3
+3572,VD DHW TOTAL,x,x,,Amount of heat HP 3,0,999,6,kWh,r,LOW HP 3
+3573,VD DHW TOTAL,x,x,,Amount of heat HP 3,0,65535,6,MWh,r,HI HP 3
+3574,VD HEATING DAY,x,x,,Power consumption HP 3,0,65535,6,kWh,r,CONSUMED HP 3
+3575,VD HEATING TOTAL,x,x,,Power consumption HP 3,0,999,6,kWh,r,LOW CONSUMED HP 3
+3576,VD HEATING TOTAL,x,x,,Power consumption HP 3,0,65535,6,MWh,r,HI CONSUMED HP 3
+3577,VD DHW DAY,x,x,,Power consumption HP 3,0,65535,6,kWh,r,CONSUMED HP 3
+3578,VD DHW TOTAL,x,x,,Power consumption HP 3,0,999,6,kWh,r,LOW CONSUMED HP 3
+3579,VD DHW TOTAL,x,x,,Power consumption HP 3,0,65535,6,MWh,r,HI CONSUMED HP 3
+3580,VD 1 HEATING,x,x,,Runtime HP 3,,,6,h,r,HP 3
+3581,VD 2 HEATING,x,x,,Runtime HP 3,,,6,h,r,HP 3
+3582,VD 1_2 HEATING,x,x,,Runtime HP 3,,,6,h,r,HP 3
+3583,VD 1 DHW,x,x,,Runtime HP 3,,,6,h,r,HP 3
+3584,VD 2 DHW,x,x,,Runtime HP 3,,,6,h,r,HP 3
+3585,VD 1_2 DHW,x,x,,Runtime HP 3,,,6,h,r,HP 3
+3586,VD COOLING,x,x,,Runtime HP 3,,,6,h,r,HP 3
