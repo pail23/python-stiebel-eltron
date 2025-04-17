@@ -857,7 +857,11 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
                             total_value = self._data.get(total_key)
                             day_value = self._data.get(day_key)
                             if total_value is not None and day_value is not None:
-                                self._data[register] = total_value + day_value
+                                prev_value = self._previous_data.get(register)
+                                if prev_value is not None:
+                                    self._data[register] = max(total_value + day_value, prev_value)
+                                else:
+                                    self._data[register] = total_value + day_value
                         else:
                             low_key = WpmEnergyDataRegisters(register.value - VIRTUAL_REGISTER_OFFSET)
                             high_key = WpmEnergyDataRegisters(register.value - VIRTUAL_REGISTER_OFFSET + 1)
