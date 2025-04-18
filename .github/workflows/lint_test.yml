@@ -55,7 +55,7 @@ jobs:
 
       - name: Run tests
         run: |
-          uvx pytest \
+          uv run pytest \
             -qq \
             --durations=10 \
             -o console_output_style=count \
