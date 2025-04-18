@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 import pytest
-from python_stiebel_eltron.lwz import LwzStiebelEltronAPI, LwzSystemValuesRegisters
+from python_stiebel_eltron.lwz import LwzStiebelEltronAPI, LwzSystemValuesRegisters, OperatingMode
 from python_stiebel_eltron.wpm import WpmStiebelEltronAPI, WpmSystemValuesRegisters
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.pdu.register_message import (
@@ -47,6 +47,12 @@ async def test_lwz(mocker):
     await api.async_update()
 
     assert api.get_register_value(LwzSystemValuesRegisters.RELATIVE_HUMIDITY_HC1) == 0.2
+
+    assert api.get_current_humidity() == 0.2
+    assert api.get_current_temp() == 0.0
+    assert api.get_target_temp() == 0.1
+
+    assert api.get_operation() == OperatingMode.EMERGENCY_OPERATION
 
     await api.close()
     mock_close.assert_called_once()
