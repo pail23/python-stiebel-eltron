@@ -18,8 +18,20 @@ build-backend = "hatchling.build"
 [dependency-groups]
 dev = [
     "jinja2>=3.1.5",
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.26.0",
+    "pytest-mock>=3.14.0",
     "ruff>=0.9.6",
 ]
 
 [tool.ruff]
 line-length = 200
+
+[tool.pytest.ini_options]
+
+pythonpath = [
+  ".",
+]
+testpaths = [
+    "tests"
+]
