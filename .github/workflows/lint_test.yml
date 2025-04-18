@@ -57,9 +57,7 @@ jobs:
         run: |
           uvx pytest \
             -qq \
-            --timeout=9 \
             --durations=10 \
-            -n auto \
             -o console_output_style=count \
             -p no:sugar \
             tests
