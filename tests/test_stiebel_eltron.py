@@ -1,10 +1,7 @@
-from unittest.mock import MagicMock
 import pytest
 from python_stiebel_eltron.lwz import LwzEnergyDataRegisters, LwzStiebelEltronAPI, LwzSystemValuesRegisters, OperatingMode
 from python_stiebel_eltron.wpm import WpmEnergyDataRegisters, WpmStiebelEltronAPI, WpmSystemValuesRegisters
-from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.pdu.register_message import (
-    ReadHoldingRegistersResponse,
     ReadInputRegistersResponse,
 )
 
