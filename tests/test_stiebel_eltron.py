@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 import pytest
-from python_stiebel_eltron.lwz import LwzStiebelEltronAPI, LwzSystemValuesRegisters, OperatingMode
-from python_stiebel_eltron.wpm import WpmStiebelEltronAPI, WpmSystemValuesRegisters
+from python_stiebel_eltron.lwz import LwzEnergyDataRegisters, LwzStiebelEltronAPI, LwzSystemValuesRegisters, OperatingMode
+from python_stiebel_eltron.wpm import WpmEnergyDataRegisters, WpmStiebelEltronAPI, WpmSystemValuesRegisters
 from pymodbus.client import AsyncModbusTcpClient
 from pymodbus.pdu.register_message import (
     ReadHoldingRegistersResponse,
@@ -29,6 +29,8 @@ async def test_wpm(mocker):
 
     assert api.get_register_value(WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_FEK) == 0.2
 
+    assert api.get_register_value(WpmEnergyDataRegisters.VD_HEATING_DAY_AND_TOTAL_CONSUMED) == 12021
+
     await api.close()
     mock_close.assert_called_once()
 
@@ -47,6 +49,8 @@ async def test_lwz(mocker):
     await api.async_update()
 
     assert api.get_register_value(LwzSystemValuesRegisters.RELATIVE_HUMIDITY_HC1) == 0.2
+
+    assert api.get_register_value(LwzEnergyDataRegisters.HEAT_METER_HTG_DAY_AND_TOTAL) == 2001
 
     assert api.get_current_humidity() == 0.2
     assert api.get_current_temp() == 0.0
