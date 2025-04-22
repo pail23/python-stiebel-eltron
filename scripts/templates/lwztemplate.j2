@@ -9,6 +9,7 @@ class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(Isg
     {{python_name(register[1], register[10])}} = {{register[0]}}{%if registerblock["name"]=="Energy Data" and register[10][:3]=="LOW" %}
     {{python_name(register[1], register[10][3:].strip())}} = {{register[0] | int + 100000}} {% endif %}{%if register[1][-3:]=="DAY" %}
     {{python_name(register[1]+"_AND_TOTAL", register[10].strip())}} = {{register[0] | int + 200001}} {% endif %}  {% endfor %}
+    {%if registerblock["name"]=="System Values"%}COMPRESSOR_STARTS = 100032{% endif %}
 {% endfor %}
 
 
@@ -77,6 +78,16 @@ class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
                             low_value = self._data.get(low_key)
                             if high_value is not None and low_value is not None:
                                 self._data[{{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register)] = high_value * 1000 + low_value
+
+        compressor_starts_high = self.get_register_value(LwzSystemValuesRegisters.COMPRESSOR_STARTS_HI)
+        if compressor_starts_high is None or compressor_starts_high == 32768:
+            self._data[LwzSystemValuesRegisters.COMPRESSOR_STARTS] = 32768
+        else:
+            compressor_starts_low = self.get_register_value(LwzSystemValuesRegisters.COMPRESSOR_STARTS_LOW)
+            if compressor_starts_low is None:
+                self._data[LwzSystemValuesRegisters.COMPRESSOR_STARTS] = compressor_starts_high * 1000
+            else:
+                self._data[LwzSystemValuesRegisters.COMPRESSOR_STARTS] = compressor_starts_high * 1000 + compressor_starts_low
 
 
     def get_current_temp(self):

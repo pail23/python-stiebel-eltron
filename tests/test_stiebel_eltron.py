@@ -55,5 +55,7 @@ async def test_lwz(mocker):
 
     assert api.get_operation() == OperatingMode.EMERGENCY_OPERATION
 
+    assert api.get_register_value(LwzSystemValuesRegisters.COMPRESSOR_STARTS) == 30033
+
     await api.close()
     mock_close.assert_called_once()
