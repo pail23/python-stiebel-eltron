@@ -428,3 +428,16 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
     async def set_operation(self, mode: OperatingMode):
         """Set the operation mode."""
         await self.write_register_value(LwzSystemParametersRegisters.OPERATING_MODE, mode.value)
+
+    def get_heating_status(self) -> bool:
+        """Return heater status."""
+        return bool(int(self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)) & (1 << 2))
+
+    def get_cooling_status(self) -> bool:
+        """Cooling status."""
+        return bool(int(self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)) & (1 << 3))
+
+    def get_filter_alarm_status(self) -> bool:
+        """Return filter alarm."""
+        filter_mask = (1 << 8) | (1 << 12) | (1 << 13)
+        return bool(int(self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)) & filter_mask)
