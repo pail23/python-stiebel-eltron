@@ -107,6 +107,13 @@ def get_register_descriptor(descriptors: list[ModbusRegister], address: int) -> 
             return descriptor
     return None
 
+class StiebelEltronModbusError(Exception):
+    """Exception during modbus communication."""
+
+    def __init(self) -> None:
+        """Initialize the error."""
+        super().__init__("Data error on the modbus")
+
 
 async def get_controller_model(host, port) -> int:
     """Read the model of the controller.
