@@ -31,4 +31,4 @@ jobs:
           --durations=10 \
           -o console_output_style=count \
           -p no:sugar \
-          tests
+          test
