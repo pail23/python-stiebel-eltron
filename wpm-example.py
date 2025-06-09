@@ -2,11 +2,11 @@
 import asyncio
 from pystiebeleltron.wpm import WpmStiebelEltronAPI, WpmSystemParametersRegisters, WpmSystemValuesRegisters
 
-host_ip = "192.168.1.209"
+host_ip = "192.168.1.20"
 
 
 async def main():
-    api = WpmStiebelEltronAPI("192.168.1.209", 502)
+    api = WpmStiebelEltronAPI(host_ip, 502)
     await api.connect()
 
     await api.async_update()
