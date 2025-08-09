@@ -1,11 +1,11 @@
 """Generate python files to access the stiebel eltron heat pumps."""
 
-from pathlib import Path
 import csv
-
 from dataclasses import dataclass
+from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, Template, select_autoescape
+
 from pystiebeleltron import RegisterType
 
 ENERGY_DATA_BLOCK_NAME = "Energy Data"

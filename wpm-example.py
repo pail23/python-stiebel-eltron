@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import asyncio
+
 from pystiebeleltron.wpm import WpmStiebelEltronAPI, WpmSystemParametersRegisters, WpmSystemValuesRegisters
 
 host_ip = "192.168.1.20"

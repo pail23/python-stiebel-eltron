@@ -1,11 +1,9 @@
 import asyncio
 import logging
-
+from dataclasses import dataclass
 from enum import Enum
 
-from dataclasses import dataclass
 from pymodbus.client import AsyncModbusTcpClient
-
 
 __version__ = "0.2.2"
 

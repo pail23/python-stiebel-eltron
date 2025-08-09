@@ -7,14 +7,13 @@ The asynchronous server is a high performance implementation using the
 twisted library as its backend.  This allows it to scale to many thousands
 of nodes which can be helpful for testing monitoring software.
 """
+
 # --------------------------------------------------------------------------- #
 # import the various server implementations
 # --------------------------------------------------------------------------- #
-from pymodbus.server import StartTcpServer, ServerStop
-
+from pymodbus.datastore import ModbusDeviceContext, ModbusSequentialDataBlock, ModbusServerContext
 from pymodbus.pdu.device import ModbusDeviceIdentification
-from pymodbus.datastore import ModbusSequentialDataBlock
-from pymodbus.datastore import ModbusDeviceContext, ModbusServerContext
+from pymodbus.server import ServerStop, StartTcpServer
 
 
 class MockModbusServer(object):
@@ -22,8 +21,8 @@ class MockModbusServer(object):
     # configure the service logging
     # --------------------------------------------------------------------------- #
     import logging
-    FORMAT = ('%(asctime)-15s %(threadName)-15s'
-              ' %(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s')
+
+    FORMAT = "%(asctime)-15s %(threadName)-15s %(levelname)-8s %(module)-15s:%(lineno)-8s %(message)s"
     logging.basicConfig(format=FORMAT)
     log = logging.getLogger()
     log.setLevel(logging.DEBUG)
@@ -83,9 +82,7 @@ class MockModbusServer(object):
         #
         #     store = ModbusDeviceContext(..., zero_mode=True)
         # ----------------------------------------------------------------------- #
-        store = ModbusDeviceContext(
-            hr=ModbusSequentialDataBlock(0, [0]*3000),
-            ir=ModbusSequentialDataBlock(0, [0]*3000))
+        store = ModbusDeviceContext(hr=ModbusSequentialDataBlock(0, [0] * 3000), ir=ModbusSequentialDataBlock(0, [0] * 3000))
         self.context = ModbusServerContext(devices=store, single=True)
 
         # ----------------------------------------------------------------------- #
@@ -94,12 +91,12 @@ class MockModbusServer(object):
         # If you don't set this or any fields, they are defaulted to empty strings.
         # ----------------------------------------------------------------------- #
         identity = ModbusDeviceIdentification()
-        identity.VendorName = 'Pymodbus'
-        identity.ProductCode = 'PM'
-        identity.VendorUrl = 'http://github.com/bashwork/pymodbus/'
-        identity.ProductName = 'Pymodbus Server'
-        identity.ModelName = 'Pymodbus Server'
-        identity.MajorMinorRevision = '1.5'
+        identity.VendorName = "Pymodbus"
+        identity.ProductCode = "PM"
+        identity.VendorUrl = "http://github.com/bashwork/pymodbus/"
+        identity.ProductName = "Pymodbus Server"
+        identity.ModelName = "Pymodbus Server"
+        identity.MajorMinorRevision = "1.5"
 
         # ----------------------------------------------------------------------- #
         # run the server you want
@@ -112,7 +109,7 @@ class MockModbusServer(object):
         ServerStop()
 
     def update_context(self, register, address, values):
-        """ Update values of the active context. It should be noted
+        """Update values of the active context. It should be noted
         that there is a race condition for the update.
 
         :param register: Type of register to update,
@@ -123,30 +120,26 @@ class MockModbusServer(object):
         """
         assert register == 3 or register == 4
         device_id = 0x00
-        old_values = self.context[device_id].getValues(register,
-                                                      address, count=1)
-        self.log.debug("Change value at address {} from {} to {}".format(
-            address, old_values, values))
+        old_values = self.context[device_id].getValues(register, address, count=1)
+        self.log.debug("Change value at address {} from {} to {}".format(address, old_values, values))
         self.context[device_id].setValues(register, address, values)
 
     def update_holding_register(self, address, value):
-        """ Update value of a holding register.
+        """Update value of a holding register.
 
         :param address: Address to update
         :param value: Value to save
         """
-        self.log.debug("Update holding register: {}:{}".format(address,
-                                                               int(value)))
+        self.log.debug("Update holding register: {}:{}".format(address, int(value)))
         self.update_context(3, address, [int(value)])
 
     def update_input_register(self, address, value):
-        """ Update value of an input register.
+        """Update value of an input register.
 
         :param address: Address to update
         :param value: Value to save
         """
-        self.log.debug("Update input register: {}:{}".format(address,
-                                                             int(value)))
+        self.log.debug("Update input register: {}:{}".format(address, int(value)))
         self.update_context(4, address, [int(value)])
 
 

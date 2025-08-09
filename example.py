@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 import time
-from pystiebeleltron import pystiebeleltron as pyse
+
 from pymodbus.client import ModbusTcpClient as ModbusClient
+
+from pystiebeleltron import pystiebeleltron as pyse
 
 host_ip = "192.168.1.20"
 host_port = 502
 device_id = 1
 
+
 def test_function(mod, fun):
     """Executes the given function on the Stiebel Heatpump and prints the result."""
-    result = getattr(mod, fun) # Executes function directly, instead of giving back the function reference
+    result = getattr(mod, fun)  # Executes function directly, instead of giving back the function reference
     print("{}: {}".format(str(fun), str(result)))
 
 
@@ -40,9 +43,7 @@ def execute_tests(unit):
 
 
 def main():
-    client = ModbusClient(host=host_ip,
-                          port=host_port,
-                          timeout=2)
+    client = ModbusClient(host=host_ip, port=host_port, timeout=2)
     client.connect()
 
     unit = pyse.StiebelEltronAPI(client, device_id)
@@ -51,6 +52,7 @@ def main():
     execute_tests(unit)
 
     client.close()
+
 
 if __name__ == "__main__":
     main()

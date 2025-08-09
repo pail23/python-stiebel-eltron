@@ -25,6 +25,8 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: uv sync --locked --all-extras --dev
+    - name: Run Ruff
+      run: uvx ruff check . --output-format=github
     - name: Run tests
       run: |
         uv run pytest \

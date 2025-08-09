@@ -225,13 +225,12 @@ class StiebelEltronAPI:
     #            self.update()
     #        return self._block_2_holding_regs[name]
 
-#    def set_raw_holding_register(self, name, value):
-#        """Write to register by name."""
-#        self._conn.write_register(
-#            device_id=self._device_id,
-#            address=(self._holding_regs[name]['addr']),
-#            value=value)
-
+    #    def set_raw_holding_register(self, name, value):
+    #        """Write to register by name."""
+    #        self._conn.write_register(
+    #            device_id=self._device_id,
+    #            address=(self._holding_regs[name]['addr']),
+    #            value=value)
 
     # Handle room temperature & humidity
 
@@ -250,7 +249,6 @@ class StiebelEltronAPI:
     def set_target_temp(self, temp: float):
         """Set the target room temperature (day)(HC1)."""
         self._conn.write_register(device_id=self._device_id, address=(self._block_2_holding_regs["ROOM_TEMP_HEAT_DAY_HC1"]["addr"]), value=round(temp * 10.0))
-
 
     def get_current_humidity(self):
         """Get the current room humidity."""
