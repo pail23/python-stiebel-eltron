@@ -1,5 +1,7 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
 
+from __future__ import annotations
+
 from enum import Enum
 
 from . import (
@@ -150,7 +152,7 @@ class LwzEnergyDataRegisters(IsgRegisters):
     ELEC_BOOSTER_DHW = 3032
 
 
-LWZ_SYSTEM_VALUES_REGISTERS = {
+LWZ_SYSTEM_VALUES_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     LwzSystemValuesRegisters.ACTUAL_ROOM_T_HC1: ModbusRegister(address=1, name="ACTUAL ROOM T HC1", unit="°C", min=-20.0, max=60.0, data_type=2, key=LwzSystemValuesRegisters.ACTUAL_ROOM_T_HC1),
     LwzSystemValuesRegisters.SET_ROOM_TEMPERATURE_HC1: ModbusRegister(
         address=2, name="SET ROOM TEMPERATURE HC1", unit="°C", min=-20.0, max=60.0, data_type=2, key=LwzSystemValuesRegisters.SET_ROOM_TEMPERATURE_HC1
@@ -211,7 +213,7 @@ LWZ_SYSTEM_VALUES_REGISTERS = {
     ),
 }
 
-LWZ_SYSTEM_PARAMETERS_REGISTERS = {
+LWZ_SYSTEM_PARAMETERS_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     LwzSystemParametersRegisters.OPERATING_MODE: ModbusRegister(address=1001, name="OPERATING MODE", unit="", min=0.0, max=14.0, data_type=8, key=LwzSystemParametersRegisters.OPERATING_MODE),
     LwzSystemParametersRegisters.ROOM_TEMPERATURE_DAY_HK1: ModbusRegister(
         address=1002, name="ROOM TEMPERATURE DAY", unit="°C", min=10.0, max=30.0, data_type=2, key=LwzSystemParametersRegisters.ROOM_TEMPERATURE_DAY_HK1
@@ -257,7 +259,7 @@ LWZ_SYSTEM_PARAMETERS_REGISTERS = {
     LwzSystemParametersRegisters.RESTART_ISG: ModbusRegister(address=1027, name="RESTART ISG", unit="", min=0.0, max=2.0, data_type=6, key=LwzSystemParametersRegisters.RESTART_ISG),
 }
 
-LWZ_SYSTEM_STATE_REGISTERS = {
+LWZ_SYSTEM_STATE_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     LwzSystemStateRegisters.OPERATING_STATUS: ModbusRegister(address=2001, name="OPERATING STATUS", unit="", min=0.0, max=65535.0, data_type=6, key=LwzSystemStateRegisters.OPERATING_STATUS),
     LwzSystemStateRegisters.FAULT_STATUS: ModbusRegister(address=2002, name="FAULT STATUS", unit="", min=0.0, max=1.0, data_type=6, key=LwzSystemStateRegisters.FAULT_STATUS),
     LwzSystemStateRegisters.BUS_STATUS: ModbusRegister(address=2003, name="BUS STATUS", unit="", min=-4.0, max=0.0, data_type=6, key=LwzSystemStateRegisters.BUS_STATUS),
@@ -265,7 +267,7 @@ LWZ_SYSTEM_STATE_REGISTERS = {
     LwzSystemStateRegisters.OPERATING_STATUS_2: ModbusRegister(address=2005, name="OPERATING STATUS 2", unit="", min=0.0, max=65535.0, data_type=6, key=LwzSystemStateRegisters.OPERATING_STATUS_2),
 }
 
-LWZ_ENERGY_DATA_REGISTERS = {
+LWZ_ENERGY_DATA_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     LwzEnergyDataRegisters.HEAT_METER_HTG_DAY: ModbusRegister(address=3001, name="HEAT METER HTG DAY", unit="kWh", min=0.0, max=65535.0, data_type=6, key=LwzEnergyDataRegisters.HEAT_METER_HTG_DAY),
     LwzEnergyDataRegisters.HEAT_METER_HTG_TTL_LOW: ModbusRegister(
         address=3002, name="HEAT METER HTG TTL", unit="kWh", min=0.0, max=999.0, data_type=6, key=LwzEnergyDataRegisters.HEAT_METER_HTG_TTL_LOW
@@ -364,7 +366,7 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
             device_id,
         )
 
-    async def async_update(self):
+    async def async_update(self) -> None:
         """Request current values from heat pump."""
         await super().async_update()
         for registerblock in self._register_blocks:
@@ -402,19 +404,19 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
             else:
                 self._data[LwzSystemValuesRegisters.COMPRESSOR_STARTS] = compressor_starts_high * 1000 + compressor_starts_low
 
-    def get_current_temp(self):
+    def get_current_temp(self) -> float | None:
         """Get the current room temperature."""
         return self.get_register_value(LwzSystemValuesRegisters.ACTUAL_ROOM_T_HC1)
 
-    def get_target_temp(self):
+    def get_target_temp(self) -> float | None:
         """Get the target room temperature."""
         return self.get_register_value(LwzSystemParametersRegisters.ROOM_TEMPERATURE_DAY_HK1)
 
-    async def set_target_temp(self, temp):
+    async def set_target_temp(self, temp: float) -> None:
         """Set the target room temperature (day)(HC1)."""
         await self.write_register_value(LwzSystemParametersRegisters.ROOM_TEMPERATURE_DAY_HK1, temp)
 
-    def get_current_humidity(self):
+    def get_current_humidity(self) -> float | None:
         """Get the current room humidity."""
         return self.get_register_value(LwzSystemValuesRegisters.RELATIVE_HUMIDITY_HC1)
 
@@ -422,22 +424,33 @@ class LwzStiebelEltronAPI(StiebelEltronAPI):
 
     def get_operation(self) -> OperatingMode:
         """Return the current mode of operation."""
-        op_mode = int(self.get_register_value(LwzSystemParametersRegisters.OPERATING_MODE))
-        return OperatingMode(op_mode)
+        op_mode = self.get_register_value(LwzSystemParametersRegisters.OPERATING_MODE)
+        if op_mode is None:
+            return OperatingMode.EMERGENCY_OPERATION
+        return OperatingMode(int(op_mode))
 
-    async def set_operation(self, mode: OperatingMode):
+    async def set_operation(self, mode: OperatingMode) -> None:
         """Set the operation mode."""
         await self.write_register_value(LwzSystemParametersRegisters.OPERATING_MODE, mode.value)
 
     def get_heating_status(self) -> bool:
         """Return heater status."""
-        return bool(int(self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)) & (1 << 2))
+        value = self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)
+        if value is None:
+            return False
+        return bool(int(value) & (1 << 2))
 
     def get_cooling_status(self) -> bool:
         """Cooling status."""
-        return bool(int(self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)) & (1 << 3))
+        value = self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)
+        if value is None:
+            return False
+        return bool(int(value) & (1 << 3))
 
     def get_filter_alarm_status(self) -> bool:
         """Return filter alarm."""
+        value = self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)
+        if value is None:
+            return False
         filter_mask = (1 << 8) | (1 << 12) | (1 << 13)
-        return bool(int(self.get_register_value(LwzSystemStateRegisters.OPERATING_STATUS)) & filter_mask)
+        return bool(int(value) & filter_mask)

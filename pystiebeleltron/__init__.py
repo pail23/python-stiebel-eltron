@@ -1,14 +1,16 @@
+from __future__ import annotations
+
 import asyncio
 import logging
 from dataclasses import dataclass
 from enum import Enum
 
 from pymodbus.client import AsyncModbusTcpClient
+from pymodbus.pdu import ModbusPDU
 
 __version__ = "0.2.3"
 
-_LOGGER: logging.Logger = logging.getLogger(__package__)
-
+_LOGGER = logging.getLogger(__package__)
 
 ENERGY_DATA_BLOCK_NAME = "Energy Data"
 VIRTUAL_REGISTER_OFFSET = 100000
@@ -72,11 +74,11 @@ class ModbusRegisterBlock:
     base_address: int
     count: int
     name: str
-    registers: dict
+    registers: dict[IsgRegisters, ModbusRegister]
     register_type: RegisterType
 
 
-ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
+ENERGY_MANAGEMENT_SETTINGS_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     EnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF: ModbusRegister(
         address=4001, name="SWITCH SG READY ON AND OFF", unit="", min=0.0, max=1.0, data_type=6, key=EnergyManagementSettingsRegisters.SWITCH_SG_READY_ON_AND_OFF
     ),
@@ -88,7 +90,7 @@ ENERGY_MANAGEMENT_SETTINGS_REGISTERS = {
     ),
 }
 
-ENERGY_SYSTEM_INFORMATION_REGISTERS = {
+ENERGY_SYSTEM_INFORMATION_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     EnergySystemInformationRegisters.SG_READY_OPERATING_STATE: ModbusRegister(
         address=5001, name="SG READY OPERATING STATE", unit="", min=1.0, max=4.0, data_type=6, key=EnergySystemInformationRegisters.SG_READY_OPERATING_STATE
     ),
@@ -125,7 +127,7 @@ class ControllerModel(Enum):
     WPMsystem = 449
 
 
-async def get_controller_model(host, port) -> ControllerModel:
+async def get_controller_model(host: str, port: int) -> ControllerModel:
     """Read the model of the controller.
 
     LWA and LWZ controllers have model ids 103 and 104.
@@ -166,9 +168,9 @@ class StiebelEltronAPI:
         self._client: AsyncModbusTcpClient = AsyncModbusTcpClient(host=host, port=port)
         self._lock = asyncio.Lock()
         self._register_blocks = register_blocks
-        self._data = {}
-        self._previous_data = {}
-        self._modbus_data = {}  # store raw data from modbus for debug purpose
+        self._data: dict[IsgRegisters, float | int | None] = {}
+        self._previous_data: dict[IsgRegisters, float | int | None] = {}
+        self._modbus_data: dict[str, ModbusPDU | None] = {}  # store raw data from modbus for debug purpose
 
     async def close(self) -> None:
         """Disconnect client."""
@@ -205,7 +207,7 @@ class StiebelEltronAPI:
                 return descriptor
         return None
 
-    def get_register_value(self, register: IsgRegisters) -> float:
+    def get_register_value(self, register: IsgRegisters) -> float | int | None:
         """Get a value form the registers. The async_udpate needs to be called first."""
         return self._data[register]
 
@@ -222,19 +224,19 @@ class StiebelEltronAPI:
         else:
             raise ValueError("invalid register")
 
-    async def read_input_registers(self, device_id, address, count):
+    async def read_input_registers(self, device_id: int, address: int, count: int) -> ModbusPDU:
         """Read input registers."""
         _LOGGER.debug(f"Reading {count} input registers from {address} with device_id {device_id}")
         async with self._lock:
             return await self._client.read_input_registers(address, count=count, device_id=device_id)
 
-    async def read_holding_registers(self, device_id, address, count):
+    async def read_holding_registers(self, device_id: int, address: int, count: int) -> ModbusPDU:
         """Read holding registers."""
         _LOGGER.debug(f"Reading {count} holding registers from {address} with device_id {device_id}")
         async with self._lock:
             return await self._client.read_holding_registers(address, count=count, device_id=device_id)
 
-    def convert_value_from_modbus(self, register, register_description: ModbusRegister) -> float | int | None:
+    def convert_value_from_modbus(self, register: int, register_description: ModbusRegister) -> float | int | None:
         """Convert a modbus value to a python value."""
         if register_description.data_type == 2:
             value = self._client.convert_from_registers([register], self._client.DATATYPE.INT16)
@@ -279,9 +281,9 @@ class StiebelEltronAPI:
         else:
             raise ValueError("invalid register type")
 
-    async def async_update(self):
+    async def async_update(self) -> None:
         """Request current values from heat pump."""
-        result: dict = {}
+        result: dict[IsgRegisters, float | int | None] = {}
         for registerblock in self._register_blocks:
             heat_pump_data = None
             if registerblock.register_type == RegisterType.INPUT_REGISTER:

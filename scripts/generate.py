@@ -41,7 +41,7 @@ def float_or_none(value: str) -> float | None:
     return float(value)
 
 
-def get_base_address(registers: list) -> int:
+def get_base_address(registers: list[list[str]]) -> int:
     """Get the base address from a register block."""
     result = 35000
     for register in registers:
@@ -49,7 +49,7 @@ def get_base_address(registers: list) -> int:
     return result - 1
 
 
-def get_block_len(registers: list) -> int:
+def get_block_len(registers: list[list[str]]) -> int:
     """Get the base address from a register block."""
     base = 35000
     highest = 0
@@ -64,7 +64,7 @@ def generate_heatpump(
     template: Template,
     modbus_files: list[ModbusFile],
     heatpump_type: str,
-):
+) -> None:
     """Generate the python file for a heat pump."""
     register_blocks = []
 

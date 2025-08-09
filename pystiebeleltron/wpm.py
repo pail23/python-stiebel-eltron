@@ -1,5 +1,7 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
 
+from __future__ import annotations
+
 from . import (
     ENERGY_DATA_BLOCK_NAME,
     ENERGY_MANAGEMENT_SETTINGS_REGISTERS,
@@ -329,7 +331,7 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_COOLING_HP_3 = 3586
 
 
-WPM_SYSTEM_VALUES_REGISTERS = {
+WPM_SYSTEM_VALUES_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_FE7: ModbusRegister(
         address=501, name="ACTUAL TEMPERATURE FE7", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_FE7
     ),
@@ -582,7 +584,7 @@ WPM_SYSTEM_VALUES_REGISTERS = {
     ),
 }
 
-WPM_SYSTEM_PARAMETERS_REGISTERS = {
+WPM_SYSTEM_PARAMETERS_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     WpmSystemParametersRegisters.OPERATING_MODE: ModbusRegister(address=1501, name="OPERATING MODE", unit="", min=0.0, max=5.0, data_type=8, key=WpmSystemParametersRegisters.OPERATING_MODE),
     WpmSystemParametersRegisters.COMFORT_TEMPERATURE_HK_1: ModbusRegister(
         address=1502, name="COMFORT TEMPERATURE", unit="°C", min=5.0, max=30.0, data_type=2, key=WpmSystemParametersRegisters.COMFORT_TEMPERATURE_HK_1
@@ -647,7 +649,7 @@ WPM_SYSTEM_PARAMETERS_REGISTERS = {
     ),
 }
 
-WPM_SYSTEM_STATE_REGISTERS = {
+WPM_SYSTEM_STATE_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     WpmSystemStateRegisters.OPERATING_STATUS: ModbusRegister(address=2501, name="OPERATING STATUS", unit="", min=None, max=None, data_type=6, key=WpmSystemStateRegisters.OPERATING_STATUS),
     WpmSystemStateRegisters.POWER_OFF: ModbusRegister(address=2502, name="POWER OFF", unit="", min=None, max=None, data_type=8, key=WpmSystemStateRegisters.POWER_OFF),
     WpmSystemStateRegisters.OPERATING_STATUS_WPM_3: ModbusRegister(address=2503, name="OPERATING STATUS", unit="", min=None, max=None, data_type=6, key=WpmSystemStateRegisters.OPERATING_STATUS_WPM_3),
@@ -723,7 +725,7 @@ WPM_SYSTEM_STATE_REGISTERS = {
     WpmSystemStateRegisters.COMPRESSOR_6: ModbusRegister(address=2547, name="COMPRESSOR 6", unit="", min=0.0, max=1.0, data_type=6, key=WpmSystemStateRegisters.COMPRESSOR_6),
 }
 
-WPM_ENERGY_DATA_REGISTERS = {
+WPM_ENERGY_DATA_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     WpmEnergyDataRegisters.VD_HEATING_DAY: ModbusRegister(address=3501, name="VD HEATING DAY", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmEnergyDataRegisters.VD_HEATING_DAY),
     WpmEnergyDataRegisters.VD_HEATING_TOTAL_LOW: ModbusRegister(address=3502, name="VD HEATING TOTAL", unit="kWh", min=0.0, max=999.0, data_type=6, key=WpmEnergyDataRegisters.VD_HEATING_TOTAL_LOW),
     WpmEnergyDataRegisters.VD_HEATING_TOTAL_HI: ModbusRegister(address=3503, name="VD HEATING TOTAL", unit="MWh", min=0.0, max=65535.0, data_type=6, key=WpmEnergyDataRegisters.VD_HEATING_TOTAL_HI),
@@ -889,7 +891,7 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
             device_id,
         )
 
-    async def async_update(self):
+    async def async_update(self) -> None:
         """Request current values from heat pump."""
         await super().async_update()
         for registerblock in self._register_blocks:

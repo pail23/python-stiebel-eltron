@@ -8,6 +8,8 @@ twisted library as its backend.  This allows it to scale to many thousands
 of nodes which can be helpful for testing monitoring software.
 """
 
+from __future__ import annotations
+
 # --------------------------------------------------------------------------- #
 # import the various server implementations
 # --------------------------------------------------------------------------- #
@@ -27,7 +29,7 @@ class MockModbusServer(object):
     log = logging.getLogger()
     log.setLevel(logging.DEBUG)
 
-    def run_async_server(self):
+    def run_async_server(self) -> None:
         # ----------------------------------------------------------------------- #
         # initialize your data store
         # ----------------------------------------------------------------------- #
@@ -105,10 +107,10 @@ class MockModbusServer(object):
         # TCP Server
         StartTcpServer(self.context, identity=identity, address=("localhost", 5020))
 
-    def stop_async_server(self):
+    def stop_async_server(self) -> None:
         ServerStop()
 
-    def update_context(self, register, address, values):
+    def update_context(self, register: int, address: int, values: list[int]) -> None:
         """Update values of the active context. It should be noted
         that there is a race condition for the update.
 
@@ -124,7 +126,7 @@ class MockModbusServer(object):
         self.log.debug("Change value at address {} from {} to {}".format(address, old_values, values))
         self.context[device_id].setValues(register, address, values)
 
-    def update_holding_register(self, address, value):
+    def update_holding_register(self, address: int, value: float) -> None:
         """Update value of a holding register.
 
         :param address: Address to update
@@ -133,7 +135,7 @@ class MockModbusServer(object):
         self.log.debug("Update holding register: {}:{}".format(address, int(value)))
         self.update_context(3, address, [int(value)])
 
-    def update_input_register(self, address, value):
+    def update_input_register(self, address: int, value: float) -> None:
         """Update value of an input register.
 
         :param address: Address to update

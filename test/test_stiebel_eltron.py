@@ -1,19 +1,22 @@
+from __future__ import annotations
+
 import pytest
 from pymodbus.pdu.register_message import (
     ReadInputRegistersResponse,
 )
+from pytest_mock import MockerFixture
 
 from pystiebeleltron.lwz import LwzEnergyDataRegisters, LwzStiebelEltronAPI, LwzSystemValuesRegisters, OperatingMode
 from pystiebeleltron.wpm import WpmEnergyDataRegisters, WpmStiebelEltronAPI, WpmSystemValuesRegisters
 
 
-async def read_registers(client, address: int, *, count: int = 1, device_id: int = 0, no_response_expected: bool = False) -> ReadInputRegistersResponse:
+async def read_registers(client: object, address: int, *, count: int = 1, device_id: int = 0, no_response_expected: bool = False) -> ReadInputRegistersResponse:
     """Read a slice from the input register."""
     return ReadInputRegistersResponse(address=address, count=count, registers=list(range(count)))
 
 
 @pytest.mark.asyncio()
-async def test_wpm(mocker):
+async def test_wpm(mocker: MockerFixture) -> None:
     api = WpmStiebelEltronAPI("localhost")
     mock_connect = mocker.patch("pymodbus.client.AsyncModbusTcpClient.connect")
     mock_close = mocker.patch("pymodbus.client.AsyncModbusTcpClient.close")
@@ -34,7 +37,7 @@ async def test_wpm(mocker):
 
 
 @pytest.mark.asyncio()
-async def test_lwz(mocker):
+async def test_lwz(mocker: MockerFixture) -> None:
     api = LwzStiebelEltronAPI("localhost")
     mock_connect = mocker.patch("pymodbus.client.AsyncModbusTcpClient.connect")
     mock_close = mocker.patch("pymodbus.client.AsyncModbusTcpClient.close")

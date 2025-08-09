@@ -1,4 +1,6 @@
 """Modbus api for stiebel eltron heat pumps. This file is generated. Do not modify it manually."""
+from __future__ import annotations
+
 from . import ModbusRegister, ModbusRegisterBlock, StiebelEltronAPI, IsgRegisters, RegisterType, ENERGY_DATA_BLOCK_NAME, VIRTUAL_REGISTER_OFFSET, ENERGY_MANAGEMENT_SETTINGS_REGISTERS, ENERGY_SYSTEM_INFORMATION_REGISTERS, VIRTUAL_TOTAL_AND_DAY_REGISTER_OFFSET
 
 {% for registerblock in registers %}
@@ -12,7 +14,7 @@ class {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers(Isg
 
 
 {% for registerblock in registers %}
-{{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS = {
+{{heatpump_type.upper()}}_{{python_name(registerblock["name"]).upper()}}_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
 {% for register in registerblock["register_block"] %}
     {{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1], register[11])}}: ModbusRegister(address={{register[0]}}, name="{{register[1]}}", unit="{{register[9]}}", min={{float_or_none(register[6])}}, max={{float_or_none(register[7])}}, data_type={{register[8]}}, key={{heatpump_type}}{{python_class_name(registerblock["name"])}}Registers.{{python_name(register[1], register[11])}}),{% endfor %}
 }
@@ -30,7 +32,7 @@ class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
             ],
             host, port, device_id)
 
-    async def async_update(self):
+    async def async_update(self) -> None:
         """Request current values from heat pump."""
         await super().async_update()
         for registerblock in self._register_blocks:
@@ -57,4 +59,3 @@ class {{heatpump_type}}StiebelEltronAPI(StiebelEltronAPI):
                             low_value = self._data.get(low_key)
                             if high_value is not None and low_value is not None:
                                 self._data[{{heatpump_type}}{{python_class_name(ENERGY_DATA_BLOCK_NAME)}}Registers(register)] = high_value * 1000 + low_value
-

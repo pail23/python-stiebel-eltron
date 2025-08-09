@@ -17,7 +17,10 @@ type | range      | for reading | for writing |        | size 1 | size 5
 8    | 0 to 255   | 1           | 1           | No     | 1      | 5
 """
 
+from __future__ import annotations
+
 from pymodbus.client.mixin import ModbusClientMixin
+from pymodbus.pdu import ModbusPDU
 
 # Error - sensor lead is missing or disconnected.
 ERROR_NOTAVAILABLE = -60
@@ -156,7 +159,7 @@ B3_BUS_STATUS = {"STATUS OK": 0, "STATUS ERROR": -1, "ERROR-PASSIVE": -2, "BUS-O
 class StiebelEltronAPI:
     """Stiebel Eltron API."""
 
-    def __init__(self, conn: ModbusClientMixin, device_id=1, update_on_read=False):
+    def __init__(self, conn: ModbusClientMixin[ModbusPDU], device_id: int = 1, update_on_read: bool = False) -> None:
         """Initialize Stiebel Eltron communication."""
         self._conn = conn
         self._block_1_input_regs = B1_REGMAP_INPUT
@@ -165,7 +168,7 @@ class StiebelEltronAPI:
         self._device_id = device_id
         self._update_on_read = update_on_read
 
-    def update(self):
+    def update(self) -> bool:
         """Request current values from heat pump."""
         ret = True
         try:
@@ -189,7 +192,7 @@ class StiebelEltronAPI:
 
         return ret
 
-    def get_conv_val(self, name: str):
+    def get_conv_val(self, name: str) -> float | int | None:
         """Read and convert value.
 
         Args:
@@ -234,23 +237,23 @@ class StiebelEltronAPI:
 
     # Handle room temperature & humidity
 
-    def get_current_temp(self):
+    def get_current_temp(self) -> float | None:
         """Get the current room temperature."""
         if self._update_on_read:
             self.update()
         return self.get_conv_val("ACTUAL_ROOM_TEMPERATURE_HC1")
 
-    def get_target_temp(self):
+    def get_target_temp(self) -> float | None:
         """Get the target room temperature."""
         if self._update_on_read:
             self.update()
         return self.get_conv_val("ROOM_TEMP_HEAT_DAY_HC1")
 
-    def set_target_temp(self, temp: float):
+    def set_target_temp(self, temp: float) -> None:
         """Set the target room temperature (day)(HC1)."""
         self._conn.write_register(device_id=self._device_id, address=(self._block_2_holding_regs["ROOM_TEMP_HEAT_DAY_HC1"]["addr"]), value=round(temp * 10.0))
 
-    def get_current_humidity(self):
+    def get_current_humidity(self) -> float | None:
         """Get the current room humidity."""
         if self._update_on_read:
             self.update()
@@ -258,36 +261,48 @@ class StiebelEltronAPI:
 
     # Handle operation mode
 
-    def get_operation(self):
+    def get_operation(self) -> str:
         """Return the current mode of operation."""
         if self._update_on_read:
             self.update()
 
         op_mode = self.get_conv_val("OPERATING_MODE")
-        return B2_OPERATING_MODE_READ.get(op_mode, "UNKNOWN")
+        return B2_OPERATING_MODE_READ.get(int(op_mode) if op_mode is not None else -1, "UNKNOWN")
 
-    def set_operation(self, mode: str):
+    def set_operation(self, mode: str) -> None:
         """Set the operation mode."""
-        self._conn.write_register(device_id=self._device_id, address=(self._block_2_holding_regs["OPERATING_MODE"]["addr"]), value=B2_OPERATING_MODE_WRITE.get(mode))
+        value = B2_OPERATING_MODE_WRITE.get(mode)
+        if value is None:
+            raise ValueError(f"Invalid operation mode: {mode}")
+        self._conn.write_register(device_id=self._device_id, address=(self._block_2_holding_regs["OPERATING_MODE"]["addr"]), value=value)
 
     # Handle device status
 
-    def get_heating_status(self):
+    def get_heating_status(self) -> bool:
         """Return heater status."""
         if self._update_on_read:
             self.update()
-        return bool(self.get_conv_val("OPERATING_STATUS") & B3_OPERATING_STATUS["HEATING"])
+        val = self.get_conv_val("OPERATING_STATUS")
+        if val is None:
+            return False
+        return bool(int(val) & B3_OPERATING_STATUS["HEATING"])
 
-    def get_cooling_status(self):
+    def get_cooling_status(self) -> bool:
         """Cooling status."""
         if self._update_on_read:
             self.update()
-        return bool(self.get_conv_val("OPERATING_STATUS") & B3_OPERATING_STATUS["COOLING"])
+        val = self.get_conv_val("OPERATING_STATUS")
+        if val is None:
+            return False
+        return bool(int(val) & B3_OPERATING_STATUS["COOLING"])
 
-    def get_filter_alarm_status(self):
+    def get_filter_alarm_status(self) -> bool:
         """Return filter alarm."""
         if self._update_on_read:
             self.update()
 
         filter_mask = B3_OPERATING_STATUS["FILTER"] | B3_OPERATING_STATUS["FILTER_EXTRACT_AIR"] | B3_OPERATING_STATUS["FILTER_VENTILATION_AIR"]
-        return bool(self.get_conv_val("OPERATING_STATUS") & filter_mask)
+        val = self.get_conv_val("OPERATING_STATUS")
+        if val is None:
+            return False
+        return bool(int(val) & filter_mask)

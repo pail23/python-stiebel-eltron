@@ -27,6 +27,8 @@ jobs:
       run: uv sync --locked --all-extras --dev
     - name: Run Ruff
       run: uvx ruff check . --output-format=github
+    - name: Run type checks
+      run: uv run mypy pystiebeleltron --show-error-codes --pretty
     - name: Run tests
       run: |
         uv run pytest \
