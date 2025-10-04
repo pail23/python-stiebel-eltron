@@ -27,23 +27,27 @@ You need to have [Python](https://www.python.org) installed.
 The package is available in the [Python Package Index](https://pypi.python.org/).
 
 ```bash
-    $ pip install python-stiebel-eltron
+    $ pip install pystiebeleltron
 ```
 
 ## Example usage of the module
 The sample below shows how to use this Python module (api for wpm heat pumps).
 
 ```python
+    import asyncio
     from pystiebeleltron.wpm import WpmStiebelEltronAPI, WpmSystemParametersRegisters
 
-    api = WpmStiebelEltronAPI('IP_ADDRESS_ISG')
-    await api.connect()
+    async def main():
+      api = WpmStiebelEltronAPI('IP_ADDRESS_ISG')
+      await api.connect()
 
-    await api.async_update()
+      await api.async_update()
 
-    print("water comfort target temperature: {}".format(api.get_register_value(WpmSystemParametersRegisters.COMFORT_TEMPERATURE)))
+      print("water comfort target temperature: {}".format(api.get_register_value(WpmSystemParametersRegisters.COMFORT_TEMPERATURE)))
 
-    await api.close()
+      await api.close()
+
+    asyncio.run(main())
 ```
 
 ## Example usage of the module
