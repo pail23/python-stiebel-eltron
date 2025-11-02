@@ -187,8 +187,6 @@ class StiebelEltronAPI:
     @property
     def is_connected(self) -> bool:
         """Check modbus client connection status."""
-        if self._client is None:
-            return False
         return self._client.connected
 
     @property
