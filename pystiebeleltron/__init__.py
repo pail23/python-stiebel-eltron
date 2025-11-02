@@ -111,7 +111,7 @@ def get_register_descriptor(descriptors: list[ModbusRegister], address: int) -> 
 class StiebelEltronModbusError(Exception):
     """Exception during modbus communication."""
 
-    def __init(self) -> None:
+    def __init__(self) -> None:
         """Initialize the error."""
         super().__init__("Data error on the modbus")
 
