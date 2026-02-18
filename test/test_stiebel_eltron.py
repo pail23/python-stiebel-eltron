@@ -6,7 +6,7 @@ from pymodbus.pdu.register_message import (
 )
 from pytest_mock import MockerFixture
 
-from pystiebeleltron import ControllerModel, get_controller_model, StiebelEltronModbusError
+from pystiebeleltron import ControllerModel, StiebelEltronModbusError, get_controller_model
 from pystiebeleltron.lwz import LwzEnergyDataRegisters, LwzStiebelEltronAPI, LwzSystemValuesRegisters, OperatingMode
 from pystiebeleltron.wpm import WpmEnergyDataRegisters, WpmStiebelEltronAPI, WpmSystemValuesRegisters
 
