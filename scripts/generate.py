@@ -18,6 +18,8 @@ class ModbusFile:
     name: str
     path: Path
     register_type: RegisterType
+    base_address_override: int | None = None
+    count_override: int | None = None
 
 
 def python_name(name: str, suffix: str = "") -> str:
@@ -74,11 +76,13 @@ def generate_heatpump(
             data = list(reader)
 
         api_data = data[1:]
+        base_address = modbus_file.base_address_override if modbus_file.base_address_override is not None else get_base_address(api_data)
+        count = modbus_file.count_override if modbus_file.count_override is not None else get_block_len(api_data)
         register_blocks.append(
             {
                 "name": modbus_file.name,
-                "count": get_block_len(api_data),
-                "base_address": get_base_address(api_data),
+                "count": count,
+                "base_address": base_address,
                 "register_block": api_data,
                 "register_type": modbus_file.register_type,
             }
@@ -124,6 +128,13 @@ def main() -> None:
             name="Energy Data",
             path=root / "api/wpm_energy_data.csv",
             register_type=RegisterType.INPUT_REGISTER,
+        ),
+        ModbusFile(
+            name="Power Consumption",
+            path=root / "api/wpm_power_consumption.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+            base_address_override=3699,
+            count_override=26,
         ),
     ]
     generate_heatpump(root, wpm_template, wpm_modbus_files, "Wpm")
