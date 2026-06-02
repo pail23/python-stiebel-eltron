@@ -331,6 +331,24 @@ class WpmEnergyDataRegisters(IsgRegisters):
     VD_COOLING_HP_3 = 3586
 
 
+class WpmPowerConsumptionRegisters(IsgRegisters):
+    """Undocumented WPM power consumption statistic registers (Modbus 3700-3725).
+
+    These values match the Servicewelt POWER CONSUMPTION screen.
+    """
+
+    HEATING_24H = 3708
+    HEATING_12M_FRACTION = 3710
+    HEATING_12M_WHOLE = 3711
+    COOLING_24H_FRACTION = 3714
+    COOLING_24H_WHOLE = 3715
+    COOLING_12M = 3716
+    DHW_24H_FRACTION = 3720
+    DHW_24H_WHOLE = 3721
+    DHW_12M_FRACTION = 3722
+    DHW_12M_WHOLE = 3723
+
+
 WPM_SYSTEM_VALUES_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_FE7: ModbusRegister(
         address=501, name="ACTUAL TEMPERATURE FE7", unit="°C", min=None, max=None, data_type=2, key=WpmSystemValuesRegisters.ACTUAL_TEMPERATURE_FE7
@@ -874,6 +892,35 @@ WPM_ENERGY_DATA_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
     WpmEnergyDataRegisters.VD_COOLING_HP_3: ModbusRegister(address=3586, name="VD COOLING", unit="h", min=None, max=None, data_type=6, key=WpmEnergyDataRegisters.VD_COOLING_HP_3),
 }
 
+WPM_POWER_CONSUMPTION_REGISTERS: dict[IsgRegisters, ModbusRegister] = {
+    WpmPowerConsumptionRegisters.HEATING_24H: ModbusRegister(address=3708, name="VD HEATING POWER 24H", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.HEATING_24H),
+    WpmPowerConsumptionRegisters.HEATING_12M_FRACTION: ModbusRegister(
+        address=3710, name="VD HEATING POWER 12M FRACTION", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.HEATING_12M_FRACTION
+    ),
+    WpmPowerConsumptionRegisters.HEATING_12M_WHOLE: ModbusRegister(
+        address=3711, name="VD HEATING POWER 12M WHOLE", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.HEATING_12M_WHOLE
+    ),
+    WpmPowerConsumptionRegisters.COOLING_24H_FRACTION: ModbusRegister(
+        address=3714, name="VD COOLING POWER 24H FRACTION", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.COOLING_24H_FRACTION
+    ),
+    WpmPowerConsumptionRegisters.COOLING_24H_WHOLE: ModbusRegister(
+        address=3715, name="VD COOLING POWER 24H WHOLE", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.COOLING_24H_WHOLE
+    ),
+    WpmPowerConsumptionRegisters.COOLING_12M: ModbusRegister(address=3716, name="VD COOLING POWER 12M", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.COOLING_12M),
+    WpmPowerConsumptionRegisters.DHW_24H_FRACTION: ModbusRegister(
+        address=3720, name="VD DHW POWER 24H FRACTION", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.DHW_24H_FRACTION
+    ),
+    WpmPowerConsumptionRegisters.DHW_24H_WHOLE: ModbusRegister(
+        address=3721, name="VD DHW POWER 24H WHOLE", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.DHW_24H_WHOLE
+    ),
+    WpmPowerConsumptionRegisters.DHW_12M_FRACTION: ModbusRegister(
+        address=3722, name="VD DHW POWER 12M FRACTION", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.DHW_12M_FRACTION
+    ),
+    WpmPowerConsumptionRegisters.DHW_12M_WHOLE: ModbusRegister(
+        address=3723, name="VD DHW POWER 12M WHOLE", unit="kWh", min=0.0, max=65535.0, data_type=6, key=WpmPowerConsumptionRegisters.DHW_12M_WHOLE
+    ),
+}
+
 
 class WpmStiebelEltronAPI(StiebelEltronAPI):
     def __init__(self, host: str, port: int = 502, device_id: int = 1) -> None:
@@ -883,6 +930,7 @@ class WpmStiebelEltronAPI(StiebelEltronAPI):
                 ModbusRegisterBlock(base_address=1500, count=52, name="System Parameters", registers=WPM_SYSTEM_PARAMETERS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
                 ModbusRegisterBlock(base_address=2500, count=47, name="System State", registers=WPM_SYSTEM_STATE_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=3500, count=86, name="Energy Data", registers=WPM_ENERGY_DATA_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
+                ModbusRegisterBlock(base_address=3699, count=26, name="Power Consumption Statistics", registers=WPM_POWER_CONSUMPTION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
                 ModbusRegisterBlock(base_address=4000, count=3, name="Energy Management Settings", registers=ENERGY_MANAGEMENT_SETTINGS_REGISTERS, register_type=RegisterType.HOLDING_REGISTER),
                 ModbusRegisterBlock(base_address=5000, count=2, name="Energy System Information", registers=ENERGY_SYSTEM_INFORMATION_REGISTERS, register_type=RegisterType.INPUT_REGISTER),
             ],

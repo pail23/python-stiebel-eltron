@@ -8,7 +8,7 @@ from pytest_mock import MockerFixture
 
 from pystiebeleltron import ControllerModel, StiebelEltronModbusError, get_controller_model
 from pystiebeleltron.lwz import LwzEnergyDataRegisters, LwzStiebelEltronAPI, LwzSystemValuesRegisters, OperatingMode
-from pystiebeleltron.wpm import WpmEnergyDataRegisters, WpmStiebelEltronAPI, WpmSystemValuesRegisters
+from pystiebeleltron.wpm import WpmEnergyDataRegisters, WpmPowerConsumptionRegisters, WpmStiebelEltronAPI, WpmSystemValuesRegisters
 
 
 async def read_registers(client: object, address: int, *, count: int = 1, device_id: int = 0, no_response_expected: bool = False) -> ReadInputRegistersResponse:
@@ -35,6 +35,31 @@ async def test_wpm(mocker: MockerFixture) -> None:
 
     await api.close()
     mock_close.assert_called_once()
+
+
+@pytest.mark.asyncio()
+async def test_wpm_power_consumption_registers(mocker: MockerFixture) -> None:
+    api = WpmStiebelEltronAPI("localhost")
+    mocker.patch("pymodbus.client.AsyncModbusTcpClient.connect")
+    mocker.patch("pymodbus.client.AsyncModbusTcpClient.close")
+    mocker.patch("pymodbus.client.AsyncModbusTcpClient.read_holding_registers", read_registers)
+    mocker.patch("pymodbus.client.AsyncModbusTcpClient.read_input_registers", read_registers)
+
+    await api.connect()
+    await api.async_update()
+
+    # Block base_address=3699, count=26 → registers[i] = i for i in 0..25
+    # Address = base_address + 1 + i, so register at address 3708 is index 8 → value 8
+    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_24H) == 8
+    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_12M_FRACTION) == 10
+    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_12M_WHOLE) == 11
+    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_24H_FRACTION) == 14
+    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_24H_WHOLE) == 15
+    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_12M) == 16
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_24H_FRACTION) == 20
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_24H_WHOLE) == 21
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_12M_FRACTION) == 22
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_12M_WHOLE) == 23
 
 
 @pytest.mark.asyncio()
