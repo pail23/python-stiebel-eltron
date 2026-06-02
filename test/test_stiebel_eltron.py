@@ -48,18 +48,18 @@ async def test_wpm_power_consumption_registers(mocker: MockerFixture) -> None:
     await api.connect()
     await api.async_update()
 
-    # Block base_address=3699, count=26 → registers[i] = i for i in 0..25
-    # Address = base_address + 1 + i, so register at address 3708 is index 8 → value 8
-    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_24H) == 8
-    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_12M_FRACTION) == 10
-    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_12M_WHOLE) == 11
-    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_24H_FRACTION) == 14
-    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_24H_WHOLE) == 15
-    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_12M) == 16
-    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_24H_FRACTION) == 20
-    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_24H_WHOLE) == 21
-    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_12M_FRACTION) == 22
-    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_12M_WHOLE) == 23
+    # Block base_address=3707, count=16 → registers[i] = i for i in 0..15
+    # Address = base_address + 1 + i, so register at address 3708 is index 0 → value 0
+    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_24H) == 0
+    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_12M_FRACTION) == 2
+    assert api.get_register_value(WpmPowerConsumptionRegisters.HEATING_12M_WHOLE) == 3
+    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_24H_FRACTION) == 6
+    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_24H_WHOLE) == 7
+    assert api.get_register_value(WpmPowerConsumptionRegisters.COOLING_12M) == 8
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_24H_FRACTION) == 12
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_24H_WHOLE) == 13
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_12M_FRACTION) == 14
+    assert api.get_register_value(WpmPowerConsumptionRegisters.DHW_12M_WHOLE) == 15
 
 
 @pytest.mark.asyncio()
