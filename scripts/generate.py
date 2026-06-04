@@ -74,11 +74,13 @@ def generate_heatpump(
             data = list(reader)
 
         api_data = data[1:]
+        base_address = get_base_address(api_data)
+        count = get_block_len(api_data)
         register_blocks.append(
             {
                 "name": modbus_file.name,
-                "count": get_block_len(api_data),
-                "base_address": get_base_address(api_data),
+                "count": count,
+                "base_address": base_address,
                 "register_block": api_data,
                 "register_type": modbus_file.register_type,
             }
@@ -123,6 +125,11 @@ def main() -> None:
         ModbusFile(
             name="Energy Data",
             path=root / "api/wpm_energy_data.csv",
+            register_type=RegisterType.INPUT_REGISTER,
+        ),
+        ModbusFile(
+            name="Power Consumption",
+            path=root / "api/wpm_power_consumption.csv",
             register_type=RegisterType.INPUT_REGISTER,
         ),
     ]

@@ -1,0 +1,11 @@
+Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Max. value,Data type,Unit,Write/ read (w/r),Suffix
+3708,HEATING 24H,x,x,x,Power consumption - heating 24h,0,65535,6,kWh,r,
+3710,HEATING 12M FRACTION,x,x,x,Power consumption - heating 12m fraction,0,65535,6,kWh,r,
+3711,HEATING 12M WHOLE,x,x,x,Power consumption - heating 12m whole,0,65535,6,kWh,r,
+3714,COOLING 24H FRACTION,x,x,x,Power consumption - cooling 24h fraction,0,65535,6,kWh,r,
+3715,COOLING 24H WHOLE,x,x,x,Power consumption - cooling 24h whole,0,65535,6,kWh,r,
+3716,COOLING 12M,x,x,x,Power consumption - cooling 12m,0,65535,6,kWh,r,
+3720,DHW 24H FRACTION,x,x,x,Power consumption - DHW 24h fraction,0,65535,6,kWh,r,
+3721,DHW 24H WHOLE,x,x,x,Power consumption - DHW 24h whole,0,65535,6,kWh,r,
+3722,DHW 12M FRACTION,x,x,x,Power consumption - DHW 12m fraction,0,65535,6,kWh,r,
+3723,DHW 12M WHOLE,x,x,x,Power consumption - DHW 12m whole,0,65535,6,kWh,r,
