@@ -1,5 +1,5 @@
 <p align=center>
-    <img src="https://www.stiebel-eltron.de/apps/ste/docroot/images/single/logo-stiebel-eltron.png"/>
+    <img src="https://www.stiebel-eltron.de/content/dam/ste/logo-stiebel-eltron.svg"/>
 </p>
 <p align=center>
     <a href="https://pypi.org/project/pystiebeleltron/"><img src="https://img.shields.io/pypi/v/pystiebeleltron.svg"/></a>
