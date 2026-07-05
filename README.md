@@ -50,24 +50,6 @@ The sample below shows how to use this Python module (api for wpm heat pumps).
     asyncio.run(main())
 ```
 
-## Example usage of the module
-The sample below shows how to use this Python module (old api for lwz heat pumps).
-
-```python
-    from pystiebeleltron import pystiebeleltron as pyse
-    from pymodbus.client.sync import ModbusTcpClient as ModbusClient
-
-    client = ModbusClient(host='IP_ADDRESS_ISG', port=502, timeout=2)
-    client.connect()
-
-    unit = pyse.StiebelEltronAPI(client, 1)
-    unit.update()
-
-    print("get_target_temp: {}".format(unit.get_target_temp))
-
-    client.close()
-```
-
 ## License
 
 ``python-stiebel-eltron`` is licensed under MIT, for more details check LICENSE.
