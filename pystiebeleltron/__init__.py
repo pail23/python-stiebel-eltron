@@ -7,7 +7,7 @@ from typing import Any
 from modbus_connection import ModbusError, ModbusUnit
 from modbus_connection.model import Component, RegisterField, WriteValidator, integer
 
-__version__ = "0.4.0"
+__version__ = "0.5.0"
 
 _LOGGER = logging.getLogger(__package__)
 
