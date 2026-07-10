@@ -26,7 +26,7 @@ from modbus_connection import ModbusError, ModbusUnit
 from modbus_connection.cli_helper import CountingUnit, add_connection_args, connect_from_args, print_component
 from modbus_connection.model import Component, RepeatingGroupField
 
-from pystiebeleltron import StiebelEltronModbusError, get_controller_model
+from pystiebeleltron import StiebelEltronModbusError, UnknownControllerModelError, get_controller_model
 from pystiebeleltron.lwz import LwzStiebelEltronAPI
 from pystiebeleltron.wpm import WpmStiebelEltronAPI
 
@@ -90,7 +90,7 @@ async def _run(args: argparse.Namespace) -> int:
         start = time.monotonic()
         await api.async_update()
         elapsed = time.monotonic() - start
-    except (ModbusError, StiebelEltronModbusError) as err:
+    except (ModbusError, StiebelEltronModbusError, UnknownControllerModelError) as err:
         print(f"Error reading device: {err}", file=sys.stderr)
         return 1
     finally:
