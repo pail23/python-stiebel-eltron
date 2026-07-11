@@ -10,7 +10,7 @@ from modbus_connection.model import Component, ComponentGroup, gauge, integer
 from . import UNAVAILABLE, EnergyManagementSettings, EnergySystemInformation, in_range, scaled_sum
 
 LWZ_HOLDING_RANGES = ((1000, 1026), (4000, 4002))
-LWZ_INPUT_RANGES = ((0, 33), (2000, 2004), (3000, 3031), (5000, 5001))
+LWZ_INPUT_RANGES = ((0, 33), (2000, 2004), (3000, 3697), (5000, 5001))
 
 
 class OperatingMode(Enum):
@@ -144,6 +144,12 @@ class LwzEnergyData(Component):
     compressor_dhw = integer(3029, signed=False, nan=UNAVAILABLE, unit="h")
     elec_booster_heating = integer(3030, signed=False, nan=UNAVAILABLE, unit="h")
     elec_booster_dhw = integer(3031, signed=False, nan=UNAVAILABLE, unit="h")
+    inverter_power = gauge(3679, 0.01, nan=UNAVAILABLE, unit="kW")
+    efficiency_heating_1_24_h = scaled_sum(3689, (1, 1000), unit="")
+    efficiency_heating_13_24_m = scaled_sum(3691, (1, 1000), unit="")
+    efficiency_cooling_1_12_m = scaled_sum(3693, (1, 1000), unit="")
+    efficiency_dhw_1_24_h = scaled_sum(3695, (1, 1000), unit="")
+    efficiency_dhw_13_24_m = scaled_sum(3697, (1, 1000), unit="")
 
     _DAY_AND_TOTAL = (
         ("heat_meter_htg_day", "heat_meter_htg_ttl", "heat_meter_htg_day_and_total"),

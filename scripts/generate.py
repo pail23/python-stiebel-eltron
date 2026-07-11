@@ -95,7 +95,6 @@ WPM = Controller(
         Block("System Parameters", "wpm_system_parameters.csv", "holding"),
         Block("System State", "wpm_system_state.csv", "input"),
         Block("Energy Data", "wpm_energy_data.csv", "input", energy=True),
-        Block("Power Consumption", "wpm_power_consumption.csv", "input"),
     ],
 )
 
@@ -121,7 +120,9 @@ SHARED_HOLDING_RANGE = (4000, 4002)  # EnergyManagementSettings
 def python_name(name: str, suffix: str = "") -> str:
     """A register's enum/attribute stem, suffix-disambiguated (pre-lowercasing)."""
     result = name.strip() if suffix == "" else name + "_" + suffix.strip()
-    return result.replace(" ", "_")
+    for c in "–- /":
+        result = result.replace(c, "_")
+    return result.replace(".", "")
 
 
 def attr(name: str, suffix: str = "") -> str:
