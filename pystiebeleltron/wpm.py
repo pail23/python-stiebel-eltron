@@ -7,8 +7,8 @@ from modbus_connection.model import Component, ComponentGroup, gauge, integer, r
 
 from . import UNAVAILABLE, EnergyManagementSettings, EnergySystemInformation, in_range, scaled_sum
 
-WPM_HOLDING_RANGES = ((1500, 1551), (4000, 4002))
-WPM_INPUT_RANGES = ((500, 609), (2500, 2546), (3500, 3585), (3707, 3722), (5000, 5001))
+WPM_HOLDING_RANGES = ((1500, 1751), (4000, 4277))
+WPM_INPUT_RANGES = ((500, 609), (2500, 2572), (3500, 3733), (5000, 5230))
 
 
 class WpmHeatPumpModule(Component):
@@ -121,9 +121,29 @@ class WpmSystemParameters(Component):
     set_room_temperature_fan = gauge(1518, 0.1, nan=UNAVAILABLE, unit="°C", writable=in_range(20, 30))
     reset = integer(1519, signed=False, nan=UNAVAILABLE, writable=in_range(1, 3))
     restart_isg = integer(1520, signed=False, nan=UNAVAILABLE, writable=in_range(0, 2))
-    comfort_temperature_hk_3 = gauge(1549, 0.1, nan=UNAVAILABLE, unit="°C", writable=in_range(5, 30))
-    eco_temperature_hk_3 = gauge(1550, 0.1, nan=UNAVAILABLE, unit="°C", writable=in_range(5, 30))
-    heating_curve_rise_hk_3 = gauge(1551, 0.01, nan=UNAVAILABLE, writable=in_range(0, 3))
+    comfort_temperature_hk_3 = gauge(1550, 0.1, nan=UNAVAILABLE, unit="°C", writable=in_range(5, 30))
+    eco_temperature_hk_3 = gauge(1551, 0.1, nan=UNAVAILABLE, unit="°C", writable=in_range(5, 30))
+    heating_curve_rise_hk_3 = gauge(1552, 0.01, nan=UNAVAILABLE, writable=True)
+    comfort_temperature_hk_4 = gauge(1553, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    eco_temperature_hk_4 = gauge(1554, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    heating_curve_rise_hk_4 = gauge(1555, 0.01, nan=UNAVAILABLE, writable=True)
+    comfort_temperature_hk_5 = gauge(1556, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    eco_temperature_hk_5 = gauge(1557, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    heating_curve_rise_hk_5 = gauge(1558, 0.01, nan=UNAVAILABLE, writable=True)
+    set_temperature_cc_1_hk_1 = gauge(1603, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_temperature_cc_2_hk_2 = gauge(1604, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_temperature_cc_3_hk_3 = gauge(1605, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_temperature_cc_4_hk_4 = gauge(1606, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_temperature_cc_5_hk_5 = gauge(1607, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_flow_temperature_cc_1_hk_1 = gauge(1703, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_flow_temperature_cc_2_hk_2 = gauge(1704, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_flow_temperature_cc_3_hk_3 = gauge(1705, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_flow_temperature_cc_4_hk_4 = gauge(1706, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_flow_temperature_cc_5_hk_5 = gauge(1707, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    set_flow_temperature_fan_cooling = gauge(1708, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    summer_mode_auto_ = integer(1749, signed=False, nan=UNAVAILABLE)
+    outside_temperature_summer_mode = gauge(1750, 0.1, nan=UNAVAILABLE, unit="°C")
+    summer_mode_building_heat_buffer = gauge(1751, 0.1, nan=UNAVAILABLE, unit="°C")
 
 
 class WpmSystemState(Component):
@@ -177,6 +197,16 @@ class WpmSystemState(Component):
     compressor_4 = integer(2544, signed=False, nan=UNAVAILABLE)
     compressor_5 = integer(2545, signed=False, nan=UNAVAILABLE)
     compressor_6 = integer(2546, signed=False, nan=UNAVAILABLE)
+    source_pump_1 = integer(2560, signed=False, nan=UNAVAILABLE)
+    source_pump_2 = integer(2561, signed=False, nan=UNAVAILABLE)
+    source_pump_3 = integer(2562, signed=False, nan=UNAVAILABLE)
+    source_pump_4 = integer(2563, signed=False, nan=UNAVAILABLE)
+    source_pump_5 = integer(2564, signed=False, nan=UNAVAILABLE)
+    source_pump_6 = integer(2565, signed=False, nan=UNAVAILABLE)
+    extension_version = integer(2569, signed=False, nan=UNAVAILABLE)
+    major_version = integer(2570, signed=False, nan=UNAVAILABLE)
+    minor_version = integer(2571, signed=False, nan=UNAVAILABLE)
+    revision = integer(2572, signed=False, nan=UNAVAILABLE)
 
 
 class WpmEnergyData(Component):
@@ -249,6 +279,96 @@ class WpmEnergyData(Component):
     vd_2_dhw_hp_3 = integer(3583, signed=False, nan=UNAVAILABLE, unit="h")
     vd_1_2_dhw_hp_3 = integer(3584, signed=False, nan=UNAVAILABLE, unit="h")
     vd_cooling_hp_3 = integer(3585, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_day_hp_4 = integer(3586, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_heating_total_hp_4 = scaled_sum(3587, (1, 1000), unit="kWh")
+    vd_dhw_day_hp_4 = integer(3589, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_dhw_total_hp_4 = scaled_sum(3590, (1, 1000), unit="kWh")
+    vd_heating_day_consumed_hp_4 = integer(3592, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_heating_total_consumed_hp_4 = scaled_sum(3593, (1, 1000), unit="kWh")
+    vd_dhw_day_consumed_hp_4 = integer(3595, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_dhw_total_consumed_hp_4 = scaled_sum(3596, (1, 1000), unit="kWh")
+    vd_1_heating_hp_4 = integer(3598, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_2_heating_hp_4 = integer(3599, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_2_heating_hp_4 = integer(3600, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_dhw_hp_4 = integer(3601, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_2_dhw_hp_4 = integer(3602, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_2_dhw_hp_4 = integer(3603, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_cooling_hp_4 = integer(3604, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_day_hp_5 = integer(3605, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_heating_total_hp_5 = scaled_sum(3606, (1, 1000), unit="kWh")
+    vd_dhw_day_hp_5 = integer(3608, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_dhw_total_hp_5 = scaled_sum(3609, (1, 1000), unit="kWh")
+    vd_heating_day_consumed_hp_5 = integer(3611, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_heating_total_consumed_hp_5 = scaled_sum(3612, (1, 1000), unit="kWh")
+    vd_dhw_day_consumed_hp_5 = integer(3614, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_dhw_total_consumed_hp_5 = scaled_sum(3615, (1, 1000), unit="kWh")
+    vd_1_heating_hp_5 = integer(3617, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_2_heating_hp_5 = integer(3618, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_2_heating_hp_5 = integer(3619, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_dhw_hp_5 = integer(3620, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_2_dhw_hp_5 = integer(3621, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_2_dhw_hp_5 = integer(3622, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_cooling_hp_5 = integer(3623, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_day_hp_6 = integer(3624, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_heating_total_hp_6 = scaled_sum(3625, (1, 1000), unit="kWh")
+    vd_dhw_day_hp_6 = integer(3627, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_dhw_total_hp_6 = scaled_sum(3628, (1, 1000), unit="kWh")
+    vd_heating_day_consumed_hp_6 = integer(3630, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_heating_total_consumed_hp_6 = scaled_sum(3631, (1, 1000), unit="kWh")
+    vd_dhw_day_consumed_hp_6 = integer(3633, signed=False, nan=UNAVAILABLE, unit="kWh")
+    vd_dhw_total_consumed_hp_6 = scaled_sum(3634, (1, 1000), unit="kWh")
+    vd_1_heating_hp_6 = integer(3636, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_2_heating_hp_6 = integer(3637, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_2_heating_hp_6 = integer(3638, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_dhw_hp_6 = integer(3639, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_2_dhw_hp_6 = integer(3640, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_1_2_dhw_hp_6 = integer(3641, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_cooling_hp_6 = integer(3642, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_hp_1 = integer(3643, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_dhw_hp_1 = integer(3644, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_hp_2 = integer(3645, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_dhw_hp_2 = integer(3646, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_hp_3 = integer(3647, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_dhw_hp_3 = integer(3648, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_hp_4 = integer(3649, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_dhw_hp_4 = integer(3650, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_hp_5 = integer(3651, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_dhw_hp_5 = integer(3652, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_heating_hp_6 = integer(3653, signed=False, nan=UNAVAILABLE, unit="h")
+    vd_dhw_hp_6 = integer(3654, signed=False, nan=UNAVAILABLE, unit="h")
+    inverter_power_iws_1 = gauge(3679, 0.1, nan=UNAVAILABLE, unit="kW")
+    inverter_power_iws_2 = gauge(3680, 0.1, nan=UNAVAILABLE, unit="kW")
+    inverter_power_iws_3 = gauge(3681, 0.1, nan=UNAVAILABLE, unit="kW")
+    inverter_power_iws_4 = gauge(3682, 0.1, nan=UNAVAILABLE, unit="kW")
+    inverter_power_iws_5 = gauge(3683, 0.1, nan=UNAVAILABLE, unit="kW")
+    inverter_power_iws_6 = gauge(3684, 0.1, nan=UNAVAILABLE, unit="kW")
+    amount_of_heat_heating_1_24_h = scaled_sum(3689, (1, 1000), unit="Wh")
+    amount_of_heat_heating_1_12 = scaled_sum(3691, (1, 1000), unit="kWh")
+    amount_of_heat_heating_13_24 = scaled_sum(3693, (1, 1000), unit="kWh")
+    amount_of_heat_cooling_1_24_h = scaled_sum(3695, (1, 1000), unit="Wh")
+    amount_of_heat_cooling_1_12_m = scaled_sum(3697, (1, 1000), unit="kWh")
+    amount_of_heat_cooling_13_24 = scaled_sum(3699, (1, 1000), unit="kWh")
+    amount_of_heat_dhw_1_24_h__wh_wh = scaled_sum(3701, (1, 1000), unit="Wh")
+    amount_of_heat_dhw_1_12_m = scaled_sum(3703, (1, 1000), unit="kWh")
+    amount_of_heat_dhw_13_24_m = scaled_sum(3705, (1, 1000), unit="kWh")
+    heating_24h = scaled_sum(3707, (1, 1000), unit="kWh")
+    heating_12m = scaled_sum(3709, (1, 1000), unit="kWh")
+    heating_13_24 = scaled_sum(3711, (1, 1000), unit="kWh")
+    cooling_24h = scaled_sum(3713, (1, 1000), unit="kWh")
+    cooling_12m = scaled_sum(3715, (1, 1000), unit="kWh")
+    cooling_13_24 = scaled_sum(3717, (1, 1000), unit="kWh")
+    dhw_24h = scaled_sum(3719, (1, 1000), unit="kWh")
+    dhw_12m = scaled_sum(3721, (1, 1000), unit="kWh")
+    dhw_13_24 = scaled_sum(3723, (1, 1000), unit="kWh")
+    efficiency_heating_1_24_h = integer(3725, signed=False, nan=UNAVAILABLE)
+    efficiency_heating_1_12_m = integer(3726, signed=False, nan=UNAVAILABLE)
+    efficiency_heating_13_24_m = integer(3727, signed=False, nan=UNAVAILABLE)
+    efficiency_cooling_1_24_h = integer(3728, signed=False, nan=UNAVAILABLE)
+    efficiency_cooling_1_12_m = integer(3729, signed=False, nan=UNAVAILABLE)
+    efficiency_cooling_13_24_m = integer(3730, signed=False, nan=UNAVAILABLE)
+    efficiency_dhw_1_24_h = integer(3731, signed=False, nan=UNAVAILABLE)
+    efficiency_dhw_1_12_m = integer(3732, signed=False, nan=UNAVAILABLE)
+    efficiency_dhw_13_24_m = integer(3733, signed=False, nan=UNAVAILABLE)
 
     _DAY_AND_TOTAL = (
         ("vd_heating_day", "vd_heating_total", "vd_heating_day_and_total"),
@@ -267,6 +387,18 @@ class WpmEnergyData(Component):
         ("vd_dhw_day_hp_3", "vd_dhw_total_hp_3", "vd_dhw_day_and_total_hp_3"),
         ("vd_heating_day_consumed_hp_3", "vd_heating_total_consumed_hp_3", "vd_heating_day_and_total_consumed_hp_3"),
         ("vd_dhw_day_consumed_hp_3", "vd_dhw_total_consumed_hp_3", "vd_dhw_day_and_total_consumed_hp_3"),
+        ("vd_heating_day_hp_4", "vd_heating_total_hp_4", "vd_heating_day_and_total_hp_4"),
+        ("vd_dhw_day_hp_4", "vd_dhw_total_hp_4", "vd_dhw_day_and_total_hp_4"),
+        ("vd_heating_day_consumed_hp_4", "vd_heating_total_consumed_hp_4", "vd_heating_day_and_total_consumed_hp_4"),
+        ("vd_dhw_day_consumed_hp_4", "vd_dhw_total_consumed_hp_4", "vd_dhw_day_and_total_consumed_hp_4"),
+        ("vd_heating_day_hp_5", "vd_heating_total_hp_5", "vd_heating_day_and_total_hp_5"),
+        ("vd_dhw_day_hp_5", "vd_dhw_total_hp_5", "vd_dhw_day_and_total_hp_5"),
+        ("vd_heating_day_consumed_hp_5", "vd_heating_total_consumed_hp_5", "vd_heating_day_and_total_consumed_hp_5"),
+        ("vd_dhw_day_consumed_hp_5", "vd_dhw_total_consumed_hp_5", "vd_dhw_day_and_total_consumed_hp_5"),
+        ("vd_heating_day_hp_6", "vd_heating_total_hp_6", "vd_heating_day_and_total_hp_6"),
+        ("vd_dhw_day_hp_6", "vd_dhw_total_hp_6", "vd_dhw_day_and_total_hp_6"),
+        ("vd_heating_day_consumed_hp_6", "vd_heating_total_consumed_hp_6", "vd_heating_day_and_total_consumed_hp_6"),
+        ("vd_dhw_day_consumed_hp_6", "vd_dhw_total_consumed_hp_6", "vd_dhw_day_and_total_consumed_hp_6"),
     )
 
     def __init__(self, unit: ModbusUnit, index: int = 1) -> None:
@@ -348,21 +480,53 @@ class WpmEnergyData(Component):
     def vd_dhw_day_and_total_consumed_hp_3(self) -> int | None:
         return self._running_totals.get("vd_dhw_day_and_total_consumed_hp_3")
 
+    @property
+    def vd_heating_day_and_total_hp_4(self) -> int | None:
+        return self._running_totals.get("vd_heating_day_and_total_hp_4")
 
-class WpmPowerConsumption(Component):
-    register_space = "input"
-    register_ranges = WPM_INPUT_RANGES
+    @property
+    def vd_dhw_day_and_total_hp_4(self) -> int | None:
+        return self._running_totals.get("vd_dhw_day_and_total_hp_4")
 
-    heating_24h = integer(3707, signed=False, nan=UNAVAILABLE, unit="kWh")
-    heating_12m_fraction = integer(3709, signed=False, nan=UNAVAILABLE, unit="kWh")
-    heating_12m_whole = integer(3710, signed=False, nan=UNAVAILABLE, unit="kWh")
-    cooling_24h_fraction = integer(3713, signed=False, nan=UNAVAILABLE, unit="kWh")
-    cooling_24h_whole = integer(3714, signed=False, nan=UNAVAILABLE, unit="kWh")
-    cooling_12m = integer(3715, signed=False, nan=UNAVAILABLE, unit="kWh")
-    dhw_24h_fraction = integer(3719, signed=False, nan=UNAVAILABLE, unit="kWh")
-    dhw_24h_whole = integer(3720, signed=False, nan=UNAVAILABLE, unit="kWh")
-    dhw_12m_fraction = integer(3721, signed=False, nan=UNAVAILABLE, unit="kWh")
-    dhw_12m_whole = integer(3722, signed=False, nan=UNAVAILABLE, unit="kWh")
+    @property
+    def vd_heating_day_and_total_consumed_hp_4(self) -> int | None:
+        return self._running_totals.get("vd_heating_day_and_total_consumed_hp_4")
+
+    @property
+    def vd_dhw_day_and_total_consumed_hp_4(self) -> int | None:
+        return self._running_totals.get("vd_dhw_day_and_total_consumed_hp_4")
+
+    @property
+    def vd_heating_day_and_total_hp_5(self) -> int | None:
+        return self._running_totals.get("vd_heating_day_and_total_hp_5")
+
+    @property
+    def vd_dhw_day_and_total_hp_5(self) -> int | None:
+        return self._running_totals.get("vd_dhw_day_and_total_hp_5")
+
+    @property
+    def vd_heating_day_and_total_consumed_hp_5(self) -> int | None:
+        return self._running_totals.get("vd_heating_day_and_total_consumed_hp_5")
+
+    @property
+    def vd_dhw_day_and_total_consumed_hp_5(self) -> int | None:
+        return self._running_totals.get("vd_dhw_day_and_total_consumed_hp_5")
+
+    @property
+    def vd_heating_day_and_total_hp_6(self) -> int | None:
+        return self._running_totals.get("vd_heating_day_and_total_hp_6")
+
+    @property
+    def vd_dhw_day_and_total_hp_6(self) -> int | None:
+        return self._running_totals.get("vd_dhw_day_and_total_hp_6")
+
+    @property
+    def vd_heating_day_and_total_consumed_hp_6(self) -> int | None:
+        return self._running_totals.get("vd_heating_day_and_total_consumed_hp_6")
+
+    @property
+    def vd_dhw_day_and_total_consumed_hp_6(self) -> int | None:
+        return self._running_totals.get("vd_dhw_day_and_total_consumed_hp_6")
 
 
 class WpmStiebelEltronAPI:
@@ -373,7 +537,6 @@ class WpmStiebelEltronAPI:
         self.system_parameters = WpmSystemParameters(unit)
         self.system_state = WpmSystemState(unit)
         self.energy_data = WpmEnergyData(unit)
-        self.power_consumption = WpmPowerConsumption(unit)
         self.energy_management_settings = EnergyManagementSettings(unit)
         self.energy_management_settings.register_ranges = WPM_HOLDING_RANGES
         self.energy_system_information = EnergySystemInformation(unit)
@@ -385,7 +548,6 @@ class WpmStiebelEltronAPI:
                 self.system_parameters,
                 self.system_state,
                 self.energy_data,
-                self.power_consumption,
                 self.energy_management_settings,
                 self.energy_system_information,
             ],

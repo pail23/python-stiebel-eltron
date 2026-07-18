@@ -95,7 +95,6 @@ WPM = Controller(
         Block("System Parameters", "wpm_system_parameters.csv", "holding"),
         Block("System State", "wpm_system_state.csv", "input"),
         Block("Energy Data", "wpm_energy_data.csv", "input", energy=True),
-        Block("Power Consumption", "wpm_power_consumption.csv", "input"),
     ],
 )
 
@@ -114,14 +113,16 @@ LWZ = Controller(
 
 # The two shared components from pystiebeleltron/__init__.py, as (low, high) wire
 # address ranges, so they join their space's device-wide ranges.
-SHARED_INPUT_RANGE = (5000, 5001)  # EnergySystemInformation
-SHARED_HOLDING_RANGE = (4000, 4002)  # EnergyManagementSettings
+SHARED_INPUT_RANGE = (5000, 5230)  # EnergySystemInformation
+SHARED_HOLDING_RANGE = (4000, 4277)  # EnergyManagementSettings
 
 
 def python_name(name: str, suffix: str = "") -> str:
     """A register's enum/attribute stem, suffix-disambiguated (pre-lowercasing)."""
     result = name.strip() if suffix == "" else name + "_" + suffix.strip()
-    return result.replace(" ", "_")
+    for c in "–- /":
+        result = result.replace(c, "_")
+    return result.replace(".", "")
 
 
 def attr(name: str, suffix: str = "") -> str:
