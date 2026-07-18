@@ -82,21 +82,17 @@ async def test_write_out_of_range_rejected(mock_modbus_unit: MockModbusUnit) -> 
 @pytest.mark.asyncio()
 async def test_wpm_power_consumption_registers(mock_modbus_unit: MockModbusUnit) -> None:
     api = WpmStiebelEltronAPI(mock_modbus_unit)
-    _seed(mock_modbus_unit, api.power_consumption)
+    _seed(mock_modbus_unit, api.energy_data)
 
     await api.async_update()
 
-    consumption = api.power_consumption
-    assert consumption.heating_24h == 0
-    assert consumption.heating_12m_fraction == 2
-    assert consumption.heating_12m_whole == 3
-    assert consumption.cooling_24h_fraction == 6
-    assert consumption.cooling_24h_whole == 7
-    assert consumption.cooling_12m == 8
-    assert consumption.dhw_24h_fraction == 12
-    assert consumption.dhw_24h_whole == 13
-    assert consumption.dhw_12m_fraction == 14
-    assert consumption.dhw_12m_whole == 15
+    energy_data = api.energy_data
+    assert energy_data.heating_24h == 208207
+    assert energy_data.heating_12m == 210209
+    assert energy_data.cooling_24h == 214213
+    assert energy_data.cooling_12m == 216215
+    assert energy_data.dhw_24h == 220219
+    assert energy_data.dhw_12m == 222221
 
 
 @pytest.mark.asyncio()
