@@ -145,11 +145,15 @@ class LwzEnergyData(Component):
     elec_booster_heating = integer(3030, signed=False, nan=UNAVAILABLE, unit="h")
     elec_booster_dhw = integer(3031, signed=False, nan=UNAVAILABLE, unit="h")
     inverter_power = gauge(3679, 0.01, nan=UNAVAILABLE, unit="kW")
-    efficiency_heating_1_24_h = scaled_sum(3689, (1, 1000), unit="")
-    efficiency_heating_13_24_m = scaled_sum(3691, (1, 1000), unit="")
-    efficiency_cooling_1_12_m = scaled_sum(3693, (1, 1000), unit="")
-    efficiency_dhw_1_24_h = scaled_sum(3695, (1, 1000), unit="")
-    efficiency_dhw_13_24_m = scaled_sum(3697, (1, 1000), unit="")
+    efficiency_heating_1_24_h = integer(3689, signed=False, nan=UNAVAILABLE)
+    efficiency_heating_1_12_m = integer(3690, signed=False, nan=UNAVAILABLE)
+    efficiency_heating_13_24_m = integer(3691, signed=False, nan=UNAVAILABLE)
+    efficiency_cooling_1_24_h = integer(3692, signed=False, nan=UNAVAILABLE)
+    efficiency_cooling_1_12_m = integer(3693, signed=False, nan=UNAVAILABLE)
+    efficiency_cooling_13_24_m = integer(3694, signed=False, nan=UNAVAILABLE)
+    efficiency_dhw_1_24_h = integer(3695, signed=False, nan=UNAVAILABLE)
+    efficiency_dhw_1_12_m = integer(3696, signed=False, nan=UNAVAILABLE)
+    efficiency_dhw_13_24_m = integer(3697, signed=False, nan=UNAVAILABLE)
 
     _DAY_AND_TOTAL = (
         ("heat_meter_htg_day", "heat_meter_htg_ttl", "heat_meter_htg_day_and_total"),
