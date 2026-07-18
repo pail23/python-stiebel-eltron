@@ -113,8 +113,8 @@ LWZ = Controller(
 
 # The two shared components from pystiebeleltron/__init__.py, as (low, high) wire
 # address ranges, so they join their space's device-wide ranges.
-SHARED_INPUT_RANGE = (5000, 5001)  # EnergySystemInformation
-SHARED_HOLDING_RANGE = (4000, 4002)  # EnergyManagementSettings
+SHARED_INPUT_RANGE = (5000, 5230)  # EnergySystemInformation
+SHARED_HOLDING_RANGE = (4000, 4277)  # EnergyManagementSettings
 
 
 def python_name(name: str, suffix: str = "") -> str:

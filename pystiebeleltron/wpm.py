@@ -7,8 +7,8 @@ from modbus_connection.model import Component, ComponentGroup, gauge, integer, r
 
 from . import UNAVAILABLE, EnergyManagementSettings, EnergySystemInformation, in_range, scaled_sum
 
-WPM_HOLDING_RANGES = ((1500, 1751), (4000, 4002))
-WPM_INPUT_RANGES = ((500, 609), (2500, 2572), (3500, 3733), (5000, 5001))
+WPM_HOLDING_RANGES = ((1500, 1751), (4000, 4277))
+WPM_INPUT_RANGES = ((500, 609), (2500, 2572), (3500, 3733), (5000, 5230))
 
 
 class WpmHeatPumpModule(Component):
