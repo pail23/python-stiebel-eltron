@@ -97,10 +97,6 @@ class {{ api_class }}:
 {% for member, class_name in members %}
         self.{{ member }} = {{ class_name }}(unit)
 {% endfor %}
-        self.energy_management_settings = EnergyManagementSettings(unit)
-        self.energy_management_settings.register_ranges = {{ holding_ranges_const }}
-        self.energy_system_information = EnergySystemInformation(unit)
-        self.energy_system_information.register_ranges = {{ input_ranges_const }}
         self._group = ComponentGroup(
             unit,
             [

@@ -95,6 +95,21 @@ WPM = Controller(
         Block("System Parameters", "wpm_system_parameters.csv", "holding"),
         Block("System State", "wpm_system_state.csv", "input"),
         Block("Energy Data", "wpm_energy_data.csv", "input", energy=True),
+        Block("Energy Management Settings", "wpm_energy_management_settings.csv", "holding"),
+        Block("Energy System Information", "wpm_energy_system_information.csv", "input"),
+    ],
+)
+
+WPM3i = Controller(
+    type="Wpm3i",
+    columns=WPM_COLUMNS,
+    blocks=[
+        Block("System Values", "wpm_system_values.csv", "input"),
+        Block("System Parameters", "wpm_system_parameters.csv", "holding"),
+        Block("System State", "wpm_system_state.csv", "input"),
+        Block("Energy Data", "wpm_energy_data.csv", "input", energy=True),
+        Block("Energy Management Settings", "wpm_energy_management_settings.csv", "holding"),
+        Block("Energy System Information", "wpm_energy_system_information.csv", "input"),
     ],
 )
 
@@ -106,6 +121,8 @@ LWZ = Controller(
         Block("System Parameters", "lwz_system_parameters.csv", "holding"),
         Block("System State", "lwz_system_state.csv", "input"),
         Block("Energy Data", "lwz_energy_data.csv", "input", energy=True),
+        Block("Energy Management Settings", "lwz_energy_management_settings.csv", "holding"),
+        Block("Energy System Information", "lwz_energy_system_information.csv", "input"),
     ],
     operating_mode=True,
     compressor_starts=True,
@@ -319,12 +336,9 @@ def _ranges_const(controller: Controller, space: str) -> str:
 
 def _ranges_by_space(components: list[Component]) -> dict[str, tuple[tuple[int, int], ...]]:
     """The device-wide readable ranges per space (block spans plus the shared blocks)."""
-    shared = {"input": SHARED_INPUT_RANGE, "holding": SHARED_HOLDING_RANGE}
     spans: dict[str, set[tuple[int, int]]] = {}
     for component in components:
         spans.setdefault(component.register_space, set()).add((component.low, component.high))
-    for space, ranges in spans.items():
-        ranges.add(shared[space])
     return {space: tuple(sorted(ranges)) for space, ranges in spans.items()}
 
 
@@ -333,7 +347,7 @@ def _imports(controller: Controller, components: list[Component]) -> list[str]:
     model = ["Component", "ComponentGroup", "gauge", "integer"]
     if any(component.repeats for component in components):
         model.append("repeating_group")
-    local = ["EnergyManagementSettings", "EnergySystemInformation", "UNAVAILABLE"]
+    local = ["UNAVAILABLE"]
     if any(block.energy for block in controller.blocks):
         local.append("scaled_sum")
     if any("in_range(" in line for component in components for line in component.fields):
@@ -349,13 +363,22 @@ def _imports(controller: Controller, components: list[Component]) -> list[str]:
     return lines
 
 
+def _filter_rows(rows: list[list[str]], filter_column: int) -> list[list[str]]:
+    """Filter out rows where the specified column is not empty."""
+    if filter_column < 0:
+        return rows
+    return [row for row in rows if len(row[filter_column]) > 0]
+
+
 def build(controller: Controller, root: Path) -> dict[str, object]:
     """Assemble the render context for a controller module."""
     api_path = root / "api"
     components: list[Component] = []
     sub_components: list[SubComponent] = []
+    filter_column = 4 if controller.type == "Wpm3i" else -1
     for block in controller.blocks:
         rows = _read_rows(api_path, block)
+        rows = _filter_rows(rows, filter_column)
         if block.energy:
             components.append(_energy_component(block, rows, controller))
         else:
@@ -392,7 +415,7 @@ def main() -> None:
     root = Path.cwd()
     env = Environment(loader=FileSystemLoader(TEMPLATES), trim_blocks=True, lstrip_blocks=True, keep_trailing_newline=True)
     paths = []
-    for controller in (WPM, LWZ):
+    for controller in (WPM, WPM3i, LWZ):
         generate(controller, root, env)
         paths.append(str(root / f"pystiebeleltron/{controller.type.lower()}.py"))
     subprocess.run(["ruff", "format", *paths], check=True)
