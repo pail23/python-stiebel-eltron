@@ -266,8 +266,6 @@ class LwzStiebelEltronAPI:
                 self.energy_data,
                 self.energy_management_settings,
                 self.energy_system_information,
-                self.energy_management_settings,
-                self.energy_system_information,
             ],
         )
 

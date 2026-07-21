@@ -103,8 +103,6 @@ class {{ api_class }}:
 {% for member, class_name in members %}
                 self.{{ member }},
 {% endfor %}
-                self.energy_management_settings,
-                self.energy_system_information,
             ],
         )
 
