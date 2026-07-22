@@ -8,8 +8,8 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 1507,HEATING CURVE RISE,x,x,x,Heating circuit 2,0,3,7,,r/w,HK 2
 1508,FIXED VALUE OPERATION,x,x,x,,20,70,2,°C,r/w,
 1509,DUAL MODE TEMP HZG,,x,x,Observe apllication limits,-40,40,2,°C,r/w,
-1510,COMFORT TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,
-1511,ECO TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,
+1510,COMFORT TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,DHW
+1511,ECO TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,DHW
 1512,DHW STAGES,x,x,x,,0,6,8,,r/w,
 1513,DUAL MODE TEMP WW,x,x,x,DHW temperatures,-40,40,2,°C,r/w,
 1514,SET FLOW TEMPERATURE,x,x,x,Area cooling,7,25,2,°C,r/w,AREA
