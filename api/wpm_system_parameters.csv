@@ -8,8 +8,8 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 1507,HEATING CURVE RISE,x,x,x,Heating circuit 2,0,3,7,,r/w,HK 2
 1508,FIXED VALUE OPERATION,x,x,x,,20,70,2,°C,r/w,
 1509,DUAL MODE TEMP HZG,,x,x,Observe apllication limits,-40,40,2,°C,r/w,
-1510,COMFORT TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,
-1511,ECO TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,
+1510,COMFORT TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,DHW
+1511,ECO TEMPERATURE,x,x,x,DHW,10,60,2,°C,r/w,DHW
 1512,DHW STAGES,x,x,x,,0,6,8,,r/w,
 1513,DUAL MODE TEMP WW,x,x,x,DHW temperatures,-40,40,2,°C,r/w,
 1514,SET FLOW TEMPERATURE,x,x,x,Area cooling,7,25,2,°C,r/w,AREA
@@ -20,26 +20,26 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 1519,SET ROOM TEMPERATURE,x,x,x,Fan cooling,20,30,2,°C,r/w,FAN
 1520,RESET,x,x,x,,1,3,6,,r/w,
 1521,RESTART ISG,x,x,x,,0,2,6,,r/w,
-1551,COMFORT TEMPERATURE,x,x,x,Heating circuit 3,5,30,2,°C,r/w,HK 3
-1552,ECO TEMPERATURE,x,x,x,Heating circuit 3,5,30,2,°C,r/w,HK 3
-1553,HEATING CURVE RISE,x,x,x,Heating circuit 3,,,7,,r/w,HK 3
-1554,COMFORT TEMPERATURE,x,x,x,Heating circuit 4,,,2,°C,r/w,HK 4
-1555,ECO TEMPERATURE,x,x,x,Heating circuit 4,,,2,°C,r/w,HK 4
-1556,HEATING CURVE RISE,x,x,x,Heating circuit 4,,,7,,r/w,HK 4
-1557,COMFORT TEMPERATURE,x,x,x,Heating circuit 5,,,2,°C,r/w,HK 5
-1558,ECO TEMPERATURE,x,x,x,Heating circuit 5,,,2,°C,r/w,HK 5
-1559,HEATING CURVE RISE,x,x,x,Heating circuit 5,,,7,,r/w,HK 5
-1604,SET TEMPERATURE CC 1,x,x,x,Set room temperature cooling circuit 1,,,2,°C,r/w,HK 1
-1605,SET TEMPERATURE CC 2,x,x,x,Set room temperature cooling circuit 2,,,2,°C,r/w,HK 2
-1606,SET TEMPERATURE CC 3,x,x,x,Set room temperature cooling circuit 3,,,2,°C,r/w,HK 3
-1607,SET TEMPERATURE CC 4,x,x,x,Set room temperature cooling circuit 4,,,2,°C,r/w,HK 4
-1608,SET TEMPERATURE CC 5,x,x,x,Set room temperature cooling circuit 5,,,2,°C,r/w,HK 5
-1704,SET FLOW TEMPERATURE CC 1,x,x,x,Flow temperature cooling circuit 1,,,2,°C,r/w,HK 1
-1705,SET FLOW TEMPERATURE CC 2,x,x,x,Flow temperature cooling circuit 2,,,2,°C,r/w,HK 2
-1706,SET FLOW TEMPERATURE CC 3,x,x,x,Flow temperature cooling circuit 3,,,2,°C,r/w,HK 3
-1707,SET FLOW TEMPERATURE CC 4,x,x,x,Flow temperature cooling circuit 4,,,2,°C,r/w,HK 4
-1708,SET FLOW TEMPERATURE CC 5,x,x,x,Flow temperature cooling circuit 5,,,2,°C,r/w,HK 5
-1709,SET FLOW TEMPERATURE FAN COOLING,x,x,x,Set flow temperature fan cooling,,,2,°C,r/w,
-1750,SUMMER MODE AUTO-,x,x,x,Summer mode auto,,,6,,,
-1751,OUTSIDE TEMPERATURE SUMMER MODE,x,x,x,Summer mode outside switching temperature,,,2,°C,,
-1752,SUMMER MODE BUILDING HEAT BUFFER,x,x,x,Summer mode building attenuation,,,2,°C,,
+1551,COMFORT TEMPERATURE,x,,,Heating circuit 3,5,30,2,°C,r/w,HK 3
+1552,ECO TEMPERATURE,x,,,Heating circuit 3,5,30,2,°C,r/w,HK 3
+1553,HEATING CURVE RISE,x,,,Heating circuit 3,,,7,,r/w,HK 3
+1554,COMFORT TEMPERATURE,x,,,Heating circuit 4,,,2,°C,r/w,HK 4
+1555,ECO TEMPERATURE,x,,,Heating circuit 4,,,2,°C,r/w,HK 4
+1556,HEATING CURVE RISE,x,,,Heating circuit 4,,,7,,r/w,HK 4
+1557,COMFORT TEMPERATURE,x,,,Heating circuit 5,,,2,°C,r/w,HK 5
+1558,ECO TEMPERATURE,x,,,Heating circuit 5,,,2,°C,r/w,HK 5
+1559,HEATING CURVE RISE,x,,,Heating circuit 5,,,7,,r/w,HK 5
+1604,SET TEMPERATURE CC 1,x,,,Set room temperature cooling circuit 1,,,2,°C,r/w,HK 1
+1605,SET TEMPERATURE CC 2,x,,,Set room temperature cooling circuit 2,,,2,°C,r/w,HK 2
+1606,SET TEMPERATURE CC 3,x,,,Set room temperature cooling circuit 3,,,2,°C,r/w,HK 3
+1607,SET TEMPERATURE CC 4,x,,,Set room temperature cooling circuit 4,,,2,°C,r/w,HK 4
+1608,SET TEMPERATURE CC 5,x,,,Set room temperature cooling circuit 5,,,2,°C,r/w,HK 5
+1704,SET FLOW TEMPERATURE CC 1,x,,,Flow temperature cooling circuit 1,,,2,°C,r/w,HK 1
+1705,SET FLOW TEMPERATURE CC 2,x,,,Flow temperature cooling circuit 2,,,2,°C,r/w,HK 2
+1706,SET FLOW TEMPERATURE CC 3,x,,,Flow temperature cooling circuit 3,,,2,°C,r/w,HK 3
+1707,SET FLOW TEMPERATURE CC 4,x,,,Flow temperature cooling circuit 4,,,2,°C,r/w,HK 4
+1708,SET FLOW TEMPERATURE CC 5,x,,,Flow temperature cooling circuit 5,,,2,°C,r/w,HK 5
+1709,SET FLOW TEMPERATURE FAN COOLING,x,,,Set flow temperature fan cooling,,,2,°C,r/w,
+1750,SUMMER MODE AUTO-,x,,,Summer mode auto,,,6,,,
+1751,OUTSIDE TEMPERATURE SUMMER MODE,x,,,Summer mode outside switching temperature,,,2,°C,,
+1752,SUMMER MODE BUILDING HEAT BUFFER,x,,,Summer mode building attenuation,,,2,°C,,

@@ -7,7 +7,7 @@ from enum import Enum
 from modbus_connection import ModbusUnit
 from modbus_connection.model import Component, ComponentGroup, gauge, integer
 
-from . import UNAVAILABLE, EnergyManagementSettings, EnergySystemInformation, in_range, scaled_sum
+from . import UNAVAILABLE, in_range, scaled_sum
 
 LWZ_HOLDING_RANGES = ((1000, 1026), (4000, 4277))
 LWZ_INPUT_RANGES = ((0, 33), (2000, 2004), (3000, 3697), (5000, 5230))
@@ -209,6 +209,44 @@ class LwzEnergyData(Component):
         return self._running_totals.get("pwr_con_dhw_day_and_total")
 
 
+class LwzEnergyManagementSettings(Component):
+    register_space = "holding"
+    register_ranges = LWZ_HOLDING_RANGES
+
+    switch_sg_ready_on_and_off = integer(4000, signed=False, nan=UNAVAILABLE, writable=in_range(0, 1))
+    sg_ready_input_1 = integer(4001, signed=False, nan=UNAVAILABLE, writable=in_range(0, 1))
+    sg_ready_input_2 = integer(4002, signed=False, nan=UNAVAILABLE, writable=in_range(0, 1))
+    sg_ready_enabled = integer(4249, signed=False, nan=UNAVAILABLE, writable=True)
+    sg_ready_input = integer(4250, signed=False, nan=UNAVAILABLE, writable=True)
+    heating_buffer = integer(4251, signed=False, nan=UNAVAILABLE, writable=True)
+    load_temperature_hc1 = gauge(4253, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_hc2 = gauge(4254, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_dhw = gauge(4255, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    power_consumption_control = integer(4256, signed=False, nan=UNAVAILABLE)
+    input_mode = integer(4257, signed=False, nan=UNAVAILABLE, writable=True)
+    power_limit = integer(4258, signed=False, nan=UNAVAILABLE, writable=True)
+    load_temperature_hc1_2 = gauge(4271, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_hc2_2 = gauge(4272, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_hc3 = gauge(4273, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_hc4 = gauge(4274, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_hc5 = gauge(4275, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_buffer = gauge(4276, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+    load_temperature_dhw_2 = gauge(4277, 0.1, nan=UNAVAILABLE, unit="°C", writable=True)
+
+
+class LwzEnergySystemInformation(Component):
+    register_space = "input"
+    register_ranges = LWZ_INPUT_RANGES
+
+    sg_ready_operating_state = integer(5000, signed=False, nan=UNAVAILABLE)
+    controller_identification = integer(5001, signed=False, nan=UNAVAILABLE)
+    sg_ready_inputs_active = integer(5219, signed=False, nan=UNAVAILABLE)
+    sg_ready_bit_1 = integer(5220, signed=False, nan=UNAVAILABLE)
+    sg_ready_bit_2 = integer(5221, signed=False, nan=UNAVAILABLE)
+    user_power_limit = integer(5229, signed=False, nan=UNAVAILABLE, unit="W")
+    electrical_power_limit_requested = integer(5230, signed=False, nan=UNAVAILABLE, unit="W")
+
+
 class LwzStiebelEltronAPI:
     """Stiebel Eltron heat pump API over a modbus_connection ModbusUnit."""
 
@@ -217,10 +255,8 @@ class LwzStiebelEltronAPI:
         self.system_parameters = LwzSystemParameters(unit)
         self.system_state = LwzSystemState(unit)
         self.energy_data = LwzEnergyData(unit)
-        self.energy_management_settings = EnergyManagementSettings(unit)
-        self.energy_management_settings.register_ranges = LWZ_HOLDING_RANGES
-        self.energy_system_information = EnergySystemInformation(unit)
-        self.energy_system_information.register_ranges = LWZ_INPUT_RANGES
+        self.energy_management_settings = LwzEnergyManagementSettings(unit)
+        self.energy_system_information = LwzEnergySystemInformation(unit)
         self._group = ComponentGroup(
             unit,
             [

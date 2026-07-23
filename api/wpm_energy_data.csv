@@ -85,123 +85,123 @@ Modbus address,Object designation ,WPMsystem,WPM 3,WPM 3i,Comments,Min. value,Ma
 3584,VD 2 DHW,x,x,,Runtime HP 3,,,6,h,r,HP 3
 3585,VD 1_2 DHW,x,x,,Runtime HP 3,,,6,h,r,HP 3
 3586,VD COOLING,x,x,,Runtime HP 3,,,6,h,r,HP 3
-3587,VD HEATING DAY,x,x,x,Amount of heat HP 4,,,6,kWh,r,HP 4
-3588,VD HEATING TOTAL,x,x,x,Amount of heat HP 4,,,6,kWh,r,LOW HP 4
-3589,VD HEATING TOTAL,x,x,x,Amount of heat HP 4,,,6,MWh,r,HI HP 4
-3590,VD DHW DAY,x,x,x,Amount of heat HP 4,,,6,kWh,r,HP 4
-3591,VD DHW TOTAL,x,x,x,Amount of heat HP 4,,,6,kWh,r,LOW HP 4
-3592,VD DHW TOTAL,x,x,x,Amount of heat HP 4,,,6,MWh,r,HI HP 4
-3593,VD HEATING DAY,x,x,x,Power consumption HP 4,,,6,kWh,r,CONSUMED HP 4
-3594,VD HEATING TOTAL,x,x,x,Power consumption HP 4,,,6,kWh,r,LOW CONSUMED HP 4
-3595,VD HEATING TOTAL,x,x,x,Power consumption HP 4,,,6,MWh,r,HI CONSUMED HP 4
-3596,VD DHW DAY,x,x,x,Power consumption HP 4,,,6,kWh,r,CONSUMED HP 4
-3597,VD DHW TOTAL,x,x,x,Power consumption HP 4,,,6,kWh,r,LOW CONSUMED HP 4
-3598,VD DHW TOTAL,x,x,x,Power consumption HP 4,,,6,MWh,r,HI CONSUMED HP 4
-3599,VD 1 HEATING,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3600,VD 2 HEATING,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3601,VD 1/2 HEATING,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3602,VD 1 DHW,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3603,VD 2 DHW,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3604,VD 1/2 DHW,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3605,VD COOLING,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3606,VD HEATING DAY,x,x,x,Amount of heat HP 5,,,6,kWh,r,HP 5
-3607,VD HEATING TOTAL,x,x,x,Amount of heat HP 5,,,6,kWh,r,LOW HP 5
-3608,VD HEATING TOTAL,x,x,x,Amount of heat HP 5,,,6,MWh,r,HI HP 5
-3609,VD DHW DAY,x,x,x,Amount of heat HP 5,,,6,kWh,r,HP 5
-3610,VD DHW TOTAL,x,x,x,Amount of heat HP 5,,,6,kWh,r,LOW HP 5
-3611,VD DHW TOTAL,x,x,x,Amount of heat HP 5,,,6,MWh,r,HI HP 5
-3612,VD HEATING DAY,x,x,x,Power consumption HP 5,,,6,kWh,r,CONSUMED HP 5
-3613,VD HEATING TOTAL,x,x,x,Power consumption HP 5,,,6,kWh,r,LOW CONSUMED HP 5
-3614,VD HEATING TOTAL,x,x,x,Power consumption HP 5,,,6,MWh,r,HI CONSUMED HP 5
-3615,VD DHW DAY,x,x,x,Power consumption HP 5,,,6,kWh,r,CONSUMED HP 5
-3616,VD DHW TOTAL,x,x,x,Power consumption HP 5,,,6,kWh,r,LOW CONSUMED HP 5
-3617,VD DHW TOTAL,x,x,x,Power consumption HP 5,,,6,MWh,r,HI CONSUMED HP 5
-3618,VD 1 HEATING,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3619,VD 2 HEATING,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3620,VD 1/2 HEATING,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3621,VD 1 DHW,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3622,VD 2 DHW,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3623,VD 1/2 DHW,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3624,VD COOLING,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3625,VD HEATING DAY,x,x,x,Amount of heat HP 6,,,6,kWh,r,HP 6
-3626,VD HEATING TOTAL,x,x,x,Amount of heat HP 6,,,6,kWh,r,LOW HP 6
-3627,VD HEATING TOTAL,x,x,x,Amount of heat HP 6,,,6,MWh,r,HI HP 6
-3628,VD DHW DAY,x,x,x,Amount of heat HP 6,,,6,kWh,r,HP 6
-3629,VD DHW TOTAL,x,x,x,Amount of heat HP 6,,,6,kWh,r,LOW HP 6
-3630,VD DHW TOTAL,x,x,x,Amount of heat HP 6,,,6,MWh,r,HI HP 6
-3631,VD HEATING DAY,x,x,x,Power consumption HP 6,,,6,kWh,r,CONSUMED HP 6
-3632,VD HEATING TOTAL,x,x,x,Power consumption HP 6,,,6,kWh,r,LOW CONSUMED HP 6
-3633,VD HEATING TOTAL,x,x,x,Power consumption HP 6,,,6,MWh,r,HI CONSUMED HP 6
-3634,VD DHW DAY,x,x,x,Power consumption HP 6,,,6,kWh,r,CONSUMED HP 6
-3635,VD DHW TOTAL,x,x,x,Power consumption HP 6,,,6,kWh,r,LOW CONSUMED HP 6
-3636,VD DHW TOTAL,x,x,x,Power consumption HP 6,,,6,MWh,r,HI CONSUMED HP 6
-3637,VD 1 HEATING,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3638,VD 2 HEATING,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3639,VD 1/2 HEATING,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3640,VD 1 DHW,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3641,VD 2 DHW,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3642,VD 1/2 DHW,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3643,VD COOLING,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3644,VD HEATING,x,x,x,Runtime HP 1,,,6,h,r,HP 1
-3645,VD DHW,x,x,x,Runtime HP 1,,,6,h,r,HP 1
-3646,VD HEATING,x,x,x,Runtime HP 2,,,6,h,r,HP 2
-3647,VD DHW,x,x,x,Runtime HP 2,,,6,h,r,HP 2
-3648,VD HEATING,x,x,x,Runtime HP 3,,,6,h,r,HP 3
-3649,VD DHW,x,x,x,Runtime HP 3,,,6,h,r,HP 3
-3650,VD HEATING,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3651,VD DHW,x,x,x,Runtime HP 4,,,6,h,r,HP 4
-3652,VD HEATING,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3653,VD DHW,x,x,x,Runtime HP 5,,,6,h,r,HP 5
-3654,VD HEATING,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3655,VD DHW,x,x,x,Runtime HP 6,,,6,h,r,HP 6
-3680,INVERTER POWER IWS 1,x,x,x,One decimal place,0,200,2,kW,r,
-3681,INVERTER POWER IWS 2,x,x,x,One decimal place,0,200,2,kW,r,
-3682,INVERTER POWER IWS 3,x,x,x,One decimal place,0,200,2,kW,r,
-3683,INVERTER POWER IWS 4,x,x,x,One decimal place,0,200,2,kW,r,
-3684,INVERTER POWER IWS 5,x,x,x,One decimal place,0,200,2,kW,r,
-3685,INVERTER POWER IWS 6,x,x,x,One decimal place,0,200,2,kW,r,
-3690,AMOUNT OF HEAT HEATING 1–24 h,x,x,x,,,,6,Wh,r,LOW
-3691,AMOUNT OF HEAT HEATING 1–24 h,x,x,x,,,,6,kWh,r,HI
-3692,AMOUNT OF HEAT HEATING 1–12,x,x,x,,,,6,kWh,r,LOW
-3693,AMOUNT OF HEAT HEATING 1–12,x,x,x,,,,6,MWh,r,HI
-3694,AMOUNT OF HEAT HEATING 13–24,x,x,x,,,,6,kWh,r,LOW
-3695,AMOUNT OF HEAT HEATING 13–24,x,x,x,,,,6,MWh,r,HI
-3696,AMOUNT OF HEAT COOLING 1–24 h,x,x,x,,,,6,Wh,r,LOW
-3697,AMOUNT OF HEAT COOLING 1–24 h,x,x,x,,,,6,kWh,r,HI
-3698,AMOUNT OF HEAT COOLING 1–12 M,x,x,x,,,,6,kWh,r,LOW
-3699,AMOUNT OF HEAT COOLING 1–12 M,x,x,x,,,,6,MWh,r,HI
-3700,AMOUNT OF HEAT COOLING 13–24,x,x,x,,,,6,kWh,r,LOW
-3701,AMOUNT OF HEAT COOLING 13–24,x,x,x,,,,6,MWh,r,HI
-3702,AMOUNT OF HEAT DHW 1–24 h  WH WH,x,x,x,,,,6,Wh,r,LOW
-3703,AMOUNT OF HEAT DHW 1–24 h,x,x,x,,,,6,kWh,r,HI
-3704,AMOUNT OF HEAT DHW 1–12 M,x,x,x,,,,6,kWh,r,LOW
-3705,AMOUNT OF HEAT DHW 1–12 M,x,x,x,,,,6,MWh,r,HI
-3706,AMOUNT OF HEAT DHW 13–24 M,x,x,x,,,,6,kWh,r,LOW
-3707,AMOUNT OF HEAT DHW 13–24 M,x,x,x,,,,6,MWh,r,HI
-3708,HEATING 24H,x,x,x,Power consumption - heating 24h,0,65535,6,kWh,r,LOW
-3709,HEATING 24H,x,x,x,Power consumption - heating 24h whole,,,6,kWh,r,HI
-3710,HEATING 12M,x,x,x,Power consumption - heating 12m fraction,0,65535,6,kWh,r,LOW
-3711,HEATING 12M,x,x,x,Power consumption - heating 12m whole,0,65535,6,kWh,r,HI
-3712,HEATING 13-24,x,x,x,Power consumption - heating 13-24 fraction,,,6,kWh,r,LOW
-3713,HEATING 13-24,x,x,x,Power consumption - heating 13-24 whole,,,6,MWh,r,HI
-3714,COOLING 24H,x,x,x,Power consumption - cooling 24h fraction,0,65535,6,kWh,r,LOW
-3715,COOLING 24H,x,x,x,Power consumption - cooling 24h whole,0,65535,6,kWh,r,HI
-3716,COOLING 12M,x,x,x,Power consumption - cooling 12m,0,65535,6,kWh,r,LOW
-3717,COOLING 12M,x,x,x,Power consumption - cooling 13-24 whole,,,6,MWh,r,HI
-3718,COOLING 13-24,x,x,x,Power consumption - cooling 13-24 fraction,,,6,kWh,r,LOW
-3719,COOLING 13-24,x,x,x,Power consumption - cooling 13-24 whole,,,6,MWh,r,HI
-3720,DHW 24H,x,x,x,Power consumption - DHW 24h fraction,0,65535,6,kWh,r,LOW
-3721,DHW 24H,x,x,x,Power consumption - DHW 24h whole,0,65535,6,kWh,r,HI
-3722,DHW 12M,x,x,x,Power consumption - DHW 12m fraction,0,65535,6,kWh,r,LOW
-3723,DHW 12M,x,x,x,Power consumption - DHW 12m whole,0,65535,6,kWh,r,HI
-3724,DHW 13-24,x,x,x,Power consumption - DHW 13-24 fraction,,,6,kWh,r,LOW
-3725,DHW 13-24,x,x,x,Power consumption - DHW 13-24 whole,,,6,MWh,r,HI
-3726,EFFICIENCY HEATING 1–24 h,x,x,x,,,,6,,r,
-3727,EFFICIENCY HEATING 1–12 M,x,x,x,,,,6,,r,
-3728,EFFICIENCY HEATING 13–24 M,x,x,x,,,,6,,r,
-3729,EFFICIENCY COOLING 1–24 h,x,x,x,,,,6,,r,
-3730,EFFICIENCY COOLING 1–12 M,x,x,x,,,,6,,r,
-3731,EFFICIENCY COOLING 13–24 M,x,x,x,,,,6,,r,
-3732,EFFICIENCY DHW 1–24 h,x,x,x,,,,6,,r,
-3733,EFFICIENCY DHW 1–12 M,x,x,x,,,,6,,r,
-3734,EFFICIENCY DHW 13–24 M,x,x,x,,,,6,,r,
+3587,VD HEATING DAY,x,x,,Amount of heat HP 4,,,6,kWh,r,HP 4
+3588,VD HEATING TOTAL,x,x,,Amount of heat HP 4,,,6,kWh,r,LOW HP 4
+3589,VD HEATING TOTAL,x,x,,Amount of heat HP 4,,,6,MWh,r,HI HP 4
+3590,VD DHW DAY,x,x,,Amount of heat HP 4,,,6,kWh,r,HP 4
+3591,VD DHW TOTAL,x,x,,Amount of heat HP 4,,,6,kWh,r,LOW HP 4
+3592,VD DHW TOTAL,x,x,,Amount of heat HP 4,,,6,MWh,r,HI HP 4
+3593,VD HEATING DAY,x,x,,Power consumption HP 4,,,6,kWh,r,CONSUMED HP 4
+3594,VD HEATING TOTAL,x,x,,Power consumption HP 4,,,6,kWh,r,LOW CONSUMED HP 4
+3595,VD HEATING TOTAL,x,x,,Power consumption HP 4,,,6,MWh,r,HI CONSUMED HP 4
+3596,VD DHW DAY,x,x,,Power consumption HP 4,,,6,kWh,r,CONSUMED HP 4
+3597,VD DHW TOTAL,x,x,,Power consumption HP 4,,,6,kWh,r,LOW CONSUMED HP 4
+3598,VD DHW TOTAL,x,x,,Power consumption HP 4,,,6,MWh,r,HI CONSUMED HP 4
+3599,VD 1 HEATING,x,x,,Runtime HP 4,,,6,h,r,HP 4
+3600,VD 2 HEATING,x,x,,Runtime HP 4,,,6,h,r,HP 4
+3601,VD 1/2 HEATING,x,x,,Runtime HP 4,,,6,h,r,HP 4
+3602,VD 1 DHW,x,x,,Runtime HP 4,,,6,h,r,HP 4
+3603,VD 2 DHW,x,x,,Runtime HP 4,,,6,h,r,HP 4
+3604,VD 1/2 DHW,x,x,,Runtime HP 4,,,6,h,r,HP 4
+3605,VD COOLING,x,x,,Runtime HP 4,,,6,h,r,HP 4
+3606,VD HEATING DAY,x,x,,Amount of heat HP 5,,,6,kWh,r,HP 5
+3607,VD HEATING TOTAL,x,x,,Amount of heat HP 5,,,6,kWh,r,LOW HP 5
+3608,VD HEATING TOTAL,x,x,,Amount of heat HP 5,,,6,MWh,r,HI HP 5
+3609,VD DHW DAY,x,x,,Amount of heat HP 5,,,6,kWh,r,HP 5
+3610,VD DHW TOTAL,x,x,,Amount of heat HP 5,,,6,kWh,r,LOW HP 5
+3611,VD DHW TOTAL,x,x,,Amount of heat HP 5,,,6,MWh,r,HI HP 5
+3612,VD HEATING DAY,x,x,,Power consumption HP 5,,,6,kWh,r,CONSUMED HP 5
+3613,VD HEATING TOTAL,x,x,,Power consumption HP 5,,,6,kWh,r,LOW CONSUMED HP 5
+3614,VD HEATING TOTAL,x,x,,Power consumption HP 5,,,6,MWh,r,HI CONSUMED HP 5
+3615,VD DHW DAY,x,x,,Power consumption HP 5,,,6,kWh,r,CONSUMED HP 5
+3616,VD DHW TOTAL,x,x,,Power consumption HP 5,,,6,kWh,r,LOW CONSUMED HP 5
+3617,VD DHW TOTAL,x,x,,Power consumption HP 5,,,6,MWh,r,HI CONSUMED HP 5
+3618,VD 1 HEATING,x,x,,Runtime HP 5,,,6,h,r,HP 5
+3619,VD 2 HEATING,x,x,,Runtime HP 5,,,6,h,r,HP 5
+3620,VD 1/2 HEATING,x,x,,Runtime HP 5,,,6,h,r,HP 5
+3621,VD 1 DHW,x,x,,Runtime HP 5,,,6,h,r,HP 5
+3622,VD 2 DHW,x,x,,Runtime HP 5,,,6,h,r,HP 5
+3623,VD 1/2 DHW,x,x,,Runtime HP 5,,,6,h,r,HP 5
+3624,VD COOLING,x,x,,Runtime HP 5,,,6,h,r,HP 5
+3625,VD HEATING DAY,x,x,,Amount of heat HP 6,,,6,kWh,r,HP 6
+3626,VD HEATING TOTAL,x,x,,Amount of heat HP 6,,,6,kWh,r,LOW HP 6
+3627,VD HEATING TOTAL,x,x,,Amount of heat HP 6,,,6,MWh,r,HI HP 6
+3628,VD DHW DAY,x,x,,Amount of heat HP 6,,,6,kWh,r,HP 6
+3629,VD DHW TOTAL,x,x,,Amount of heat HP 6,,,6,kWh,r,LOW HP 6
+3630,VD DHW TOTAL,x,x,,Amount of heat HP 6,,,6,MWh,r,HI HP 6
+3631,VD HEATING DAY,x,x,,Power consumption HP 6,,,6,kWh,r,CONSUMED HP 6
+3632,VD HEATING TOTAL,x,x,,Power consumption HP 6,,,6,kWh,r,LOW CONSUMED HP 6
+3633,VD HEATING TOTAL,x,x,,Power consumption HP 6,,,6,MWh,r,HI CONSUMED HP 6
+3634,VD DHW DAY,x,x,,Power consumption HP 6,,,6,kWh,r,CONSUMED HP 6
+3635,VD DHW TOTAL,x,x,,Power consumption HP 6,,,6,kWh,r,LOW CONSUMED HP 6
+3636,VD DHW TOTAL,x,x,,Power consumption HP 6,,,6,MWh,r,HI CONSUMED HP 6
+3637,VD 1 HEATING,x,x,,Runtime HP 6,,,6,h,r,HP 6
+3638,VD 2 HEATING,x,x,,Runtime HP 6,,,6,h,r,HP 6
+3639,VD 1/2 HEATING,x,x,,Runtime HP 6,,,6,h,r,HP 6
+3640,VD 1 DHW,x,x,,Runtime HP 6,,,6,h,r,HP 6
+3641,VD 2 DHW,x,x,,Runtime HP 6,,,6,h,r,HP 6
+3642,VD 1/2 DHW,x,x,,Runtime HP 6,,,6,h,r,HP 6
+3643,VD COOLING,x,x,,Runtime HP 6,,,6,h,r,HP 6
+3644,VD HEATING,x,,,Runtime HP 1,,,6,h,r,HP 1
+3645,VD DHW,x,,,Runtime HP 1,,,6,h,r,HP 1
+3646,VD HEATING,x,,,Runtime HP 2,,,6,h,r,HP 2
+3647,VD DHW,x,,,Runtime HP 2,,,6,h,r,HP 2
+3648,VD HEATING,x,,,Runtime HP 3,,,6,h,r,HP 3
+3649,VD DHW,x,,,Runtime HP 3,,,6,h,r,HP 3
+3650,VD HEATING,x,,,Runtime HP 4,,,6,h,r,HP 4
+3651,VD DHW,x,,,Runtime HP 4,,,6,h,r,HP 4
+3652,VD HEATING,x,,,Runtime HP 5,,,6,h,r,HP 5
+3653,VD DHW,x,,,Runtime HP 5,,,6,h,r,HP 5
+3654,VD HEATING,x,,,Runtime HP 6,,,6,h,r,HP 6
+3655,VD DHW,x,,,Runtime HP 6,,,6,h,r,HP 6
+3680,INVERTER POWER IWS 1,x,,,One decimal place,0,200,2,kW,r,
+3681,INVERTER POWER IWS 2,x,,,One decimal place,0,200,2,kW,r,
+3682,INVERTER POWER IWS 3,x,,,One decimal place,0,200,2,kW,r,
+3683,INVERTER POWER IWS 4,x,,,One decimal place,0,200,2,kW,r,
+3684,INVERTER POWER IWS 5,x,,,One decimal place,0,200,2,kW,r,
+3685,INVERTER POWER IWS 6,x,,,One decimal place,0,200,2,kW,r,
+3690,AMOUNT OF HEAT HEATING 1–24 h,x,,,,,,6,Wh,r,LOW
+3691,AMOUNT OF HEAT HEATING 1–24 h,x,,,,,,6,kWh,r,HI
+3692,AMOUNT OF HEAT HEATING 1–12,x,,,,,,6,kWh,r,LOW
+3693,AMOUNT OF HEAT HEATING 1–12,x,,,,,,6,MWh,r,HI
+3694,AMOUNT OF HEAT HEATING 13–24,x,,,,,,6,kWh,r,LOW
+3695,AMOUNT OF HEAT HEATING 13–24,x,,,,,,6,MWh,r,HI
+3696,AMOUNT OF HEAT COOLING 1–24 h,x,,,,,,6,Wh,r,LOW
+3697,AMOUNT OF HEAT COOLING 1–24 h,x,,,,,,6,kWh,r,HI
+3698,AMOUNT OF HEAT COOLING 1–12 M,x,,,,,,6,kWh,r,LOW
+3699,AMOUNT OF HEAT COOLING 1–12 M,x,,,,,,6,MWh,r,HI
+3700,AMOUNT OF HEAT COOLING 13–24,x,,,,,,6,kWh,r,LOW
+3701,AMOUNT OF HEAT COOLING 13–24,x,,,,,,6,MWh,r,HI
+3702,AMOUNT OF HEAT DHW 1–24 h  WH WH,x,,,,,,6,Wh,r,LOW
+3703,AMOUNT OF HEAT DHW 1–24 h,x,,,,,,6,kWh,r,HI
+3704,AMOUNT OF HEAT DHW 1–12 M,x,,,,,,6,kWh,r,LOW
+3705,AMOUNT OF HEAT DHW 1–12 M,x,,,,,,6,MWh,r,HI
+3706,AMOUNT OF HEAT DHW 13–24 M,x,,,,,,6,kWh,r,LOW
+3707,AMOUNT OF HEAT DHW 13–24 M,x,,,,,,6,MWh,r,HI
+3708,HEATING 24H,x,,,Power consumption - heating 24h,0,65535,6,kWh,r,LOW
+3709,HEATING 24H,x,,,Power consumption - heating 24h whole,,,6,kWh,r,HI
+3710,HEATING 12M,x,,,Power consumption - heating 12m fraction,0,65535,6,kWh,r,LOW
+3711,HEATING 12M,x,,,Power consumption - heating 12m whole,0,65535,6,kWh,r,HI
+3712,HEATING 13-24,x,,,Power consumption - heating 13-24 fraction,,,6,kWh,r,LOW
+3713,HEATING 13-24,x,,,Power consumption - heating 13-24 whole,,,6,MWh,r,HI
+3714,COOLING 24H,x,,,Power consumption - cooling 24h fraction,0,65535,6,kWh,r,LOW
+3715,COOLING 24H,x,,,Power consumption - cooling 24h whole,0,65535,6,kWh,r,HI
+3716,COOLING 12M,x,,,Power consumption - cooling 12m,0,65535,6,kWh,r,LOW
+3717,COOLING 12M,x,,,Power consumption - cooling 13-24 whole,,,6,MWh,r,HI
+3718,COOLING 13-24,x,,,Power consumption - cooling 13-24 fraction,,,6,kWh,r,LOW
+3719,COOLING 13-24,x,,,Power consumption - cooling 13-24 whole,,,6,MWh,r,HI
+3720,DHW 24H,x,,,Power consumption - DHW 24h fraction,0,65535,6,kWh,r,LOW
+3721,DHW 24H,x,,,Power consumption - DHW 24h whole,0,65535,6,kWh,r,HI
+3722,DHW 12M,x,,,Power consumption - DHW 12m fraction,0,65535,6,kWh,r,LOW
+3723,DHW 12M,x,,,Power consumption - DHW 12m whole,0,65535,6,kWh,r,HI
+3724,DHW 13-24,x,,,Power consumption - DHW 13-24 fraction,,,6,kWh,r,LOW
+3725,DHW 13-24,x,,,Power consumption - DHW 13-24 whole,,,6,MWh,r,HI
+3726,EFFICIENCY HEATING 1–24 h,x,,,,,,6,,r,
+3727,EFFICIENCY HEATING 1–12 M,x,,,,,,6,,r,
+3728,EFFICIENCY HEATING 13–24 M,x,,,,,,6,,r,
+3729,EFFICIENCY COOLING 1–24 h,x,,,,,,6,,r,
+3730,EFFICIENCY COOLING 1–12 M,x,,,,,,6,,r,
+3731,EFFICIENCY COOLING 13–24 M,x,,,,,,6,,r,
+3732,EFFICIENCY DHW 1–24 h,x,,,,,,6,,r,
+3733,EFFICIENCY DHW 1–12 M,x,,,,,,6,,r,
+3734,EFFICIENCY DHW 13–24 M,x,,,,,,6,,r,
