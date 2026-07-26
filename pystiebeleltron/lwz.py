@@ -10,7 +10,7 @@ from modbus_connection.model import Component, ComponentGroup, gauge, integer
 from . import UNAVAILABLE, in_range, scaled_sum
 
 LWZ_HOLDING_RANGES = ((1000, 1026), (4000, 4277))
-LWZ_INPUT_RANGES = ((0, 33), (2000, 2004), (3000, 3697), (5000, 5230))
+LWZ_INPUT_RANGES = ((0, 33), (2000, 2004), (3000, 3031), (5000, 5001))
 
 
 class OperatingMode(Enum):
@@ -144,16 +144,6 @@ class LwzEnergyData(Component):
     compressor_dhw = integer(3029, signed=False, nan=UNAVAILABLE, unit="h")
     elec_booster_heating = integer(3030, signed=False, nan=UNAVAILABLE, unit="h")
     elec_booster_dhw = integer(3031, signed=False, nan=UNAVAILABLE, unit="h")
-    inverter_power = gauge(3679, 0.01, nan=UNAVAILABLE, unit="kW")
-    efficiency_heating_1_24_h = integer(3689, signed=False, nan=UNAVAILABLE)
-    efficiency_heating_1_12_m = integer(3690, signed=False, nan=UNAVAILABLE)
-    efficiency_heating_13_24_m = integer(3691, signed=False, nan=UNAVAILABLE)
-    efficiency_cooling_1_24_h = integer(3692, signed=False, nan=UNAVAILABLE)
-    efficiency_cooling_1_12_m = integer(3693, signed=False, nan=UNAVAILABLE)
-    efficiency_cooling_13_24_m = integer(3694, signed=False, nan=UNAVAILABLE)
-    efficiency_dhw_1_24_h = integer(3695, signed=False, nan=UNAVAILABLE)
-    efficiency_dhw_1_12_m = integer(3696, signed=False, nan=UNAVAILABLE)
-    efficiency_dhw_13_24_m = integer(3697, signed=False, nan=UNAVAILABLE)
 
     _DAY_AND_TOTAL = (
         ("heat_meter_htg_day", "heat_meter_htg_ttl", "heat_meter_htg_day_and_total"),
@@ -240,11 +230,6 @@ class LwzEnergySystemInformation(Component):
 
     sg_ready_operating_state = integer(5000, signed=False, nan=UNAVAILABLE)
     controller_identification = integer(5001, signed=False, nan=UNAVAILABLE)
-    sg_ready_inputs_active = integer(5219, signed=False, nan=UNAVAILABLE)
-    sg_ready_bit_1 = integer(5220, signed=False, nan=UNAVAILABLE)
-    sg_ready_bit_2 = integer(5221, signed=False, nan=UNAVAILABLE)
-    user_power_limit = integer(5229, signed=False, nan=UNAVAILABLE, unit="W")
-    electrical_power_limit_requested = integer(5230, signed=False, nan=UNAVAILABLE, unit="W")
 
 
 class LwzStiebelEltronAPI:

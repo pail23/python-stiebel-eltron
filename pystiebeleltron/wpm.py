@@ -8,7 +8,7 @@ from modbus_connection.model import Component, ComponentGroup, gauge, integer, r
 from . import UNAVAILABLE, in_range, scaled_sum
 
 WPM_HOLDING_RANGES = ((1500, 1751), (4000, 4277))
-WPM_INPUT_RANGES = ((500, 609), (2500, 2572), (3500, 3733), (5000, 5230))
+WPM_INPUT_RANGES = ((500, 609), (2500, 2572), (3500, 3733), (5000, 5001))
 
 
 class WpmHeatPumpModule(Component):
@@ -559,11 +559,6 @@ class WpmEnergySystemInformation(Component):
 
     sg_ready_operating_state = integer(5000, signed=False, nan=UNAVAILABLE)
     controller_identification = integer(5001, signed=False, nan=UNAVAILABLE)
-    sg_ready_inputs_active = integer(5219, signed=False, nan=UNAVAILABLE)
-    sg_ready_bit_1 = integer(5220, signed=False, nan=UNAVAILABLE)
-    sg_ready_bit_2 = integer(5221, signed=False, nan=UNAVAILABLE)
-    user_power_limit = integer(5229, signed=False, nan=UNAVAILABLE, unit="W")
-    electrical_power_limit_requested = integer(5230, signed=False, nan=UNAVAILABLE, unit="W")
 
 
 class WpmStiebelEltronAPI:
