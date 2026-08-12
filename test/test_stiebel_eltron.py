@@ -1,18 +1,20 @@
 from __future__ import annotations
 
 import pytest
-from modbus_connection import ModbusError, ModbusExceptionError
+from modbus_connection import IllegalDataAddressError, ModbusError, ReadBlock, ServerDeviceBusyError
 from modbus_connection.mock import MockModbusConnection, MockModbusUnit
 from modbus_connection.model import Component
 
 from pystiebeleltron import (
+    UNAVAILABLE,
     ControllerModel,
     StiebelEltronModbusError,
     UnknownControllerModelError,
     get_controller_model,
 )
-from pystiebeleltron.lwz import LwzStiebelEltronAPI, OperatingMode
-from pystiebeleltron.wpm import WpmStiebelEltronAPI
+from pystiebeleltron.lwz import LWZ_HOLDING_RANGES, LWZ_INPUT_RANGES, LwzStiebelEltronAPI, OperatingMode
+from pystiebeleltron.wpm import WPM_HOLDING_RANGES, WPM_INPUT_RANGES, WpmStiebelEltronAPI
+from pystiebeleltron.wpm3i import WPM3I_HOLDING_RANGES, WPM3I_INPUT_RANGES, Wpm3iStiebelEltronAPI
 
 
 def _seed(unit: MockModbusUnit, *components: Component) -> None:
@@ -23,11 +25,56 @@ def _seed(unit: MockModbusUnit, *components: Component) -> None:
     field at address ``base + n`` decodes the raw value ``n``.
     """
     for component in components:
-        fields = component._register_fields.values()
+        fields = component.declared_fields.values()
         low = min(field.address for field in fields)
         high = max(field.address + field.count - 1 for field in fields)
         store = unit.input if component.register_space == "input" else unit.holding
         store[low] = list(range(high - low + 1))
+
+
+@pytest.mark.parametrize(
+    "ranges",
+    [WPM_HOLDING_RANGES, WPM_INPUT_RANGES, WPM3I_HOLDING_RANGES, WPM3I_INPUT_RANGES, LWZ_HOLDING_RANGES, LWZ_INPUT_RANGES],
+)
+def test_declared_ranges_are_separated_by_a_real_gap(ranges: tuple[tuple[int, int], ...]) -> None:
+    """Consecutive entries must leave at least one address unclaimed between them.
+
+    A gap in the map is what stops a read from crossing it. The manual splits
+    the registers into documentation blocks that sometimes abut - the WPM energy
+    block ends at 3642 and the extended one starts at 3643 - and emitting those
+    as two entries would forbid a single read the controller answers happily.
+    The generator joins them, so every remaining boundary is one the device
+    really has.
+    """
+    for (_, high), (low, _) in zip(ranges, ranges[1:], strict=False):
+        assert low > high + 1, f"({low}, ...) touches (..., {high}); they are one readable run"
+
+
+@pytest.mark.parametrize("api_class", [WpmStiebelEltronAPI, Wpm3iStiebelEltronAPI, LwzStiebelEltronAPI])
+@pytest.mark.asyncio()
+async def test_every_field_sits_inside_a_declared_readable_range(
+    mock_modbus_unit: MockModbusUnit,
+    api_class: type[WpmStiebelEltronAPI | Wpm3iStiebelEltronAPI | LwzStiebelEltronAPI],
+) -> None:
+    """Every controller's layout must plan against the ranges it declares.
+
+    ``register_ranges`` says which addresses the controller answers, and a field
+    the map does not contain cannot be read at all, so the planner refuses to
+    build the plan rather than emitting a block the device would refuse. That
+    fails the first poll of a whole controller family, which is why each of them
+    is polled here and not only the two with value assertions below.
+    """
+    api = api_class(mock_modbus_unit)
+
+    await api.async_update()
+
+    for component in vars(api).values():
+        if not isinstance(component, Component):
+            continue
+        ranges = component.register_ranges or ()
+        for name, resolved in component.resolved_fields.items():
+            last = resolved.address + resolved.count - 1
+            assert any(low <= resolved.address and last <= high for low, high in ranges), f"{type(component).__name__}.{name} reads {resolved.address}-{last}, outside {ranges}"
 
 
 @pytest.mark.asyncio()
@@ -83,6 +130,38 @@ async def test_write_out_of_range_rejected(mock_modbus_unit: MockModbusUnit) -> 
         await api.system_parameters.write("comfort_temperature_hk_1", 40)
     # The rejected write must not have reached the device.
     assert mock_modbus_unit.holding[1501] == 220
+
+
+@pytest.mark.asyncio()
+async def test_a_documented_flag_reads_as_a_bool(mock_modbus_unit: MockModbusUnit) -> None:
+    """A register the manual bounds to 0..1 decodes to True/False, not 0/1.
+
+    ``is`` rather than ``==`` because ``False == 0`` - only identity tells the
+    flag apart from the integer it used to be. A code the manual does not
+    define reads as None: a pump reported with an undefined value is unknown,
+    and taking anything non-zero as running would invent a state the
+    controller never reported.
+    """
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+
+    for raw, expected in ((1, True), (0, False), (UNAVAILABLE, None), (2, None)):
+        mock_modbus_unit.input[2508] = raw
+        await api.async_update()
+        assert api.system_state.heating_circuit_pump_1 is expected
+
+
+@pytest.mark.asyncio()
+async def test_a_writable_flag_takes_a_bool_or_the_raw_code(mock_modbus_unit: MockModbusUnit) -> None:
+    """Writing a flag accepts True/False and the 1/0 callers passed before."""
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+
+    for value in (True, 1):
+        await api.energy_management_settings.write("sg_ready_input_1", value)
+        assert mock_modbus_unit.holding[4001] == 1
+
+    for value in (False, 0):
+        await api.energy_management_settings.write("sg_ready_input_1", value)
+        assert mock_modbus_unit.holding[4001] == 0
 
 
 @pytest.mark.asyncio()
@@ -221,7 +300,7 @@ async def test_async_update_surfaces_refused_block(mock_modbus_unit: MockModbusU
     _seed(mock_modbus_unit, api.system_values)
     # 502 falls inside the first input block; illegal-data-address (2) mimics a
     # controller that doesn't serve that block.
-    mock_modbus_unit.fail_read(502, ModbusExceptionError(2), register_type="input")
+    mock_modbus_unit.fail_read(502, IllegalDataAddressError(), register_type="input")
 
     with pytest.raises(ModbusError):
         await api.async_update()
@@ -243,7 +322,7 @@ async def test_wpm_without_the_extended_energy_registers(mock_modbus_unit: MockM
     """
     api = WpmStiebelEltronAPI(mock_modbus_unit)
     _seed(mock_modbus_unit, api.system_values, api.energy_system_information)
-    mock_modbus_unit.fail_read(5219, ModbusExceptionError(2), register_type="input")
+    mock_modbus_unit.fail_read(5219, IllegalDataAddressError(), register_type="input")
 
     await api.async_update()
 
@@ -260,7 +339,7 @@ async def test_lwz_without_the_extended_energy_registers(mock_modbus_unit: MockM
     """
     api = LwzStiebelEltronAPI(mock_modbus_unit)
     _seed(mock_modbus_unit, api.system_values, api.energy_data)
-    mock_modbus_unit.fail_read(3679, ModbusExceptionError(2), register_type="input")
+    mock_modbus_unit.fail_read(3679, IllegalDataAddressError(), register_type="input")
 
     await api.async_update()
 
@@ -279,10 +358,13 @@ async def test_a_busy_controller_does_not_lose_an_optional_block(mock_modbus_uni
     """
     api = WpmStiebelEltronAPI(mock_modbus_unit)
     _seed(mock_modbus_unit, api.system_values, api.extended_energy_system_information)
-    mock_modbus_unit.fail_read(5219, ModbusExceptionError(6), register_type="input")
+    mock_modbus_unit.fail_read(5219, ServerDeviceBusyError(), register_type="input")
 
-    with pytest.raises(ModbusError):
+    # The busy answer reaches the caller as itself, naming the block it aborted,
+    # rather than as something the tolerance rewrapped on the way out.
+    with pytest.raises(ServerDeviceBusyError) as exc_info:
         await api.async_update()
+    assert exc_info.value.block == ReadBlock("input", 5219, 12)
 
     mock_modbus_unit.fail_read(5219, None, register_type="input")
     await api.async_update()
@@ -299,23 +381,13 @@ async def test_a_refused_optional_block_is_not_read_again(mock_modbus_unit: Mock
     """
     api = WpmStiebelEltronAPI(mock_modbus_unit)
     _seed(mock_modbus_unit, api.system_values)
-    mock_modbus_unit.fail_read(5219, ModbusExceptionError(2), register_type="input")
-
-    attempts = 0
-    original = mock_modbus_unit.read_input_registers
-
-    async def counting_read(address: int, count: int) -> list[int]:
-        nonlocal attempts
-        if address <= 5219 <= address + count - 1:
-            attempts += 1
-        return await original(address, count)
-
-    mock_modbus_unit.read_input_registers = counting_read  # type: ignore[method-assign]
+    mock_modbus_unit.fail_read(5219, IllegalDataAddressError(), register_type="input")
 
     await api.async_update()
     await api.async_update()
 
-    assert attempts == 1
+    attempts = [event for event in mock_modbus_unit.read_events if event.register_type == "input" and event.address <= 5219 <= event.address + event.count - 1]
+    assert len(attempts) == 1
 
 
 @pytest.mark.asyncio()
@@ -336,7 +408,7 @@ async def test_a_failed_poll_notifies_nobody(mock_modbus_unit: MockModbusUnit) -
         notified += 1
 
     api.system_values.add_update_listener(count)
-    mock_modbus_unit.fail_read(5219, ModbusExceptionError(6), register_type="input")
+    mock_modbus_unit.fail_read(5219, ServerDeviceBusyError(), register_type="input")
 
     with pytest.raises(ModbusError):
         await api.async_update()
@@ -365,7 +437,7 @@ async def test_a_refused_block_still_notifies_the_rest(mock_modbus_unit: MockMod
         notified += 1
 
     api.system_values.add_update_listener(count)
-    mock_modbus_unit.fail_read(5219, ModbusExceptionError(2), register_type="input")
+    mock_modbus_unit.fail_read(5219, IllegalDataAddressError(), register_type="input")
 
     await api.async_update()
 
@@ -376,9 +448,7 @@ async def test_a_refused_block_still_notifies_the_rest(mock_modbus_unit: MockMod
 async def test_a_controller_refusing_everything_still_errors(mock_modbus_unit: MockModbusUnit) -> None:
     """Tolerating optional blocks must not make a mute controller look healthy."""
     api = WpmStiebelEltronAPI(mock_modbus_unit)
-    for address in (502, 1500, 3500, 5000, 5219):
-        mock_modbus_unit.fail_read(address, ModbusExceptionError(2), register_type="input")
-        mock_modbus_unit.fail_read(address, ModbusExceptionError(2), register_type="holding")
+    mock_modbus_unit.fail_requests(IllegalDataAddressError())
 
     with pytest.raises(ModbusError):
         await api.async_update()
