@@ -382,10 +382,7 @@ def _ranges_by_space(components: list[Component]) -> dict[str, tuple[tuple[int, 
     addresses: dict[str, set[int]] = {}
     for component in components:
         addresses.setdefault(component.register_space, set()).update(component.addresses)
-    return {
-        space: _coalesce({(address, address) for address in space_addresses})
-        for space, space_addresses in addresses.items()
-    }
+    return {space: _coalesce({(address, address) for address in space_addresses}) for space, space_addresses in addresses.items()}
 
 
 def _imports(controller: Controller, components: list[Component]) -> list[str]:
