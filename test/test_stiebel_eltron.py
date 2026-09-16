@@ -342,6 +342,60 @@ async def test_wpm_without_the_extended_energy_registers(mock_modbus_unit: MockM
 
 
 @pytest.mark.asyncio()
+async def test_wpm_without_version_registers(mock_modbus_unit: MockModbusUnit) -> None:
+    """Refusing version registers must not break polls (pail23/stiebel_eltron_isg_component#693)."""
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+    _seed(mock_modbus_unit, api.system_values, api.extended_system_state)
+    mock_modbus_unit.fail_read(2569, IllegalDataAddressError(), register_type="input")
+
+    for raw_temperature in (12, 34):
+        mock_modbus_unit.input[502] = [raw_temperature]
+        await api.async_update()
+
+        assert api.system_values.actual_temperature_fek == raw_temperature / 10
+        assert api.extended_system_state.extension_version is None
+        assert api.extended_system_state.major_version is None
+        assert api.extended_system_state.minor_version is None
+        assert api.extended_system_state.revision is None
+
+    attempts = [event for event in mock_modbus_unit.read_events if event.register_type == "input" and event.address <= 2569 < event.address + event.count]
+    assert len(attempts) == 1
+    assert attempts[0].address == 2569
+    assert attempts[0].count == 4
+
+
+@pytest.mark.asyncio()
+async def test_wpm_with_version_registers(mock_modbus_unit: MockModbusUnit) -> None:
+    """Supported version registers remain readable."""
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+    mock_modbus_unit.input[2569] = [260, 12, 2, 3]
+
+    await api.async_update()
+
+    assert api.extended_system_state.extension_version == 260
+    assert api.extended_system_state.major_version == 12
+    assert api.extended_system_state.minor_version == 2
+    assert api.extended_system_state.revision == 3
+
+
+@pytest.mark.asyncio()
+async def test_wpm_busy_version_registers_are_retried(mock_modbus_unit: MockModbusUnit) -> None:
+    """A transient busy response must not permanently disable version reads."""
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+    mock_modbus_unit.input[2569] = [260, 12, 2, 3]
+    mock_modbus_unit.fail_read(2569, ServerDeviceBusyError(), register_type="input")
+
+    with pytest.raises(ServerDeviceBusyError) as exc_info:
+        await api.async_update()
+    assert exc_info.value.block == ReadBlock("input", 2569, 4)
+
+    mock_modbus_unit.fail_read(2569, None, register_type="input")
+    await api.async_update()
+
+    assert api.extended_system_state.major_version == 12
+
+
+@pytest.mark.asyncio()
 async def test_lwz_without_the_extended_energy_registers(mock_modbus_unit: MockModbusUnit) -> None:
     """An LWZ without the inverter and efficiency registers still updates.
 
