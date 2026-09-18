@@ -39,32 +39,18 @@ Install with the optional `tmodbus` backend used in the example below:
 ```
 
 ## Example usage of the module
-The sample below shows how to use this Python module (api for wpm heat pumps). It uses the optional `tmodbus` backend, so install `pystiebeleltron[tmodbus]` first.
+The [`examples/`](examples/) directory contains runnable examples for WPM and LWZ heat pumps. They use the optional `tmodbus` backend, so install `pystiebeleltron[tmodbus]` first.
 
 The API takes a [`ModbusUnit`](https://github.com/home-assistant-libs/modbus-connection). You own the connection: build it, hand a unit to the API, and close it when done. Building it performs no I/O — the first read establishes the link, and a link that drops later is re-established on the next request, over the same unit handle. Each register block is a component exposed on the API, and values are read as typed attributes (`None` when the register is unavailable).
 
-```python
-    import asyncio
-    from modbus_connection import ModbusTcpParams
-    from modbus_connection.tmodbus import ModbusConnection
-    from pystiebeleltron.wpm import WpmStiebelEltronAPI
+Pass the IP address of the ISG gateway to the selected example:
 
-    async def main():
-      connection = ModbusConnection(ModbusTcpParams(host='IP_ADDRESS_ISG', port=502))
-      api = WpmStiebelEltronAPI(connection.for_unit(1))
-
-      await api.async_update()
-
-      print(f"outside temperature: {api.system_values.outside_temperature}")
-      print(f"water comfort target temperature: {api.system_parameters.comfort_temperature_dhw}")
-
-      # Writing a register:
-      await api.system_parameters.write("comfort_temperature_dhw", 50)
-
-      await connection.close()
-
-    asyncio.run(main())
+```bash
+./examples/wpm-example.py 192.168.1.10
+./examples/lwz-example.py 192.168.1.10
 ```
+
+The WPM example also demonstrates writing and restoring the DHW comfort temperature. The LWZ example reads room and outside temperatures and the current operating mode.
 
 ## License
 

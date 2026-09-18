@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Example that uses the optional tmodbus backend.
 
-Install with: ``pip install "pystiebeleltron[tmodbus]"``.
+For the development environment, initialize and sync with uv:
+``uv sync --all-extras``.
 """
 
+import argparse
 import asyncio
 
 from modbus_connection import ModbusTcpParams
@@ -11,12 +13,11 @@ from modbus_connection.tmodbus import ModbusConnection
 
 from pystiebeleltron.wpm import WpmStiebelEltronAPI
 
-host_ip = "192.168.1.20"
 host_port = 502
 device_id = 1
 
 
-async def main():
+async def main(host_ip: str) -> None:
     connection = ModbusConnection(ModbusTcpParams(host=host_ip, port=host_port))
     api = WpmStiebelEltronAPI(connection.for_unit(device_id))
 
@@ -45,7 +46,7 @@ async def main():
 
 
 if __name__ == "__main__":
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-
-    loop.run_until_complete(main())
+    parser = argparse.ArgumentParser(description="Read values from a WPM heat pump.")
+    parser.add_argument("host_ip", help="IP address of the ISG gateway")
+    args = parser.parse_args()
+    asyncio.run(main(args.host_ip))
