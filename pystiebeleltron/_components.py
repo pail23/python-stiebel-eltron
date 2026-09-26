@@ -107,11 +107,7 @@ class ControllerComponents:
     async def async_read_raw(self) -> Raw:
         """Read every component the controller serves, in one poll."""
         #        return await self._group.async_read_raw()
-        raw: Raw = {}
-        for component in self._required:
-            if component is None:
-                continue
-            _merge_raw(raw, await component.async_read_raw(notify=False))
+        raw: Raw = await self._group.async_read_raw()
 
         for component in list(self._optional):
             try:
