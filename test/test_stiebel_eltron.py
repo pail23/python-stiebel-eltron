@@ -103,7 +103,8 @@ async def test_wpm(mock_modbus_unit: MockModbusUnit) -> None:
 async def test_wpm_repeating_groups(mock_modbus_unit: MockModbusUnit) -> None:
     """Repeated sub-units read as typed lists, each instance at its strided address."""
     api = WpmStiebelEltronAPI(mock_modbus_unit)
-    _seed(mock_modbus_unit, api.system_values)
+    # _seed is not working for this test, so we manually populate the input registers.
+    mock_modbus_unit.input[500] = list(range(608 - 500))
 
     await api.async_update()
 
@@ -339,6 +340,57 @@ async def test_wpm_without_the_extended_energy_registers(mock_modbus_unit: MockM
     assert api.system_values.actual_temperature_fek == 0.2
     assert api.energy_system_information.sg_ready_operating_state == 0
     assert api.extended_energy_system_information.sg_ready_inputs_active is None
+
+
+@pytest.mark.asyncio()
+async def test_wpm_without_extended_system_values(mock_modbus_unit: MockModbusUnit) -> None:
+    """A controller without the additional heating-circuit values still updates."""
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+    _seed(mock_modbus_unit, api.system_values, api.extended_system_values)
+    mock_modbus_unit.fail_read(609, IllegalDataAddressError(), register_type="input")
+
+    for raw_temperature in (12, 34):
+        mock_modbus_unit.input[502] = [raw_temperature]
+        await api.async_update()
+
+        assert api.system_values.actual_temperature_fek == raw_temperature / 10
+        assert api.extended_system_values.actual_temperature_hk_3 is None
+        assert api.extended_system_values.set_temperature_hk_3 is None
+
+    attempts = [event for event in mock_modbus_unit.read_events if event.register_type == "input" and event.address <= 609 < event.address + event.count]
+    assert len(attempts) == 1
+    assert attempts[0].address == 609
+    assert attempts[0].count == 2
+
+
+@pytest.mark.asyncio()
+async def test_wpm_with_extended_system_values(mock_modbus_unit: MockModbusUnit) -> None:
+    """Supported additional heating-circuit values are readable."""
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+    mock_modbus_unit.input[609] = [217, 225]
+
+    await api.async_update()
+
+    assert api.extended_system_values.actual_temperature_hk_3 == 21.7
+    assert api.extended_system_values.set_temperature_hk_3 == 22.5
+
+
+@pytest.mark.asyncio()
+async def test_wpm_busy_extended_system_values_are_retried(mock_modbus_unit: MockModbusUnit) -> None:
+    """A transient busy response does not permanently disable these values."""
+    api = WpmStiebelEltronAPI(mock_modbus_unit)
+    mock_modbus_unit.input[609] = [217, 225]
+    mock_modbus_unit.fail_read(609, ServerDeviceBusyError(), register_type="input")
+
+    with pytest.raises(ServerDeviceBusyError) as exc_info:
+        await api.async_update()
+    assert exc_info.value.block == ReadBlock("input", 609, 2)
+
+    mock_modbus_unit.fail_read(609, None, register_type="input")
+    await api.async_update()
+
+    assert api.extended_system_values.actual_temperature_hk_3 == 21.7
+    assert api.extended_system_values.set_temperature_hk_3 == 22.5
 
 
 @pytest.mark.asyncio()
