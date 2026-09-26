@@ -26,9 +26,12 @@ def _seed(unit: MockModbusUnit, *components: Component) -> None:
     field at address ``base + n`` decodes the raw value ``n``.
     """
     for component in components:
-        fields = component.declared_fields.values()
-        low = min(field.address for field in fields)
-        high = max(field.address + field.count - 1 for field in fields)
+        fields = [(field.address, field.count) for field in component.declared_fields.values()]
+        for group in component._groups.values():
+            for child in group:
+                fields.extend((field.address, field.count) for field in child.resolved_fields.values())
+        low = min(address for address, _ in fields)
+        high = max(address + count - 1 for address, count in fields)
         store = unit.input if component.register_space == "input" else unit.holding
         store[low] = list(range(high - low + 1))
 
@@ -103,8 +106,7 @@ async def test_wpm(mock_modbus_unit: MockModbusUnit) -> None:
 async def test_wpm_repeating_groups(mock_modbus_unit: MockModbusUnit) -> None:
     """Repeated sub-units read as typed lists, each instance at its strided address."""
     api = WpmStiebelEltronAPI(mock_modbus_unit)
-    # _seed is not working for this test, so we manually populate the input registers.
-    mock_modbus_unit.input[500] = list(range(608 - 500))
+    _seed(mock_modbus_unit, api.system_values)
 
     await api.async_update()
 
