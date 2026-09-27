@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__package__)
 
 
 def _merge_raw(
-    into: dict[str, dict[int, int | bool]],
+    into: Raw,
     more: Mapping[str, Mapping[int, int | bool]],
 ) -> None:
     """Merge a raw ``{space: {address: value}}`` map into an accumulator in place."""
